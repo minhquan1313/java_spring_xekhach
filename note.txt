@@ -1,0 +1,4 @@
+Thay đổi pass của mysql trong
+    src\main\resources\databases.properties
+
+    
