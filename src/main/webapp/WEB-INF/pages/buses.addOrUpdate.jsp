@@ -1,5 +1,9 @@
 <%-- Document : bus.addOrUpdate Created on : Aug 1, 2023, 3:52:55 PM Author : Binh --%>
 <!--  -->
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!--  -->
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<!--  -->
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <section class="container pt-4 my-auto h-100">

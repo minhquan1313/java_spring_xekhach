@@ -56,4 +56,8 @@ public class BusServiceImpl implements BusService {
         return busRepository.deleteById(id);
     }
 
+    @Override
+    public int countSeat(int id) {
+        return busRepository.countSeat(id);
+    }
 }

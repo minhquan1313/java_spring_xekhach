@@ -13,4 +13,6 @@ public interface BusRepository {
     boolean addOrUpdate(Bus item);
 
     boolean deleteById(int id);
+
+    int countSeat(int id);
 }

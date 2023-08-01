@@ -69,4 +69,14 @@ public class BusRepositoryImpl implements BusRepository {
         }
     }
 
+    @Override
+    public int countSeat(int id) {
+        Session session = this.factory.getObject().getCurrentSession();
+        Query query = session
+                .createQuery("SELECT Count(*) FROM BusSeatTemplate WHERE BusSeatTemplate.busId = :bus_Id");
+
+        query.setParameter("bus_Id", id);
+
+        return Integer.parseInt(query.getSingleResult().toString());
+    }
 }

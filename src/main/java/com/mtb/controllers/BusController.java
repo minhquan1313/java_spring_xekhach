@@ -1,5 +1,7 @@
 package com.mtb.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -16,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mtb.pojo.Bus;
-import com.mtb.pojo.Route;
 import com.mtb.service.BusService;
 
 @Controller
@@ -29,6 +30,12 @@ public class BusController {
     @RequestMapping("/buses")
     public String index(Model model, @RequestParam Map<String, String> params) {
         model.addAttribute("buses", busService.getList(null));
+        List<Integer> listCho = new ArrayList<>();
+        for (Bus b : busService.getList(null)) {
+            listCho.add(5);
+            // listCho.add(busService.countSeat(b.getId()));
+        }
+        model.addAttribute("count", listCho);
         // here here here here here here here here here here here here
         return "buses";
     }
@@ -36,7 +43,7 @@ public class BusController {
     // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     @GetMapping("/buses/add")
     public String addForm(Model model) {
-        model.addAttribute("bus", new Route());
+        model.addAttribute("bus", new Bus());
 
         return "buses.addOrUpdate";
     }
