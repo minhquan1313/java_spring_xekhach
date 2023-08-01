@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -13,9 +12,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-
-import com.cloudinary.Cloudinary;
-import com.cloudinary.utils.ObjectUtils;
 
 @Configuration
 @EnableWebSecurity
@@ -29,8 +25,8 @@ import com.cloudinary.utils.ObjectUtils;
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService userDetailsService;
-    @Autowired
-    private Environment env;
+    // @Autowired
+    // private Environment env;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -62,15 +58,15 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
     }
 
-    @Bean
-    public Cloudinary cloudinary() {
-        Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
-                "cloud_name", this.env.getProperty("cloudinary.cloud_name"),
-                "api_key", this.env.getProperty("cloudinary.api_key"),
-                "api_secret", this.env.getProperty("cloudinary.api_secret"),
-                "secure", true));
-        return cloudinary;
-    }
+    // @Bean
+    // public Cloudinary cloudinary() {
+    // Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
+    // "cloud_name", this.env.getProperty("cloudinary.cloud_name"),
+    // "api_key", this.env.getProperty("cloudinary.api_key"),
+    // "api_secret", this.env.getProperty("cloudinary.api_secret"),
+    // "secure", true));
+    // return cloudinary;
+    // }
 
     // here here here here here here here here here
 }

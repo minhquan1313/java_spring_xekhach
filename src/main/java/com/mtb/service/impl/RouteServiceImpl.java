@@ -19,4 +19,19 @@ public class RouteServiceImpl implements RouteService {
     public List<Route> getList(Map<String, String> params) {
         return routeRepository.getList(params);
     }
+
+    @Override
+    public Route getById(int id) {
+        return routeRepository.getById(id);
+    }
+
+    @Override
+    public boolean addOrUpdate(Route item) {
+        return routeRepository.addOrUpdate(item);
+    }
+
+    @Override
+    public boolean deleteById(int id) {
+        return routeRepository.deleteById(id);
+    }
 }

@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,6 +31,7 @@ public class RouteController {
         return "routes";
     }
 
+    // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     @GetMapping("/routes/add")
     public String addForm(Model model) {
         model.addAttribute("route", new Route());
@@ -37,12 +39,19 @@ public class RouteController {
         return "routes.addOrUpdate";
     }
 
+    @GetMapping("/routes/edit/{id}")
+    public String editForm(Model model, @PathVariable(value = "id") int id) {
+        model.addAttribute("route", routeService.getById(id));
+
+        return "routes.addOrUpdate";
+    }
+
     @PostMapping("/routes/add")
-    public String add(@ModelAttribute(value = "route") @Valid Route item, BindingResult rs) {
+    public String addOrUpdate(@ModelAttribute(value = "route") @Valid Route item, BindingResult rs) {
         if (!rs.hasErrors()) {
-            // if (productService.addOrUpdateProduct(p)) {
-            // return "redirect:/routes";
-            // }
+            if (routeService.addOrUpdate(item)) {
+                return "redirect:/routes";
+            }
         }
 
         return "routes.addOrUpdate";
