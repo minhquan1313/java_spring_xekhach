@@ -9,16 +9,23 @@
         <thead>
             <tr>
                 <th>Id</th>
+                <th></th>
                 <th>Họ</th>
                 <th>Tên</th>
+                <th>Tài khoản</th>
+                <th>Mật khẩu</th>
+                <th>Vai trò</th>
             </tr>
         </thead>
         <tbody>
             <c:forEach items="${users}" var="u">
                 <tr>
                     <td>${u.id}</td>
+                    <td></td>
                     <td>${u.lastName}</td>
                     <td>${u.firstName} </td>
+                    <td>${u.username} </td>
+                    <td>${u.password} </td>
                 </tr>
             </c:forEach>
         </tbody>
