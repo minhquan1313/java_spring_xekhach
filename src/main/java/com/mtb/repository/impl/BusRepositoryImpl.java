@@ -1,9 +1,14 @@
 package com.mtb.repository.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import org.hibernate.HibernateError;
 import org.hibernate.HibernateException;
@@ -14,6 +19,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mtb.pojo.Bus;
+import com.mtb.pojo.BusSeatTemplate;
 import com.mtb.repository.BusRepository;
 
 @Repository
@@ -72,10 +78,18 @@ public class BusRepositoryImpl implements BusRepository {
     @Override
     public int countSeat(int id) {
         Session session = this.factory.getObject().getCurrentSession();
-        Query query = session
-                .createQuery("SELECT Count(*) FROM BusSeatTemplate WHERE BusSeatTemplate.busId = :bus_Id");
 
-        query.setParameter("bus_Id", id);
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+        Root root = cq.from(BusSeatTemplate.class);
+
+        List<Predicate> predicates = new ArrayList<>();
+
+        predicates.add(cb.equal(root.get("busId"), id));
+
+        cq.where(predicates.toArray(Predicate[]::new));
+        cq.select(cb.count(root));
+        Query query = session.createQuery(cq);
 
         return Integer.parseInt(query.getSingleResult().toString());
     }

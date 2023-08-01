@@ -32,8 +32,7 @@ public class BusController {
         model.addAttribute("buses", busService.getList(null));
         List<Integer> listCho = new ArrayList<>();
         for (Bus b : busService.getList(null)) {
-            listCho.add(5);
-            // listCho.add(busService.countSeat(b.getId()));
+            listCho.add(busService.countSeat(b.getId()));
         }
         model.addAttribute("count", listCho);
         // here here here here here here here here here here here here
