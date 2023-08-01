@@ -2,3 +2,6 @@ Thay đổi pass của mysql trong
     src\main\resources\databases.properties
 
     
+Thay đổi tên db của mysql trong
+    src\main\resources\databases.properties
+(saledb -> xekhachdb)
