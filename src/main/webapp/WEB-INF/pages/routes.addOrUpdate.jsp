@@ -11,15 +11,29 @@
         <form:errors path="*" element="div" cssClass="alert alert-danger" />
         <form:hidden path="id" />
 
-        <div class="form-floating mb-3">
-            <form:input type="text" class="form-control" id="startLocation" path="startLocation" />
-            <label for="startLocation">Nơi xuất phát</label>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">
+                <i class="bi bi-cursor"></i>
+            </span>
+            <form:input
+                type="text"
+                class="form-control"
+                placeholder="Nơi xuất phát"
+                path="startLocation"
+            />
             <form:errors path="startLocation" element="div" cssClass="text-danger" />
         </div>
 
-        <div class="form-floating mb-3">
-            <form:input type="text" class="form-control" id="endLocation" path="endLocation" />
-            <label for="endLocation">Điểm đến</label>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">
+                <i class="bi bi-geo-fill"></i>
+            </span>
+            <form:input
+                type="text"
+                class="form-control"
+                placeholder="Điểm đến"
+                path="endLocation"
+            />
             <form:errors path="endLocation" element="div" cssClass="text-danger" />
         </div>
 
