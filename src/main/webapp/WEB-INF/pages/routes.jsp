@@ -2,15 +2,14 @@
 prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!--  -->
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<script src="/js/delAPI.js" defer></script>
 <section class="container mt-4">
     <div class="d-flex align-items-center">
-        <a href="#" class="invisible">Thêm route</a>
+        <a href="#" class="invisible">Thêm tuyến</a>
 
         <h3 class="text-center w-100">Các tuyến xe</h3>
 
-        <c:url value="/routes/add" var="createRouteUrl" />
-        <a href="${createRouteUrl}" class="btn btn-primary text-nowrap">Thêm route</a>
+        <c:url value="/routes/add" var="createUrl" />
+        <a href="${createUrl}" class="btn btn-primary text-nowrap">Thêm tuyến</a>
     </div>
 
     <table class="table table-hover">
@@ -30,15 +29,18 @@ prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
                     <td>${route.endLocation}</td>
                     <td>
                         <!--  -->
-                        <c:url value="/routes/edit/${route.id}" var="editRouteUrl" />
-                        <a href="${editRouteUrl}" class="btn btn-primary">Sửa</a>
+                        <c:url value="/routes/edit/${route.id}" var="editUrl" />
+                        <a href="${editUrl}" class="btn btn-primary">Sửa</a>
 
-                        <c:url value="/routes/${route.id}" var="delRouteUrl" />
-                        <c:set value="onclick=(delAPI(${delRouteUrl}))" var="delRouteClick" />
-                        <button class="btn btn-primary" ${delRouteClick}>Xoá</button>
+                        <c:url value="/api/routes/${route.id}" var="delUrl" />
+                        <c:set value="onclick=(delAPI('${delUrl}'))" var="delClick" />
+                        <button class="btn btn-primary" ${delClick}>Xoá</button>
                     </td>
-                </tr></c:forEach
-            >
+                </tr>
+            </c:forEach>
         </tbody>
     </table>
 </section>
+
+<c:url value="/js/delAPI.js" var="delAPI" />
+<script src="${delAPI}"></script>

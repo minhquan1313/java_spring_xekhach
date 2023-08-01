@@ -67,6 +67,4 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     // "secure", true));
     // return cloudinary;
     // }
-
-    // here here here here here here here here here
 }

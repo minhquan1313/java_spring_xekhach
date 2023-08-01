@@ -5,9 +5,10 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!--  -->
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <section class="container pt-4 my-auto h-100">
     <c:url value="/routes/add" var="action" />
-    <form:form method="post" action="${action}" modelAttribute="route">
+    <form:form method="post" action="${action}" modelAttribute="route" accept-charset="utf-8">
         <form:errors path="*" element="div" cssClass="alert alert-danger" />
         <form:hidden path="id" />
 

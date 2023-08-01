@@ -46,8 +46,11 @@ public class RouteController {
         return "routes.addOrUpdate";
     }
 
-    @PostMapping("/routes/add")
-    public String addOrUpdate(@ModelAttribute(value = "route") @Valid Route item, BindingResult rs) {
+    @PostMapping(value = "/routes/add")
+    public String addOrUpdate(Model model, @ModelAttribute(value = "route") @Valid Route item, BindingResult rs) {
+        // model.addAttribute("debugValue", item);
+        // return "debug";
+
         if (!rs.hasErrors()) {
             if (routeService.addOrUpdate(item)) {
                 return "redirect:/routes";
