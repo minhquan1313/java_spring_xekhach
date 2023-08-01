@@ -5,6 +5,9 @@
 <c:url value="/" var="action" />
 <section class="container mt-3">
     <h1>Hello Đây là java spring xe khách</h1>
+
+    <c:url value="/routes" var="routes" />
+    <a href="${routes}">Routes</a>
 </section>
 <c:url value="/js/main.js" var="mainJs" />
 <script src="${mainJs}"></script>
