@@ -5,11 +5,19 @@
 package com.mtb.repository;
 
 import com.mtb.pojo.User;
+import java.util.List;
+import java.util.Map;
 
 /**
  *
  * @author Duc Hung
  */
 public interface UserRepository {
-    User getUserByUsername(String username);
+    //User getUserByUsername(String username);
+    
+    List<User> getUsers(Map<String, String> params);
+    Long countUser();
+    boolean addOrUpdateUser(User u);
+    User getUserById(int id);
+    boolean deleteUser(int id);
 }

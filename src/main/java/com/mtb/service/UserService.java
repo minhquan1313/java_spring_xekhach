@@ -4,12 +4,18 @@
  */
 package com.mtb.service;
 
-import org.springframework.security.core.userdetails.UserDetailsService;
+import com.mtb.pojo.User;
+import java.util.List;
+import java.util.Map;
 
 /**
  *
  * @author Duc Hung
  */
-public interface UserService extends UserDetailsService {
-                                          
+public interface UserService {
+    List<User> getUsers(Map<String, String> params);
+    Long countUser();
+    boolean addOrUpdateUser(User u);
+    User getUserById(int id);
+    boolean deleteUser(int id);
 }
