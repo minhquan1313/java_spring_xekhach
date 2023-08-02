@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mtb.pojo.Bus;
+import com.mtb.service.BusSeatTemplateService;
 import com.mtb.service.BusService;
 
 @Controller
@@ -27,15 +28,17 @@ public class BusController {
     @Autowired
     private BusService busService;
 
+    @Autowired
+    private BusSeatTemplateService busSeatTemplateService;
+
     @RequestMapping("/buses")
     public String index(Model model, @RequestParam Map<String, String> params) {
         model.addAttribute("buses", busService.getList(null));
         List<Integer> listCho = new ArrayList<>();
         for (Bus b : busService.getList(null)) {
-            listCho.add(busService.countSeat(b.getId()));
+            listCho.add(busSeatTemplateService.countSeatByBusId(b.getId()));
         }
-        model.addAttribute("count", listCho);
-        // here here here here here here here here here here here here
+        model.addAttribute("seatCounts", listCho);
         return "buses";
     }
 
@@ -45,6 +48,15 @@ public class BusController {
         model.addAttribute("bus", new Bus());
 
         return "buses.addOrUpdate";
+    }
+
+    @GetMapping("/buses/{id}")
+    public String detail(Model model, @PathVariable(value = "id") int id) {
+        model.addAttribute("bus", busService.getById(id));
+        model.addAttribute("seats", busSeatTemplateService.getBusSeatsByBusId(id));
+        model.addAttribute("seatCount", busSeatTemplateService.countSeatByBusId(id));
+
+        return "bus.detail";
     }
 
     @GetMapping("/buses/edit/{id}")

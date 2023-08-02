@@ -26,6 +26,11 @@
         <put-attribute name="title" value="Các xe khách" />
         <put-attribute name="content" value="/WEB-INF/pages/buses.jsp" />
     </definition>
+    <definition name="bus.detail" extends="baseLayout">
+        <put-attribute name="title" value="Chi tiết xe khách" />
+        <put-attribute name="content" value="/WEB-INF/pages/bus.detail.jsp" />
+        <put-attribute name="bus_seats" value="/WEB-INF/pages/bus.seats.jsp" />
+    </definition>
     <definition name="buses.addOrUpdate" extends="baseLayout">
         <put-attribute name="title" value="Chỉnh sửa tuyến xe" />
         <put-attribute name="content" value="/WEB-INF/pages/buses.addOrUpdate.jsp" />

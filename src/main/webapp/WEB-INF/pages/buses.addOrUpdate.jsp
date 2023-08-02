@@ -22,7 +22,7 @@
                 class="form-control"
                 placeholder="Biển số xe"
                 path="licensePlate"
-            />
+                />
             <form:errors path="startLocation" element="div" cssClass="text-danger" />
         </div>
 
@@ -33,7 +33,7 @@
                     width="300"
                     class="img-thumbnail rounded mx-auto d-block"
                     alt="..."
-                />
+                    />
             </div>
         </c:if>
 

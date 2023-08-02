@@ -10,7 +10,6 @@ import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -53,7 +52,7 @@ public class Bus implements Serializable {
     private String image;
     @OneToMany(mappedBy = "busId")
     private Set<Trip> tripSet;
-    @OneToMany(mappedBy = "busId", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "busId")
     private Set<BusSeatTemplate> busSeatTemplateSet;
     @OneToMany(mappedBy = "busId")
     private Set<BusSeatTrip> busSeatTripSet;
@@ -66,6 +65,14 @@ public class Bus implements Serializable {
 
     public Bus(Integer id) {
         this.id = id;
+    }
+
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    public void setFile(MultipartFile file) {
+        this.file = file;
     }
 
     public Integer getId() {
@@ -117,14 +124,6 @@ public class Bus implements Serializable {
 
     public void setBusSeatTripSet(Set<BusSeatTrip> busSeatTripSet) {
         this.busSeatTripSet = busSeatTripSet;
-    }
-
-    public MultipartFile getFile() {
-        return file;
-    }
-
-    public void setFile(MultipartFile file) {
-        this.file = file;
     }
 
     @Override

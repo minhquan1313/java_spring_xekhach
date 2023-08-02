@@ -13,6 +13,4 @@ public interface BusService {
     boolean addOrUpdate(Bus item);
 
     boolean deleteById(int id);
-
-    int countSeat(int id);
 }

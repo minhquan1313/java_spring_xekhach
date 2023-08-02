@@ -18,9 +18,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 <th scope="col">id</th>
                 <th scope="col">Hình ảnh</th>
                 <th scope="col">Biển số</th>
-                <th scope="col">Cho ngoi</th>
+                <th scope="col">Số chỗ ngồi</th>
                 <th scope="col">Hành động</th>
-                <th scope="col"></th>
             </tr>
         </thead>
         <tbody class="table-group-divider">
@@ -35,19 +34,17 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                         />
                     </td>
                     <td>${bus.licensePlate}</td>
-                    <td>${count[i.index]}</td>
+                    <td>${seatCounts[i.index]}</td>
                     <td>
+                        <c:url value="/buses/${bus.id}" var="detailUrl" />
+                        <a href="${detailUrl}" class="btn btn-primary">Xem chi tiết1</a>
+
                         <c:url value="/buses/edit/${bus.id}" var="editUrl" />
                         <a href="${editUrl}" class="btn btn-primary">Sửa</a>
 
                         <c:url value="/api/buses/${bus.id}" var="delUrl" />
                         <c:set value="onclick=(delAPI('${delUrl}'))" var="delClick" />
                         <button class="btn btn-primary" ${delClick}>Xoá</button>
-                    </td>
-                    <td>
-                        <c:forEach items="${bus.busSeatTemplateSet}" var="seatTemplate">
-                            <div class="">${seatTemplate.busSeat}</div>
-                        </c:forEach>
                     </td>
                 </tr>
             </c:forEach>
