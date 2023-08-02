@@ -37,7 +37,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                     <td>${seatCounts[i.index]}</td>
                     <td>
                         <c:url value="/buses/${bus.id}" var="detailUrl" />
-                        <a href="${detailUrl}" class="btn btn-primary">Xem chi tiết1</a>
+                        <a href="${detailUrl}" class="btn btn-primary">Xem chi tiết</a>
 
                         <c:url value="/buses/edit/${bus.id}" var="editUrl" />
                         <a href="${editUrl}" class="btn btn-primary">Sửa</a>
