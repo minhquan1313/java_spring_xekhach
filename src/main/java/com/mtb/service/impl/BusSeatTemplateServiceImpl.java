@@ -11,16 +11,17 @@ import com.mtb.myObject.BusSeats;
 import com.mtb.myObject.BusSeats.Pos;
 import com.mtb.pojo.Bus;
 import com.mtb.pojo.BusSeatTemplate;
-import com.mtb.repository.BusRepository;
 import com.mtb.repository.BusSeatTemplateRepository;
 import com.mtb.service.BusSeatTemplateService;
+import com.mtb.service.BusService;
 
 @Service
 public class BusSeatTemplateServiceImpl implements BusSeatTemplateService {
     @Autowired
     BusSeatTemplateRepository busSeatTemplateRepository;
+
     @Autowired
-    BusRepository busRepository;
+    BusService busService;
 
     @Override
     public BusSeats getBusSeatsByBusId(int id) {
@@ -39,7 +40,7 @@ public class BusSeatTemplateServiceImpl implements BusSeatTemplateService {
 
     @Override
     public boolean makeMultipleSeatTemplate(int busId, BusSeats list) {
-        Bus b = busRepository.getById(busId);
+        Bus b = busService.getById(busId);
         List<BusSeatTemplate> l = new ArrayList<>();
         for (Pos pos : list.getArray()) {
             BusSeatTemplate item = new BusSeatTemplate();
