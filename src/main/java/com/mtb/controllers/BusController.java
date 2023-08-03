@@ -91,5 +91,4 @@ public class BusController {
 
         return "bus.detail";
     }
-
 }
