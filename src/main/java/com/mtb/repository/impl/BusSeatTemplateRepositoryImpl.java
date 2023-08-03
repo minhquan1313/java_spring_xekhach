@@ -2,6 +2,7 @@ package com.mtb.repository.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -26,9 +27,8 @@ public class BusSeatTemplateRepositoryImpl implements BusSeatTemplateRepository 
     private LocalSessionFactoryBean factory;
 
     @Override
-    public BusSeats getBusSeatsByBusId(int id) {
+    public List<BusSeatTemplate> getListById(int id, Map<String, String> params) {
         Session session = this.factory.getObject().getCurrentSession();
-        BusSeats busSeats = new BusSeats();
 
         CriteriaBuilder cb = session.getCriteriaBuilder();
         CriteriaQuery<BusSeatTemplate> cq = cb.createQuery(BusSeatTemplate.class);
@@ -42,6 +42,14 @@ public class BusSeatTemplateRepositoryImpl implements BusSeatTemplateRepository 
         Query query = session.createQuery(cq);
 
         List<BusSeatTemplate> list = query.getResultList();
+
+        return list;
+    }
+
+    @Override
+    public BusSeats getBusSeatsByBusId(int id) {
+        List<BusSeatTemplate> list = this.getListById(id, null);
+        BusSeats busSeats = new BusSeats();
 
         int x = 1;
         int y = 1;
@@ -85,4 +93,5 @@ public class BusSeatTemplateRepositoryImpl implements BusSeatTemplateRepository 
 
         return Integer.parseInt(query.getSingleResult().toString());
     }
+
 }

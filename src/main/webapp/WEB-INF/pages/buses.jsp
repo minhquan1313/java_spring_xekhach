@@ -1,5 +1,8 @@
-<%-- Document : bus Created on : Aug 1, 2023, 3:32:29 PM Author : Binh --%> <%@ taglib prefix="c"
-uri="http://java.sun.com/jsp/jstl/core" %>
+<%-- Document : bus Created on : Aug 1, 2023, 3:32:29 PM Author : Binh --%>
+<!--  -->
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!--  -->
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!--  -->
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <section class="container mt-4">
@@ -34,7 +37,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                         />
                     </td>
                     <td>${bus.licensePlate}</td>
-                    <td>${seatCounts[i.index]}</td>
+                    <td>${fn:length(bus.busSeatTemplateSet)}</td>
                     <td>
                         <c:url value="/buses/${bus.id}" var="detailUrl" />
                         <a href="${detailUrl}" class="btn btn-primary">Xem chi tiết</a>

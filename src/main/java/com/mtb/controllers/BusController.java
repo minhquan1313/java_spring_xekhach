@@ -1,7 +1,6 @@
 package com.mtb.controllers;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -33,12 +32,15 @@ public class BusController {
 
     @RequestMapping("/buses")
     public String index(Model model, @RequestParam Map<String, String> params) {
-        model.addAttribute("buses", busService.getList(null));
-        List<Integer> listCho = new ArrayList<>();
-        for (Bus b : busService.getList(null)) {
-            listCho.add(busSeatTemplateService.countSeatByBusId(b.getId()));
-        }
-        model.addAttribute("seatCounts", listCho);
+        Map<String, String> new_params = new HashMap<>();
+        new_params.put("getSeats", "");
+        model.addAttribute("buses", busService.getList(new_params));
+
+        // List<Integer> listCho = new ArrayList<>();
+        // for (Bus b : busService.getList(null)) {
+        // listCho.add(busSeatTemplateService.countSeatByBusId(b.getId()));
+        // }
+        // model.addAttribute("seatCounts", listCho);
         return "buses";
     }
 
@@ -48,15 +50,6 @@ public class BusController {
         model.addAttribute("bus", new Bus());
 
         return "buses.addOrUpdate";
-    }
-
-    @GetMapping("/buses/{id}")
-    public String detail(Model model, @PathVariable(value = "id") int id) {
-        model.addAttribute("bus", busService.getById(id));
-        model.addAttribute("seats", busSeatTemplateService.getBusSeatsByBusId(id));
-        model.addAttribute("seatCount", busSeatTemplateService.countSeatByBusId(id));
-
-        return "bus.detail";
     }
 
     @GetMapping("/buses/edit/{id}")
@@ -76,4 +69,14 @@ public class BusController {
 
         return "buses.addOrUpdate";
     }
+
+    @GetMapping("/buses/{id}")
+    public String detailForm(Model model, @PathVariable(value = "id") int id) {
+        model.addAttribute("bus", busService.getById(id));
+        model.addAttribute("seats", busSeatTemplateService.getBusSeatsByBusId(id));
+        model.addAttribute("seatCount", busSeatTemplateService.countSeatByBusId(id));
+
+        return "bus.detail";
+    }
+
 }
