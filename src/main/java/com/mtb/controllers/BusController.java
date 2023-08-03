@@ -38,11 +38,6 @@ public class BusController {
         new_params.put("getSeats", "");
         model.addAttribute("buses", busService.getList(new_params));
 
-        // List<Integer> listCho = new ArrayList<>();
-        // for (Bus b : busService.getList(null)) {
-        // listCho.add(busSeatTemplateService.countSeatByBusId(b.getId()));
-        // }
-        // model.addAttribute("seatCounts", listCho);
         return "buses";
     }
 

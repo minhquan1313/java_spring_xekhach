@@ -1,5 +1,6 @@
-<%-- Document : routes Created on : Aug 1, 2023, 10:12:59 AM Author : Binh --%> <%@ taglib
-prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%-- Document : routes Created on : Aug 1, 2023, 10:12:59 AM Author : Binh --%>
+<!--  -->
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!--  -->
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <section class="container mt-4">
