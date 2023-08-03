@@ -47,11 +47,15 @@
         <td>
           <c:url value="/users/${u.id}" var="api" />
           <a href="${api}" class="btn btn-success">Cập nhật</a>
-          <button class="btn btn-danger" onclick="deleteUser('${api}')">
-            Xóa
-          </button>
+
+          <c:url value="/api/users/${u.id}" var="delUrl" />
+          <c:set value="onclick=(delAPI('${delUrl}'))" var="delClick" />
+          <button class="btn btn-primary" ${delClick}>Xoá</button>
         </td>
       </tr>
     </c:forEach>
   </tbody>
 </table>
+
+<c:url value="/js/delAPI.js" var="delAPI" />
+<script src="${delAPI}"></script>
