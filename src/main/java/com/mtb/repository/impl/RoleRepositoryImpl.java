@@ -21,14 +21,15 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 @Transactional
 public class RoleRepositoryImpl implements RoleRepository {
+
     @Autowired
     private LocalSessionFactoryBean factory;
-    
+
     @Override
     public List<Role> getRoles() {
         Session s = this.factory.getObject().getCurrentSession();
-        Query q = s.createQuery("FROM Role");
-        
+        Query q = s.createQuery("From Role");
+
         return q.getResultList();
     }
 }

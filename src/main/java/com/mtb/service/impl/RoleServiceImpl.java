@@ -17,9 +17,10 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class RoleServiceImpl implements RoleService {
+
     @Autowired
     private RoleRepository roleRepo;
-    
+
     @Override
     public List<Role> getRoles() {
         return this.roleRepo.getRoles();

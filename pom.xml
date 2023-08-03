@@ -117,26 +117,37 @@
             <groupId>com.cloudinary</groupId>
             <artifactId>cloudinary-http44</artifactId>
             <version>1.29.0</version>
-        </dependency><!--
-        https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
+        </dependency> 
         <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.4</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.6</version>
+        </dependency>
+        <!--
+        https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
+<!--        <dependency>
             <groupId>commons-fileupload</groupId>
             <artifactId>commons-fileupload</artifactId>
             <version>1.5</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+         https://mvnrepository.com/artifact/commons-io/commons-io    
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>2.13.0</version>
-        </dependency><!--
+        </dependency>
         https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator -->
-        <dependency>
+<!--        <dependency>
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
             <version>6.2.0.Final</version>
-        </dependency>
+        </dependency>-->
         <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-web -->
         <dependency>
             <groupId>org.springframework.security</groupId>
@@ -149,6 +160,11 @@
             <artifactId>spring-security-config</artifactId>
             <version>5.2.1.RELEASE</version>
         </dependency>
+        <dependency>
+<groupId>org.hibernate.validator</groupId>
+<artifactId>hibernate-validator</artifactId>
+<version>6.1.1.Final</version>
+</dependency>
     </dependencies>
 
     <build>

@@ -4,7 +4,9 @@
  */
 package com.mtb.repository.impl;
 
+import com.mtb.pojo.Role;
 import com.mtb.pojo.User;
+import com.mtb.repository.RoleRepository;
 import com.mtb.repository.UserRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,16 +34,6 @@ import org.springframework.transaction.annotation.Transactional;
 @PropertySource("classpath:configs.properties")
 public class UserRepositoryImpl implements UserRepository {
 
-//    @Autowired
-//    private LocalSessionFactoryBean factory;
-//
-//    @Override
-//    public User getUserByUsername(String username) {
-//        Session s = this.factory.getObject().getCurrentSession();
-//        Query q = s.createQuery("FROM User WHERE username=:username");
-//        q.setParameter("username", username);
-//        return (User) q.getSingleResult();
-//    }
     @Autowired
     private LocalSessionFactoryBean factory;
     @Autowired
@@ -78,6 +70,11 @@ public class UserRepositoryImpl implements UserRepository {
                 predicates.add(b.like(root.get("password"), String.format("%%%s%%", password)));
             }
 
+            String roleId = params.get("roleId");
+            if (roleId != null && !roleId.isEmpty()) {
+                predicates.add(b.equal(root.get("roleId"), Integer.parseInt(roleId)));
+            }
+
             q.where(predicates.toArray(Predicate[]::new));
         }
 
@@ -85,36 +82,35 @@ public class UserRepositoryImpl implements UserRepository {
 
         Query query = session.createQuery(q);
 
-        if (params != null) {
-            String p = params.get("page");
-            if (p != null && !p.isEmpty()) {
-                int pageNumber = Integer.parseInt(p);
-                int pageSize = Integer.parseInt(this.env.getProperty("PAGE_SIZE"));
-
-                query.setMaxResults(pageSize);
-                query.setFirstResult((pageNumber - 1) * pageSize);
-            }
-        }
-
+//        if (params != null) {
+//            String p = params.get("page");
+//            if (p != null && !p.isEmpty()) {
+//                int pageNumber = Integer.parseInt(p);
+//                int pageSize = Integer.parseInt(this.env.getProperty("PAGE_SIZE"));
+//
+//                query.setMaxResults(pageSize);
+//                query.setFirstResult((pageNumber - 1) * pageSize);
+//            }
+//        }
         return query.getResultList();
     }
 
     @Override
-    public Long countUser() {
+    public int countUser() {
         Session session = this.factory.getObject().getCurrentSession();
         Query query = session.createQuery("SELECT Count(*) FROM User");
 
-        return Long.parseLong(query.getSingleResult().toString());
+        return Integer.parseInt(query.getSingleResult().toString());
     }
 
     @Override
-    public boolean addOrUpdateUser(User user) {
-        Session session = this.factory.getObject().getCurrentSession();
+    public boolean addOrUpdateUser(User u) {
+        Session s = this.factory.getObject().getCurrentSession();
         try {
-            if (user.getId() == null) {
-                session.save(user);
+            if (u.getId() == null) {
+                s.save(u);
             } else {
-                session.update(user);
+                s.update(u);
             }
 
             return true;
@@ -142,5 +138,4 @@ public class UserRepositoryImpl implements UserRepository {
             return false;
         }
     }
-
 }

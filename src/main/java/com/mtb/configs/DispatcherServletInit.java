@@ -11,6 +11,7 @@ public class DispatcherServletInit extends AbstractAnnotationConfigDispatcherSer
             TilesConfigs.class,
             //SpringSecurityConfig.class
         };
+        
     }
 
     @Override

@@ -1,4 +1,4 @@
-/*
+    /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
@@ -19,6 +19,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -47,7 +48,9 @@ public class User implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Size(max = 50)
+      
+    @NotNull(message="{user.username.notNull}")
+    @Size(max = 50, message="{user.username.lenErr}")
     @Column(name = "username")
     private String username;
     @Size(max = 50)
@@ -80,6 +83,7 @@ public class User implements Serializable {
     public User(Integer id) {
         this.id = id;
     }
+    
 
     public Integer getId() {
         return id;

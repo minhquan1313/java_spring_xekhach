@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public interface UserService {
     List<User> getUsers(Map<String, String> params);
-    Long countUser();
+    int countUser();
     boolean addOrUpdateUser(User u);
     User getUserById(int id);
     boolean deleteUser(int id);

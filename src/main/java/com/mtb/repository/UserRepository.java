@@ -13,10 +13,8 @@ import java.util.Map;
  * @author Duc Hung
  */
 public interface UserRepository {
-    //User getUserByUsername(String username);
-    
     List<User> getUsers(Map<String, String> params);
-    Long countUser();
+    int countUser();
     boolean addOrUpdateUser(User u);
     User getUserById(int id);
     boolean deleteUser(int id);
