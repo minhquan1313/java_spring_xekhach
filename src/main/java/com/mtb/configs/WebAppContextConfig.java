@@ -6,6 +6,7 @@ import com.mtb.formatter.RoleFormatter;
 import java.text.SimpleDateFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -25,6 +26,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
+
 @Configuration
 @EnableWebMvc
 @EnableTransactionManagement
@@ -34,6 +38,8 @@ import org.springframework.web.servlet.view.JstlView;
     "com.mtb.service",})
 @PropertySource("classpath:configs.properties")
 public class WebAppContextConfig implements WebMvcConfigurer {
+    @Autowired
+    private Environment env;
 
     @Autowired
     private Environment env;
@@ -102,13 +108,11 @@ public class WebAppContextConfig implements WebMvcConfigurer {
 
     @Bean
     public Cloudinary cloudinary() {
-        Cloudinary cloudinary
-                = new Cloudinary(ObjectUtils.asMap(
-                        "cloud_name", env.getProperty("cloudinary.cloud_name"),
-                        "api_key", env.getProperty("cloudinary.api_id"),
-                        "api_secret", env.getProperty("cloudinary.api_secret"),
-                        "secure", true));
+        Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
+                "cloud_name", this.env.getProperty("cloudinary.cloud_name"),
+                "api_key", this.env.getProperty("cloudinary.api_key"),
+                "api_secret", this.env.getProperty("cloudinary.api_secret"),
+                "secure", true));
         return cloudinary;
     }
-
 }

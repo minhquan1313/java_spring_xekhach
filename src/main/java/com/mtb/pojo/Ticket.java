@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -57,7 +58,7 @@ public class Ticket implements Serializable {
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
-    @OneToMany(mappedBy = "ticketId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ticketId")
     private Set<Feedback> feedbackSet;
     @JoinColumn(name = "trip_id", referencedColumnName = "id")
     @ManyToOne
@@ -68,6 +69,8 @@ public class Ticket implements Serializable {
     @JoinColumn(name = "staff_id", referencedColumnName = "id")
     @ManyToOne
     private User staffId;
+    @OneToMany(mappedBy = "ticketId")
+    private Set<TicketDetail> ticketDetailSet;
 
     public Ticket() {
     }
@@ -147,6 +150,15 @@ public class Ticket implements Serializable {
 
     public void setStaffId(User staffId) {
         this.staffId = staffId;
+    }
+
+    @XmlTransient
+    public Set<TicketDetail> getTicketDetailSet() {
+        return ticketDetailSet;
+    }
+
+    public void setTicketDetailSet(Set<TicketDetail> ticketDetailSet) {
+        this.ticketDetailSet = ticketDetailSet;
     }
 
     @Override

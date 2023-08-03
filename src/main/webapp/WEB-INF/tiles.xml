@@ -12,9 +12,43 @@
         <put-attribute name="title" value="Trang chủ" />
         <put-attribute name="content" value="/WEB-INF/pages/index.jsp" />
     </definition>
+
     <definition name="users" extends="baseLayout">
         <put-attribute name="title" value="Users" />
         <put-attribute name="content"
-                       value="/WEB-INF/pages/users.jsp" />
+            value="/WEB-INF/pages/users.jsp" />
+    </definition>
+
+    <definition name="users.addOrUpdate" extends="baseLayout">
+        <put-attribute name="title" value="Users" />
+        <put-attribute name="content" value="/WEB-INF/pages/users.addOrUpdate.jsp" />
+    </definition>
+
+    <definition name="routes" extends="baseLayout">
+        <put-attribute name="title" value="Tuyến xe" />
+        <put-attribute name="content" value="/WEB-INF/pages/routes.jsp" />
+    </definition>
+    <definition name="routes.addOrUpdate" extends="baseLayout">
+        <put-attribute name="title" value="Chỉnh sửa tuyến xe" />
+        <put-attribute name="content" value="/WEB-INF/pages/routes.addOrUpdate.jsp" />
+    </definition>
+
+    <definition name="buses" extends="baseLayout">
+        <put-attribute name="title" value="Các xe khách" />
+        <put-attribute name="content" value="/WEB-INF/pages/buses.jsp" />
+    </definition>
+    <definition name="bus.detail" extends="baseLayout">
+        <put-attribute name="title" value="Chi tiết xe khách" />
+        <put-attribute name="content" value="/WEB-INF/pages/bus.detail.jsp" />
+        <put-attribute name="bus_seats" value="/WEB-INF/pages/bus.seats.jsp" />
+    </definition>
+    <definition name="buses.addOrUpdate" extends="baseLayout">
+        <put-attribute name="title" value="Chỉnh sửa xe khách" />
+        <put-attribute name="content" value="/WEB-INF/pages/buses.addOrUpdate.jsp" />
+    </definition>
+
+    <definition name="debug" extends="baseLayout">
+        <put-attribute name="title" value="Debug" />
+        <put-attribute name="content" value="/WEB-INF/pages/debug.jsp" />
     </definition>
 </tiles-definitions>

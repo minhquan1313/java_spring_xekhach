@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -38,11 +39,13 @@ public class BusSeatTemplate implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Size(max = 50)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "bus_seat")
     private String busSeat;
     @JoinColumn(name = "bus_id", referencedColumnName = "id")
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Bus busId;
 
     public BusSeatTemplate() {
@@ -50,6 +53,11 @@ public class BusSeatTemplate implements Serializable {
 
     public BusSeatTemplate(Integer id) {
         this.id = id;
+    }
+
+    public BusSeatTemplate(Integer id, String busSeat) {
+        this.id = id;
+        this.busSeat = busSeat;
     }
 
     public Integer getId() {

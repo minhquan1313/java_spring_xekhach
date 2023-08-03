@@ -51,12 +51,17 @@ public class User implements Serializable {
       
     @NotNull(message="{user.username.notNull}")
     @Size(max = 50, message="{user.username.lenErr}")
+    @Basic(optional = false)
     @Column(name = "username")
     private String username;
-    @Size(max = 50)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "password")
     private String password;
-    @Size(max = 50)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "first_name")
     private String firstName;
     @Size(max = 50)
@@ -84,6 +89,13 @@ public class User implements Serializable {
         this.id = id;
     }
     
+
+    public User(Integer id, String username, String password, String firstName) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+    }
 
     public Integer getId() {
         return id;

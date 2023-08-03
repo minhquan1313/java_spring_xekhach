@@ -5,6 +5,7 @@
 package com.mtb.pojo;
 
 import java.io.Serializable;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,9 +16,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -44,6 +47,8 @@ public class BusSeatTrip implements Serializable {
     private String busSeat;
     @Column(name = "available")
     private Boolean available;
+    @OneToMany(mappedBy = "busSeatTripId")
+    private Set<TicketDetail> ticketDetailSet;
     @JoinColumn(name = "bus_id", referencedColumnName = "id")
     @ManyToOne
     private Bus busId;
@@ -80,6 +85,15 @@ public class BusSeatTrip implements Serializable {
 
     public void setAvailable(Boolean available) {
         this.available = available;
+    }
+
+    @XmlTransient
+    public Set<TicketDetail> getTicketDetailSet() {
+        return ticketDetailSet;
+    }
+
+    public void setTicketDetailSet(Set<TicketDetail> ticketDetailSet) {
+        this.ticketDetailSet = ticketDetailSet;
     }
 
     public Bus getBusId() {
