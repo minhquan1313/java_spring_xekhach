@@ -10,7 +10,7 @@
         <h3 class="text-center w-100">Các tuyến xe</h3>
 
         <c:url value="/routes/add" var="createUrl" />
-        <a href="${createUrl}" class="btn btn-primary text-nowrap">Thêm tuyến</a>
+        <a href="${createUrl}" class="btn btn-outline-info text-nowrap">Thêm tuyến</a>
     </div>
 
     <table class="table table-hover">
@@ -35,7 +35,7 @@
 
                         <c:url value="/api/routes/${route.id}" var="delUrl" />
                         <c:set value="onclick=(delAPI('${delUrl}'))" var="delClick" />
-                        <button class="btn btn-primary" ${delClick}>Xoá</button>
+                        <button class="btn btn-danger" ${delClick}>Xoá</button>
                     </td>
                 </tr>
             </c:forEach>

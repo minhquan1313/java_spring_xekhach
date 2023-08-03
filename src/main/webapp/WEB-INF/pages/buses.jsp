@@ -12,7 +12,7 @@
         <h3 class="text-center w-100">Các xe hiện có</h3>
 
         <c:url value="/buses/add" var="createUrl" />
-        <a href="${createUrl}" class="btn btn-primary text-nowrap">Thêm xe</a>
+        <a href="${createUrl}" class="btn btn-outline-info text-nowrap">Thêm xe</a>
     </div>
 
     <table class="table table-hover">
@@ -47,7 +47,7 @@
 
                         <c:url value="/api/buses/${bus.id}" var="delUrl" />
                         <c:set value="onclick=(delAPI('${delUrl}'))" var="delClick" />
-                        <button class="btn btn-primary" ${delClick}>Xoá</button>
+                        <button class="btn btn-danger" ${delClick}>Xoá</button>
                     </td>
                 </tr>
             </c:forEach>
