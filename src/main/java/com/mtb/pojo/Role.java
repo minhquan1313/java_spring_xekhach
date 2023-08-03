@@ -16,6 +16,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -39,7 +40,9 @@ public class Role implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Size(max = 50)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "title")
     private String title;
     @OneToMany(mappedBy = "roleId")
@@ -50,6 +53,11 @@ public class Role implements Serializable {
 
     public Role(Integer id) {
         this.id = id;
+    }
+
+    public Role(Integer id, String title) {
+        this.id = id;
+        this.title = title;
     }
 
     public Integer getId() {

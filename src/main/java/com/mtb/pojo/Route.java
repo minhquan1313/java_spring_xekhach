@@ -16,6 +16,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -40,10 +41,14 @@ public class Route implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Size(max = 50)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "start_location")
     private String startLocation;
-    @Size(max = 50)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "end_location")
     private String endLocation;
     @OneToMany(mappedBy = "routeId")
@@ -54,6 +59,12 @@ public class Route implements Serializable {
 
     public Route(Integer id) {
         this.id = id;
+    }
+
+    public Route(Integer id, String startLocation, String endLocation) {
+        this.id = id;
+        this.startLocation = startLocation;
+        this.endLocation = endLocation;
     }
 
     public Integer getId() {

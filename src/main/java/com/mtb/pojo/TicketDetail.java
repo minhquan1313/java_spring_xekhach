@@ -16,7 +16,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -24,13 +23,12 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Binh
  */
 @Entity
-@Table(name = "feedback")
+@Table(name = "ticket_detail")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Feedback.findAll", query = "SELECT f FROM Feedback f"),
-    @NamedQuery(name = "Feedback.findById", query = "SELECT f FROM Feedback f WHERE f.id = :id"),
-    @NamedQuery(name = "Feedback.findByComment", query = "SELECT f FROM Feedback f WHERE f.comment = :comment")})
-public class Feedback implements Serializable {
+    @NamedQuery(name = "TicketDetail.findAll", query = "SELECT t FROM TicketDetail t"),
+    @NamedQuery(name = "TicketDetail.findById", query = "SELECT t FROM TicketDetail t WHERE t.id = :id")})
+public class TicketDetail implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -38,17 +36,17 @@ public class Feedback implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Size(max = 200)
-    @Column(name = "comment")
-    private String comment;
+    @JoinColumn(name = "bus_seat_trip_id", referencedColumnName = "id")
+    @ManyToOne
+    private BusSeatTrip busSeatTripId;
     @JoinColumn(name = "ticket_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Ticket ticketId;
 
-    public Feedback() {
+    public TicketDetail() {
     }
 
-    public Feedback(Integer id) {
+    public TicketDetail(Integer id) {
         this.id = id;
     }
 
@@ -60,12 +58,12 @@ public class Feedback implements Serializable {
         this.id = id;
     }
 
-    public String getComment() {
-        return comment;
+    public BusSeatTrip getBusSeatTripId() {
+        return busSeatTripId;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setBusSeatTripId(BusSeatTrip busSeatTripId) {
+        this.busSeatTripId = busSeatTripId;
     }
 
     public Ticket getTicketId() {
@@ -86,10 +84,10 @@ public class Feedback implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Feedback)) {
+        if (!(object instanceof TicketDetail)) {
             return false;
         }
-        Feedback other = (Feedback) object;
+        TicketDetail other = (TicketDetail) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -98,7 +96,7 @@ public class Feedback implements Serializable {
 
     @Override
     public String toString() {
-        return "com.mtb.pojo.Feedback[ id=" + id + " ]";
+        return "com.mtb.pojo.TicketDetail[ id=" + id + " ]";
     }
 
 }

@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,6 +19,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -44,7 +46,9 @@ public class Bus implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Size(max = 50)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "license_plate")
     private String licensePlate;
     @Size(max = 200)
@@ -52,7 +56,7 @@ public class Bus implements Serializable {
     private String image;
     @OneToMany(mappedBy = "busId")
     private Set<Trip> tripSet;
-    @OneToMany(mappedBy = "busId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "busId")
     private Set<BusSeatTemplate> busSeatTemplateSet;
     @OneToMany(mappedBy = "busId")
     private Set<BusSeatTrip> busSeatTripSet;
@@ -65,6 +69,11 @@ public class Bus implements Serializable {
 
     public Bus(Integer id) {
         this.id = id;
+    }
+
+    public Bus(Integer id, String licensePlate) {
+        this.id = id;
+        this.licensePlate = licensePlate;
     }
 
     public MultipartFile getFile() {
