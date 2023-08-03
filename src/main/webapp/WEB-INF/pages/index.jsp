@@ -11,6 +11,11 @@
     <a href="${users}">users</a>
   </div>
 
+    <div class="h3">
+    <c:url value="/roles" var="roles" />
+    <a href="${roles}">Roles</a>
+  </div>
+  
   <div class="h3">
     <c:url value="/routes" var="routes" />
     <a href="${routes}">Routes</a>

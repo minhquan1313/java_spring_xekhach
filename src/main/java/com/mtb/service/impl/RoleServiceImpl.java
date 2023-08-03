@@ -8,6 +8,7 @@ import com.mtb.pojo.Role;
 import com.mtb.repository.RoleRepository;
 import com.mtb.service.RoleService;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,22 @@ public class RoleServiceImpl implements RoleService {
     private RoleRepository roleRepo;
 
     @Override
-    public List<Role> getRoles() {
+    public List<Role> getRoles(Map<String, String> params) {
         return this.roleRepo.getRoles();
+    }
+
+    @Override
+    public boolean addOrUpdateRole(Role r) {
+        return this.roleRepo.addOrUpdateRole(r);
+    }
+
+    @Override
+    public Role getRoleById(int id) {
+        return this.roleRepo.getRoleById(id);
+    }
+
+    @Override
+    public boolean deleteRole(int id) {
+        return this.roleRepo.deleteRole(id);
     }
 }

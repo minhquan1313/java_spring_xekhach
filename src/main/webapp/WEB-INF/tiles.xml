@@ -23,7 +23,16 @@
         <put-attribute name="title" value="Users" />
         <put-attribute name="content" value="/WEB-INF/pages/users.addOrUpdate.jsp" />
     </definition>
+  <definition name="roles" extends="baseLayout">
+        <put-attribute name="title" value="Roles" />
+        <put-attribute name="content"
+            value="/WEB-INF/pages/roles.jsp" />
+    </definition>
 
+    <definition name="roles.addOrUpdate" extends="baseLayout">
+        <put-attribute name="title" value="Roles" />
+        <put-attribute name="content" value="/WEB-INF/pages/roles.addOrUpdate.jsp" />
+    </definition>
     <definition name="routes" extends="baseLayout">
         <put-attribute name="title" value="Tuyến xe" />
         <put-attribute name="content" value="/WEB-INF/pages/routes.jsp" />

@@ -50,8 +50,8 @@
   <div class="form-floating mb-3 mt-3">
     <button class="btn btn-info mt-1" type="submit">
       <c:choose>
-        <c:when test="${user.id != null}"> Cập nhật sản phẩm </c:when>
-        <c:otherwise> Thêm sản phẩm </c:otherwise>
+        <c:when test="${user.id != null}">Cập nhật user</c:when>
+        <c:otherwise>Thêm user</c:otherwise>
       </c:choose>
     </button>
   </div>

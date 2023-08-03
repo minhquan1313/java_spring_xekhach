@@ -6,11 +6,16 @@ package com.mtb.service;
 
 import com.mtb.pojo.Role;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
  * @author Duc Hung
  */
 public interface RoleService {
-    List<Role> getRoles();
+    List<Role> getRoles(Map<String, String> params);
+
+    boolean addOrUpdateRole(Role r);
+      Role getRoleById(int id);
+    boolean deleteRole(int id);
 }

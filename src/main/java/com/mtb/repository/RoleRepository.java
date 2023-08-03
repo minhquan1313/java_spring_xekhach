@@ -12,5 +12,10 @@ import java.util.List;
  * @author Duc Hung
  */
 public interface RoleRepository {
+
     List<Role> getRoles();
+
+    boolean addOrUpdateRole(Role r);
+    Role getRoleById(int id);
+    boolean deleteRole(int id);
 }

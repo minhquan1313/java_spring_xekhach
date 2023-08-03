@@ -4,6 +4,7 @@
  */
 package com.mtb.controllers;
 
+import com.mtb.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,12 +22,22 @@ import com.mtb.service.UserService;
 @RestController
 @RequestMapping("/api")
 public class ApiUserController {
+
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private RoleService roleService;
 
     @DeleteMapping("/users/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUser(@PathVariable(value = "id") int id) {
         this.userService.deleteUser(id);
+    }
+
+    @DeleteMapping("/roles/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteRole(@PathVariable(value = "id") int id) {
+        this.roleService.deleteRole(id);
     }
 }
