@@ -3,6 +3,7 @@ package com.mtb.controllers;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.mtb.myObject.BusSeats;
 import com.mtb.pojo.Bus;
 import com.mtb.service.BusSeatTemplateService;
 import com.mtb.service.BusService;
@@ -48,6 +50,7 @@ public class BusController {
     @GetMapping("/buses/add")
     public String addForm(Model model) {
         model.addAttribute("bus", new Bus());
+        model.addAttribute("seats", new BusSeats());
 
         return "buses.addOrUpdate";
     }
@@ -60,9 +63,18 @@ public class BusController {
     }
 
     @PostMapping(value = "/buses/add")
-    public String addOrUpdate(Model model, @ModelAttribute(value = "bus") @Valid Bus item, BindingResult rs) {
+    public String addOrUpdate(@ModelAttribute(value = "bus") @Valid Bus item,
+            BindingResult rs,
+            HttpServletRequest formData) {
+
+        BusSeats busSeats = new BusSeats();
+        String seatListStr = formData.getParameter("selectedSeats");
+        if (seatListStr != null) {
+            busSeats.addMultiPosFromInput(seatListStr);
+        }
+
         if (!rs.hasErrors()) {
-            if (busService.addOrUpdate(item)) {
+            if (busService.addOrUpdate(item, busSeats)) {
                 return "redirect:/buses";
             }
         }

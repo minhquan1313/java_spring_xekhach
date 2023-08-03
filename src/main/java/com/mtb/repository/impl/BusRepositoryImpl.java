@@ -73,21 +73,21 @@ public class BusRepositoryImpl implements BusRepository {
     }
 
     @Override
-    public boolean addOrUpdate(Bus item) {
+    public Bus addOrUpdate(Bus item) {
         Session session = this.factory.getObject().getCurrentSession();
         try {
             if (item.getId() == null) {
                 // Create new
                 session.save(item);
-                return true;
+                return item;
             }
 
             // Update
             session.update(item);
-            return true;
+            return item;
         } catch (HibernateError e) {
             e.printStackTrace();
-            return false;
+            return null;
         }
     }
 
@@ -97,7 +97,9 @@ public class BusRepositoryImpl implements BusRepository {
         Bus p = this.getById(id);
 
         try {
+            busSeatTemplateService.delMultipleSeatTemplateByBusId(id);
             session.delete(p);
+
             return true;
         } catch (HibernateException e) {
             return false;

@@ -11,8 +11,10 @@ import org.springframework.stereotype.Service;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.mtb.myObject.BusSeats;
 import com.mtb.pojo.Bus;
 import com.mtb.repository.BusRepository;
+import com.mtb.service.BusSeatTemplateService;
 import com.mtb.service.BusService;
 
 @Service
@@ -20,6 +22,9 @@ public class BusServiceImpl implements BusService {
 
     @Autowired
     BusRepository busRepository;
+
+    @Autowired
+    BusSeatTemplateService busSeatTemplateService;
 
     @Autowired
     private Cloudinary cloudinary;
@@ -35,7 +40,7 @@ public class BusServiceImpl implements BusService {
     }
 
     @Override
-    public boolean addOrUpdate(Bus item) {
+    public boolean addOrUpdate(Bus item, BusSeats busSeats) {
         if (item.getFile() != null && !item.getFile().isEmpty()) {
             try {
                 Map res = this.cloudinary
@@ -47,12 +52,17 @@ public class BusServiceImpl implements BusService {
                 Logger.getLogger(BusServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        busRepository.addOrUpdate(item);
 
-        return busRepository.addOrUpdate(item);
+        if (busSeats != null)
+            busSeatTemplateService.makeMultipleSeatTemplate(item.getId(), busSeats);
+
+        return true;
     }
 
     @Override
     public boolean deleteById(int id) {
         return busRepository.deleteById(id);
     }
+
 }

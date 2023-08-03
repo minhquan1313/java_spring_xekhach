@@ -10,7 +10,7 @@ public interface BusRepository {
 
     Bus getById(int id);
 
-    boolean addOrUpdate(Bus item);
+    Bus addOrUpdate(Bus item);
 
     boolean deleteById(int id);
 }

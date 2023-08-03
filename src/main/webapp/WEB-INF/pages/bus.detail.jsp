@@ -27,48 +27,59 @@
                 <span>Chỗ ngồi trên xe: </span>
             </div>
             <section>
-                <div
-                    style="--col:${seats.col}; display: grid; grid-template-columns: repeat(var(--col), 3rem)"
-                >
-                    <c:forEach items="${seats.array}" var="seat" varStatus="i">
-                        <c:choose>
-                            <c:when test="${seat.available == true}">
-                                <button
-                                    data-pos="${seat.x}_${seat.y}"
-                                    class="text-primary d-flex align-items-center justify-content-center"
-                                    style="--x: ${seat.x}; --y: ${seat.y};"
-                                >
-                                    <h3 class="m-0" withoutActive><i class="bi bi-circle"></i></h3>
-                                    <h3 class="m-0" withActive>
-                                        <i class="bi bi-circle-fill"></i>
-                                    </h3>
-                                </button>
-                            </c:when>
+                <div class="align-items-center d-flex flex-column mb-3">
+                    <div id="seatArrayContainer" style="--col: ${seats.col}; --row: ${seats.row}">
+                        <c:forEach items="${seats.array}" var="seat" varStatus="i">
+                            <c:choose>
+                                <c:when test="${seat.available == true}">
+                                    <button
+                                        data-pos="${seat.x}_${seat.y}"
+                                        class="text-primary d-flex align-items-center justify-content-center"
+                                        style="--x: ${seat.x}; --y: ${seat.y};"
+                                    >
+                                        <h3 class="m-0" withoutActive>
+                                            <i class="bi bi-circle"></i>
+                                        </h3>
+                                        <h3 class="m-0" withActive>
+                                            <i class="bi bi-circle-fill"></i>
+                                        </h3>
+                                    </button>
+                                </c:when>
 
-                            <c:otherwise>
-                                <button
-                                    data-pos="${seat.x}_${seat.y}"
-                                    class="text-primary d-flex align-items-center justify-content-center"
-                                    style="--x: ${seat.x}; --y: ${seat.y};"
-                                    disabled
-                                >
-                                    <h3 class="m-0" withoutActive><i class="bi bi-circle"></i></h3>
-                                    <h3 class="m-0" withActive>
-                                        <i class="bi bi-circle-fill"></i>
-                                    </h3>
-                                </button>
-                            </c:otherwise>
-                        </c:choose>
-                    </c:forEach>
+                                <c:otherwise>
+                                    <button
+                                        data-pos="${seat.x}_${seat.y}"
+                                        class="text-primary d-flex align-items-center justify-content-center"
+                                        style="--x: ${seat.x}; --y: ${seat.y};"
+                                        disabled
+                                    >
+                                        <h3 class="m-0" withoutActive>
+                                            <i class="bi bi-circle"></i>
+                                        </h3>
+                                        <h3 class="m-0" withActive>
+                                            <i class="bi bi-circle-fill"></i>
+                                        </h3>
+                                    </button>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
+                    </div>
                 </div>
 
                 <style>
+                    #seatArrayContainer {
+                        display: grid;
+                        grid-template-columns: repeat(var(--col), 3rem);
+                        grid-template-rows: repeat(var(--row), 1fr);
+                    }
                     button[data-pos] {
                         aspect-ratio: 1/1;
                         background-color: transparent;
                         border-color: transparent;
                         grid-column: var(--x);
                         grid-row: var(--y);
+
+                        filter: grayscale(1);
                     }
                     button[data-pos] *.bi {
                         font-size: 2rem;

@@ -32,7 +32,7 @@
         <put-attribute name="bus_seats" value="/WEB-INF/pages/bus.seats.jsp" />
     </definition>
     <definition name="buses.addOrUpdate" extends="baseLayout">
-        <put-attribute name="title" value="Chỉnh sửa tuyến xe" />
+        <put-attribute name="title" value="Chỉnh sửa xe khách" />
         <put-attribute name="content" value="/WEB-INF/pages/buses.addOrUpdate.jsp" />
     </definition>
 

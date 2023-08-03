@@ -11,5 +11,9 @@ public interface BusSeatTemplateService {
 
     public List<BusSeatTemplate> getListById(int id, Map<String, String> params);
 
+    boolean makeMultipleSeatTemplate(int busId, BusSeats busSeats);
+
+    boolean delMultipleSeatTemplateByBusId(int busId);
+
     int countSeatByBusId(int id);
 }

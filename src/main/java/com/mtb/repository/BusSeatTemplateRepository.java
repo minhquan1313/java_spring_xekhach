@@ -9,7 +9,11 @@ import com.mtb.pojo.BusSeatTemplate;
 public interface BusSeatTemplateRepository {
     BusSeats getBusSeatsByBusId(int id);
 
-    public List<BusSeatTemplate> getListById(int id, Map<String, String> params);
+    List<BusSeatTemplate> getListById(int id, Map<String, String> params);
+
+    boolean makeMultipleSeatTemplate(List<BusSeatTemplate> list);
+
+    boolean delMultipleSeatTemplateByBusId(int busId);
 
     int countSeatByBusId(int id);
 }

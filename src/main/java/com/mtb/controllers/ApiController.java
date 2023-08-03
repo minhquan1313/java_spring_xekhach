@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mtb.repository.BusRepository;
+import com.mtb.service.BusService;
 import com.mtb.service.RouteService;
 
 @RestController
@@ -19,7 +19,7 @@ public class ApiController {
     private RouteService routeService;
 
     @Autowired
-    BusRepository busRepository;
+    BusService busService;
 
     @DeleteMapping("/routes/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -30,6 +30,6 @@ public class ApiController {
     @DeleteMapping("/buses/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteBus(@PathVariable(value = "id") int id) {
-        this.busRepository.deleteById(id);
+        this.busService.deleteById(id);
     }
 }
