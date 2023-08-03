@@ -12,20 +12,21 @@
         <form:errors path="*" element="div" cssClass="alert alert-danger" />
         <form:hidden path="id" />
         <form:hidden path="image" />
-        <c:if test="bus.id==null">
+        <c:if test="${bus.id == null}">
             <input type="hidden" name="selectedSeats" id="selectedSeats" value="" />
         </c:if>
-
-        <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">
-                <i class="bi bi-dash-square-fill"></i>
-            </span>
-            <form:input
-                type="text"
-                class="form-control"
-                placeholder="Biển số xe"
-                path="licensePlate"
-            />
+        <div class="mb-3">
+            <div class="input-group">
+                <span class="input-group-text" id="basic-addon1">
+                    <i class="bi bi-dash-square-fill"></i>
+                </span>
+                <form:input
+                    type="text"
+                    class="form-control"
+                    placeholder="Biển số xe"
+                    path="licensePlate"
+                />
+            </div>
             <form:errors path="licensePlate" element="div" cssClass="text-danger" />
         </div>
 
@@ -66,6 +67,7 @@
                     <span class="">Tổng số chỗ ngồi đã chọn: </span>
                     <span id="seatCount" class="ms-3">1</span>
                 </div>
+                <div class="text-danger">${noSeatSelectedError}</div>
 
                 <style>
                     #seatArrayContainer {

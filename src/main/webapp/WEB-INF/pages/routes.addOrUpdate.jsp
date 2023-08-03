@@ -12,32 +12,35 @@
         <form:errors path="*" element="div" cssClass="alert alert-danger" />
         <form:hidden path="id" />
 
-        <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">
-                <i class="bi bi-cursor"></i>
-            </span>
-            <form:input
-                type="text"
-                class="form-control"
-                placeholder="Nơi xuất phát"
-                path="startLocation"
-            />
+        <div class="mb-3">
+            <div class="input-group">
+                <span class="input-group-text" id="basic-addon1">
+                    <i class="bi bi-cursor"></i>
+                </span>
+                <form:input
+                    type="text"
+                    class="form-control"
+                    placeholder="Nơi xuất phát"
+                    path="startLocation"
+                />
+            </div>
             <form:errors path="startLocation" element="div" cssClass="text-danger" />
         </div>
 
-        <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">
-                <i class="bi bi-geo-fill"></i>
-            </span>
-            <form:input
-                type="text"
-                class="form-control"
-                placeholder="Điểm đến"
-                path="endLocation"
-            />
+        <div class="mb-3">
+            <div class="input-group">
+                <span class="input-group-text" id="basic-addon1">
+                    <i class="bi bi-geo-fill"></i>
+                </span>
+                <form:input
+                    type="text"
+                    class="form-control"
+                    placeholder="Điểm đến"
+                    path="endLocation"
+                />
+            </div>
             <form:errors path="endLocation" element="div" cssClass="text-danger" />
         </div>
-
         <button type="submit" class="btn btn-primary w-100">
             <c:choose>
                 <c:when test="${route.id == null}"> Thêm </c:when>

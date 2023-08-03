@@ -50,7 +50,6 @@ public class BusController {
     @GetMapping("/buses/add")
     public String addForm(Model model) {
         model.addAttribute("bus", new Bus());
-        model.addAttribute("seats", new BusSeats());
 
         return "buses.addOrUpdate";
     }
@@ -63,20 +62,22 @@ public class BusController {
     }
 
     @PostMapping(value = "/buses/add")
-    public String addOrUpdate(@ModelAttribute(value = "bus") @Valid Bus item,
+    public String addOrUpdate(Model model, @ModelAttribute(value = "bus") @Valid Bus item,
             BindingResult rs,
             HttpServletRequest formData) {
 
         BusSeats busSeats = new BusSeats();
         String seatListStr = formData.getParameter("selectedSeats");
-        if (seatListStr != null) {
+        if (seatListStr != null && !seatListStr.isEmpty()) {
             busSeats.addMultiPosFromInput(seatListStr);
         }
 
-        if (!rs.hasErrors()) {
+        if (!rs.hasErrors() && !seatListStr.isEmpty()) {
             if (busService.addOrUpdate(item, busSeats)) {
                 return "redirect:/buses";
             }
+        } else {
+            model.addAttribute("noSeatSelectedError", "Không có ghế nào được chọn, vui lòng chọn ít nhất 1 ghế!");
         }
 
         return "buses.addOrUpdate";

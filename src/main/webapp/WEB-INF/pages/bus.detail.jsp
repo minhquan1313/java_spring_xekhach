@@ -103,18 +103,9 @@
                         display: none;
                     }
                 </style>
-                <script>
-                    let btnList = document.querySelectorAll("button[data-pos]");
 
-                    btnList.forEach((r) =>
-                        r.addEventListener("click", function (e) {
-                            this.toggleAttribute("active");
-                            // console.log("Click");
-                        })
-                    );
-
-                    console.log({ btnList });
-                </script>
+                <c:url value="/js/busDetailSeat.js" var="busDetailSeat" />
+                <script src="${busDetailSeat}"></script>
             </section>
         </div>
     </div>

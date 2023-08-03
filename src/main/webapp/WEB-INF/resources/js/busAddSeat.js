@@ -54,7 +54,6 @@ function setClickBtn() {
         };
     });
     seatCount.innerText = countSeat();
-    console.log({ btnList });
 }
 
 function updateInputSelected() {
@@ -64,8 +63,6 @@ function updateInputSelected() {
             return r.getAttribute("data-pos");
         })
         .join(",");
-
-    console.log(selectedSeats.value);
 }
 
 function getSelectedSeat() {
