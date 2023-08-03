@@ -1,10 +1,6 @@
 package com.mtb.configs;
 
-import com.cloudinary.Cloudinary;
-import com.cloudinary.utils.ObjectUtils;
-import com.mtb.formatter.RoleFormatter;
 import java.text.SimpleDateFormat;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -23,24 +19,20 @@ import org.springframework.web.servlet.config.annotation.DefaultServletHandlerCo
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import org.springframework.web.servlet.view.JstlView;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.mtb.formatter.RoleFormatter;
 
 @Configuration
 @EnableWebMvc
 @EnableTransactionManagement
 @ComponentScan(basePackages = {
-    "com.mtb.controllers",
-    "com.mtb.repository",
-    "com.mtb.service",})
+        "com.mtb.controllers",
+        "com.mtb.repository",
+        "com.mtb.service", })
 @PropertySource("classpath:configs.properties")
 public class WebAppContextConfig implements WebMvcConfigurer {
-    @Autowired
-    private Environment env;
-
     @Autowired
     private Environment env;
 
@@ -51,10 +43,11 @@ public class WebAppContextConfig implements WebMvcConfigurer {
     }
 
     // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-     @Override
-     public void addFormatters(FormatterRegistry registry) {
-     registry.addFormatter(new RoleFormatter());
-     }
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addFormatter(new RoleFormatter());
+    }
+
     // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     @Bean
     public SimpleDateFormat simpleDateFormat() {
@@ -62,16 +55,16 @@ public class WebAppContextConfig implements WebMvcConfigurer {
     }
 
     // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-//    @Bean
-//    public InternalResourceViewResolver internalResourceViewResolver(){
-//        InternalResourceViewResolver r = new InternalResourceViewResolver();
-//        r.setViewClass(JstlView.class);
-//        r.setPrefix("WEB-INF/pages/");
-//        r.setSuffix(".jsp");
-//        
-//        return r;
-//    }
-//  
+    // @Bean
+    // public InternalResourceViewResolver internalResourceViewResolver(){
+    // InternalResourceViewResolver r = new InternalResourceViewResolver();
+    // r.setViewClass(JstlView.class);
+    // r.setPrefix("WEB-INF/pages/");
+    // r.setSuffix(".jsp");
+    //
+    // return r;
+    // }
+    //
     @Bean
     public CommonsMultipartResolver multipartResolver() {
         CommonsMultipartResolver resolver = new CommonsMultipartResolver();

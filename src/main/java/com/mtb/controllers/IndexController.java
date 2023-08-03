@@ -34,7 +34,6 @@ public class IndexController {
 
     @RequestMapping("/")
     public String index(Model model, @RequestParam Map<String, String> params) {
-          model.addAttribute("users", this.userService.getUsers(params));
 
         return "index";
     }
