@@ -33,8 +33,12 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping("/users")
-    public String list(Model model, @RequestParam Map<String, String> params) {
-        model.addAttribute("users", this.userService.getUsers(params));
+    public String list(Model model, @RequestParam Map<String, String> params, String kw, String roleId) {
+        if ((kw != null && !kw.isEmpty()) || (roleId!=null&&!roleId.isEmpty())) {
+            model.addAttribute("users", this.userService.searchUsers(params, kw, roleId));
+        } else {
+            model.addAttribute("users", this.userService.getUsers(params));
+        }
         return "users";
     }
 
@@ -53,9 +57,11 @@ public class UserController {
     @PostMapping("/users")
     public String add(@ModelAttribute(value = "user") @Valid User u, BindingResult rs) {
 
-        if (!rs.hasErrors())
-            if (this.userService.addOrUpdateUser(u) == true)
+        if (!rs.hasErrors()) {
+            if (this.userService.addOrUpdateUser(u) == true) {
                 return "redirect:/users";
+            }
+        }
 
         return "users.addOrUpdate";
     }

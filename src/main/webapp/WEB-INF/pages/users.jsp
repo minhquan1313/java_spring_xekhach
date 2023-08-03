@@ -10,6 +10,19 @@
     <c:url value="/users/add" var="createUser" />
     <a href="${createUser}" class="btn btn-info mt-1">Tạo user</a>
 </div>
+<c:url value="/users" var="action" />
+<div>
+    <form class="d-flex mt-1" action="${action}">
+    <input class=" me-2" type="text" name="kw"  placeholder="Nhập ...">
+    <select name="roleId">
+        <option value="">Role</option>
+        <c:forEach items="${roles}" var="r">
+            <option value="${r.id}">${r.title}</option>
+        </c:forEach>
+    </select>
+    <button class="btn btn-primary" type="submit">Tìm</button>
+</form>
+</div>
 <table class="table table-hover">
     <thead>
         <tr>

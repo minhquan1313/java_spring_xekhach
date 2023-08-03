@@ -36,8 +36,8 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Autowired
     private LocalSessionFactoryBean factory;
-    @Autowired
-    private Environment env;
+//    @Autowired
+//    private Environment env;
 
     public List<User> getUsers(Map<String, String> params) {
         Session session = this.factory.getObject().getCurrentSession();
@@ -49,6 +49,11 @@ public class UserRepositoryImpl implements UserRepository {
 
         if (params != null) {
             List<Predicate> predicates = new ArrayList<>();
+
+            String kw = params.get("kw");
+            if (kw != null && !kw.isEmpty()) {
+                predicates.add(b.like(root.get("username"), String.format("%%%s%%", kw)));
+            }
 
             String username = params.get("username");
             if (username != null && !username.isEmpty()) {
@@ -74,12 +79,10 @@ public class UserRepositoryImpl implements UserRepository {
             if (roleId != null && !roleId.isEmpty()) {
                 predicates.add(b.equal(root.get("roleId"), Integer.parseInt(roleId)));
             }
-
             q.where(predicates.toArray(Predicate[]::new));
         }
 
-        q.orderBy(b.desc(root.get("id")));
-
+        //q.orderBy(b.desc(root.get("id")));
         Query query = session.createQuery(q);
 
 //        if (params != null) {
@@ -110,6 +113,7 @@ public class UserRepositoryImpl implements UserRepository {
             if (u.getId() == null) {
                 s.save(u);
             } else {
+                
                 s.update(u);
             }
 
@@ -137,5 +141,36 @@ public class UserRepositoryImpl implements UserRepository {
             ex.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public List<User> searchUsers(Map<String, String> params, String kw, String role) {
+        Session session = this.factory.getObject().getCurrentSession();
+
+        CriteriaBuilder b = session.getCriteriaBuilder();
+        CriteriaQuery<User> q = b.createQuery(User.class);
+        Root root = q.from(User.class);
+        q.select(root);
+        if (params != null) {
+            List<Predicate> predicates = new ArrayList<>();
+            if (kw != null && !kw.isEmpty()) {
+                String pattern = "%" + kw + "%";
+                predicates.add(b.or(
+                        b.like(b.lower(root.get("username")), pattern),
+                        b.like(b.lower(root.get("firstName")), pattern),
+                        b.like(b.lower(root.get("lastName")), pattern)
+                ));
+
+            }
+            if (role != null && !role.isEmpty()) {
+                predicates.add(b.equal(root.get("roleId"), Integer.parseInt(role)));
+            }
+            if (!predicates.isEmpty()) {
+                q.where(b.and(predicates.toArray(Predicate[]::new)));
+            }
+
+        }
+        Query query = session.createQuery(q);
+        return query.getResultList();
     }
 }
