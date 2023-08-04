@@ -57,11 +57,13 @@ public class BusSeatTemplateRepositoryImpl implements BusSeatTemplateRepository 
         int y = 1;
 
         for (BusSeatTemplate r : list) {
-            String seatStr = r.getBusSeat();
-            String[] seats = seatStr.split("_");
+            // String seatStr = r.getBusSeat();
+            // String[] seats = seatStr.split("_");
 
-            int _x = Integer.parseInt(seats[0]);
-            int _y = Integer.parseInt(seats[1]);
+            // int _x = Integer.parseInt(seats[0]);
+            // int _y = Integer.parseInt(seats[1]);
+            int _x = r.getBusSeatX();
+            int _y = r.getBusSeatY();
 
             if (x < _x)
                 x = _x;

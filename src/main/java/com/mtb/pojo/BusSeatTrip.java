@@ -5,7 +5,6 @@
 package com.mtb.pojo;
 
 import java.io.Serializable;
-import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,11 +15,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -32,7 +29,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "BusSeatTrip.findAll", query = "SELECT b FROM BusSeatTrip b"),
     @NamedQuery(name = "BusSeatTrip.findById", query = "SELECT b FROM BusSeatTrip b WHERE b.id = :id"),
-    @NamedQuery(name = "BusSeatTrip.findByBusSeat", query = "SELECT b FROM BusSeatTrip b WHERE b.busSeat = :busSeat"),
+    @NamedQuery(name = "BusSeatTrip.findByBusSeatX", query = "SELECT b FROM BusSeatTrip b WHERE b.busSeatX = :busSeatX"),
+    @NamedQuery(name = "BusSeatTrip.findByBusSeatY", query = "SELECT b FROM BusSeatTrip b WHERE b.busSeatY = :busSeatY"),
     @NamedQuery(name = "BusSeatTrip.findByAvailable", query = "SELECT b FROM BusSeatTrip b WHERE b.available = :available")})
 public class BusSeatTrip implements Serializable {
 
@@ -42,18 +40,23 @@ public class BusSeatTrip implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Size(max = 50)
-    @Column(name = "bus_seat")
-    private String busSeat;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "bus_seat_x")
+    private int busSeatX;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "bus_seat_y")
+    private int busSeatY;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "available")
-    private Boolean available;
-    @OneToMany(mappedBy = "busSeatTripId")
-    private Set<TicketDetail> ticketDetailSet;
+    private boolean available;
     @JoinColumn(name = "bus_id", referencedColumnName = "id")
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Bus busId;
     @JoinColumn(name = "trip_id", referencedColumnName = "id")
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Trip tripId;
 
     public BusSeatTrip() {
@@ -61,6 +64,13 @@ public class BusSeatTrip implements Serializable {
 
     public BusSeatTrip(Integer id) {
         this.id = id;
+    }
+
+    public BusSeatTrip(Integer id, int busSeatX, int busSeatY, boolean available) {
+        this.id = id;
+        this.busSeatX = busSeatX;
+        this.busSeatY = busSeatY;
+        this.available = available;
     }
 
     public Integer getId() {
@@ -71,29 +81,28 @@ public class BusSeatTrip implements Serializable {
         this.id = id;
     }
 
-    public String getBusSeat() {
-        return busSeat;
+    public int getBusSeatX() {
+        return busSeatX;
     }
 
-    public void setBusSeat(String busSeat) {
-        this.busSeat = busSeat;
+    public void setBusSeatX(int busSeatX) {
+        this.busSeatX = busSeatX;
     }
 
-    public Boolean getAvailable() {
+    public int getBusSeatY() {
+        return busSeatY;
+    }
+
+    public void setBusSeatY(int busSeatY) {
+        this.busSeatY = busSeatY;
+    }
+
+    public boolean getAvailable() {
         return available;
     }
 
-    public void setAvailable(Boolean available) {
+    public void setAvailable(boolean available) {
         this.available = available;
-    }
-
-    @XmlTransient
-    public Set<TicketDetail> getTicketDetailSet() {
-        return ticketDetailSet;
-    }
-
-    public void setTicketDetailSet(Set<TicketDetail> ticketDetailSet) {
-        this.ticketDetailSet = ticketDetailSet;
     }
 
     public Bus getBusId() {
