@@ -2,6 +2,7 @@ package com.mtb.controllers;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,23 +35,25 @@ public class RouteController {
     // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     @GetMapping("/routes/add")
     public String addForm(Model model) {
-        model.addAttribute("route", new Route());
+        Route route = new Route();
+        model.addAttribute("route", route);
 
         return "routes.addOrUpdate";
     }
 
     @GetMapping("/routes/edit/{id}")
     public String editForm(Model model, @PathVariable(value = "id") int id) {
-        model.addAttribute("route", routeService.getById(id));
+        Route route = routeService.getById(id);
+
+        model.addAttribute("route", route);
 
         return "routes.addOrUpdate";
     }
 
-    @PostMapping(value = "/routes/add")
-    public String addOrUpdate(Model model, @ModelAttribute(value = "route") @Valid Route item, BindingResult rs) {
-        // model.addAttribute("debugValue", item);
-        // return "debug";
-
+    @PostMapping("/routes/add")
+    public String addOrUpdate(@ModelAttribute(value = "route") @Valid Route item, BindingResult rs,
+            HttpServletRequest formData) {
+        String x = formData.getParameter("startLocation");
         if (!rs.hasErrors()) {
             if (routeService.addOrUpdate(item)) {
                 return "redirect:/routes";

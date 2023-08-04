@@ -44,8 +44,10 @@ public class BusSeatTemplateServiceImpl implements BusSeatTemplateService {
         List<BusSeatTemplate> l = new ArrayList<>();
         for (Pos pos : list.getArray()) {
             BusSeatTemplate item = new BusSeatTemplate();
+
             item.setBusId(b);
-            item.setBusSeat(pos.toString());
+            item.setBusSeatX(pos.getX());
+            item.setBusSeatY(pos.getY());
 
             l.add(item);
         }

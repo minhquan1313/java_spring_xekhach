@@ -112,7 +112,7 @@
             </section>
         </c:if>
 
-        <button type="submit" class="btn btn-primary w-100">
+        <button type="submit" class="btn btn-outline-info w-100">
             <c:choose>
                 <c:when test="${bus.id == null}"> Thêm </c:when>
                 <c:otherwise> Cập nhật </c:otherwise>

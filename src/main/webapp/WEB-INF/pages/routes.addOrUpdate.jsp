@@ -8,7 +8,12 @@
 
 <section class="container pt-4 my-auto h-100">
     <c:url value="/routes/add" var="action" />
-    <form:form method="post" action="${action}" modelAttribute="route" accept-charset="utf-8">
+    <form:form
+        method="post"
+        action="${action}"
+        modelAttribute="route"
+        enctype="multipart/form-data"
+    >
         <form:errors path="*" element="div" cssClass="alert alert-danger" />
         <form:hidden path="id" />
 
@@ -41,7 +46,7 @@
             </div>
             <form:errors path="endLocation" element="div" cssClass="text-danger" />
         </div>
-        <button type="submit" class="btn btn-primary w-100">
+        <button type="submit" class="btn btn-outline-info w-100">
             <c:choose>
                 <c:when test="${route.id == null}"> Thêm </c:when>
                 <c:otherwise> Cập nhật </c:otherwise>
