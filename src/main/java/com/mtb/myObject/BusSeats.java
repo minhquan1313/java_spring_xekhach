@@ -27,6 +27,10 @@ public class BusSeats {
         this.array.add(new Pos(x, y));
     }
 
+    public void addPos(int x, int y, boolean available) {
+        this.array.add(new Pos(x, y, available));
+    }
+
     public void addMultiPosFromInput(String input) {
         String[] l = input.split(",");
 

@@ -6,8 +6,11 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mtb.myObject.BusSeats;
 import com.mtb.pojo.Trip;
 import com.mtb.repository.TripRepository;
+import com.mtb.service.BusSeatTemplateService;
+import com.mtb.service.BusSeatTripService;
 import com.mtb.service.TripService;
 
 @Service
@@ -15,6 +18,12 @@ public class TripServiceImpl implements TripService {
 
     @Autowired
     private TripRepository repository;
+
+    @Autowired
+    private BusSeatTripService busSeatTripService;
+
+    @Autowired
+    private BusSeatTemplateService busSeatTemplateService;
 
     @Override
     public List<Trip> getList(Map<String, String> params) {
@@ -27,10 +36,25 @@ public class TripServiceImpl implements TripService {
     }
 
     @Override
-    public boolean addOrUpdate(Trip item) {
-        // auto create seats
+    public boolean add(Trip item) {
+        boolean isTripAdded = repository.addOrUpdate(item);
 
-        return repository.addOrUpdate(item);
+        BusSeats busSeats = busSeatTemplateService.getBusSeatsByBusId(item.getBusId().getId());
+
+        boolean isSeatsAdded = busSeatTripService
+                .makeMultipleSeatTrip(item.getBusId().getId(), item.getId(), busSeats);
+
+        return isTripAdded && isSeatsAdded;
+    }
+
+    @Override
+    public boolean update(Trip item, BusSeats busSeats) {
+        boolean isTripUpdated = repository.addOrUpdate(item);
+
+        boolean isSeatsUpdated = busSeatTripService
+                .editMultipleSeatTrip(item.getBusId().getId(), item.getId(), busSeats);
+
+        return isTripUpdated && isSeatsUpdated;
     }
 
     @Override

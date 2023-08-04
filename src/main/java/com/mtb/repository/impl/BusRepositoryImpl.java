@@ -51,7 +51,7 @@ public class BusRepositoryImpl implements BusRepository {
             String getSeats = params.get("getSeats");
             if (getSeats != null) {
                 list.forEach(r -> {
-                    List<BusSeatTemplate> seatTemplates = busSeatTemplateService.getListById(r.getId(), null);
+                    List<BusSeatTemplate> seatTemplates = busSeatTemplateService.getListByBusId(r.getId());
                     Set<BusSeatTemplate> targetSet = new HashSet<>(seatTemplates);
                     r.setBusSeatTemplateSet(targetSet);
                 });

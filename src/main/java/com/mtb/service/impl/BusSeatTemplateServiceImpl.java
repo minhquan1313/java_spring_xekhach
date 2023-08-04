@@ -24,8 +24,8 @@ public class BusSeatTemplateServiceImpl implements BusSeatTemplateService {
     BusService busService;
 
     @Override
-    public BusSeats getBusSeatsByBusId(int id) {
-        return this.busSeatTemplateRepository.getBusSeatsByBusId(id);
+    public BusSeats getBusSeatsByBusId(int busId) {
+        return this.busSeatTemplateRepository.getBusSeatsByBusId(busId);
     }
 
     @Override
@@ -34,8 +34,8 @@ public class BusSeatTemplateServiceImpl implements BusSeatTemplateService {
     }
 
     @Override
-    public List<BusSeatTemplate> getListById(int id, Map<String, String> params) {
-        return this.busSeatTemplateRepository.getListById(id, params);
+    public List<BusSeatTemplate> getListByBusId(int id) {
+        return this.busSeatTemplateRepository.getListByBusId(id);
     }
 
     @Override

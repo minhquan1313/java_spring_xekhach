@@ -3,6 +3,7 @@ package com.mtb.service;
 import java.util.List;
 import java.util.Map;
 
+import com.mtb.myObject.BusSeats;
 import com.mtb.pojo.Trip;
 
 public interface TripService {
@@ -10,7 +11,9 @@ public interface TripService {
 
     Trip getById(int id);
 
-    boolean addOrUpdate(Trip item);
+    boolean add(Trip item);
+
+    boolean update(Trip item, BusSeats busSeats);
 
     boolean deleteById(int id);
 }

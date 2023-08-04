@@ -1,19 +1,20 @@
 package com.mtb.repository;
 
 import java.util.List;
-import java.util.Map;
 
 import com.mtb.myObject.BusSeats;
 import com.mtb.pojo.BusSeatTrip;
 
 public interface BusSeatTripRepository {
-    BusSeats getBusSeatsByBusId(int id);
+    List<BusSeatTrip> getListByBusAndTripId(int busId, int tripId);
 
-    List<BusSeatTrip> getListById(int id, Map<String, String> params);
+    BusSeats getBusSeatsByBusAndTripId(int busId, int tripId);
 
-    boolean makeMultipleSeatTemplate(List<BusSeatTrip> list);
+    boolean makeMultipleSeatTrip(List<BusSeatTrip> list);
 
-    boolean delMultipleSeatTemplateByBusId(int busId);
+    boolean editMultipleSeatTrip(List<BusSeatTrip> list);
 
-    int countSeatByBusId(int id);
+    boolean delMultipleSeatTripByBusAndTripId(int busId, int tripId);
+
+    int countSeatByBusAndTripId(int busId, int tripId);
 }

@@ -2,7 +2,6 @@ package com.mtb.repository.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -19,53 +18,56 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mtb.myObject.BusSeats;
-import com.mtb.pojo.BusSeatTemplate;
-import com.mtb.repository.BusSeatTemplateRepository;
+import com.mtb.pojo.BusSeatTrip;
+import com.mtb.repository.BusSeatTripRepository;
 
 @Repository
 @Transactional
-public class BusSeatTemplateRepositoryImpl implements BusSeatTemplateRepository {
+public class BusSeatTripRepositoryImp implements BusSeatTripRepository {
+
     @Autowired
     private LocalSessionFactoryBean factory;
 
     @Override
-    public List<BusSeatTemplate> getListByBusId(int busId) {
+    public List<BusSeatTrip> getListByBusAndTripId(int busId, int tripId) {
         Session session = this.factory.getObject().getCurrentSession();
 
         CriteriaBuilder cb = session.getCriteriaBuilder();
-        CriteriaQuery<BusSeatTemplate> cq = cb.createQuery(BusSeatTemplate.class);
-        Root root = cq.from(BusSeatTemplate.class);
+        CriteriaQuery<BusSeatTrip> cq = cb.createQuery(BusSeatTrip.class);
+        Root root = cq.from(BusSeatTrip.class);
 
         List<Predicate> predicates = new ArrayList<>();
 
         predicates.add(cb.equal(root.get("busId"), busId));
+        predicates.add(cb.equal(root.get("tripId"), tripId));
 
         cq.where(predicates.toArray(Predicate[]::new));
         Query query = session.createQuery(cq);
 
-        List<BusSeatTemplate> list = query.getResultList();
+        List<BusSeatTrip> list = query.getResultList();
 
         return list;
     }
 
     @Override
-    public BusSeats getBusSeatsByBusId(int id) {
-        List<BusSeatTemplate> list = this.getListByBusId(id);
+    public BusSeats getBusSeatsByBusAndTripId(int busId, int tripId) {
+        List<BusSeatTrip> list = this.getListByBusAndTripId(busId, tripId);
         BusSeats busSeats = new BusSeats();
 
         int x = 1;
         int y = 1;
 
-        for (BusSeatTemplate r : list) {
+        for (BusSeatTrip r : list) {
             int _x = r.getBusSeatX();
             int _y = r.getBusSeatY();
+            boolean available = r.getAvailable();
 
             if (x < _x)
                 x = _x;
             if (y < _y)
                 y = _y;
 
-            busSeats.addPos(_x, _y);
+            busSeats.addPos(_x, _y, available);
         }
 
         busSeats.setCol(x);
@@ -75,31 +77,12 @@ public class BusSeatTemplateRepositoryImpl implements BusSeatTemplateRepository 
     }
 
     @Override
-    public int countSeatByBusId(int id) {
-        Session session = this.factory.getObject().getCurrentSession();
-
-        CriteriaBuilder cb = session.getCriteriaBuilder();
-        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
-        Root root = cq.from(BusSeatTemplate.class);
-
-        List<Predicate> predicates = new ArrayList<>();
-
-        predicates.add(cb.equal(root.get("busId"), id));
-
-        cq.where(predicates.toArray(Predicate[]::new));
-        cq.select(cb.count(root));
-        Query query = session.createQuery(cq);
-
-        return Integer.parseInt(query.getSingleResult().toString());
-    }
-
-    @Override
-    public boolean makeMultipleSeatTemplate(List<BusSeatTemplate> list) {
+    public boolean makeMultipleSeatTrip(List<BusSeatTrip> list) {
         Session session = this.factory.getObject().getCurrentSession();
 
         try {
-            for (BusSeatTemplate busSeatTemplate : list) {
-                session.save(busSeatTemplate);
+            for (BusSeatTrip item : list) {
+                session.save(item);
             }
             return true;
         } catch (HibernateError e) {
@@ -110,12 +93,28 @@ public class BusSeatTemplateRepositoryImpl implements BusSeatTemplateRepository 
     }
 
     @Override
-    public boolean delMultipleSeatTemplateByBusId(int busId) {
+    public boolean editMultipleSeatTrip(List<BusSeatTrip> list) {
         Session session = this.factory.getObject().getCurrentSession();
 
-        List<BusSeatTemplate> list = this.getListByBusId(busId);
         try {
-            for (BusSeatTemplate p : list) {
+            for (BusSeatTrip item : list) {
+                session.update(item);
+            }
+            return true;
+        } catch (HibernateError e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean delMultipleSeatTripByBusAndTripId(int busId, int tripId) {
+        Session session = this.factory.getObject().getCurrentSession();
+
+        List<BusSeatTrip> list = this.getListByBusAndTripId(busId, tripId);
+        try {
+            for (BusSeatTrip p : list) {
                 session.delete(p);
             }
             return true;
@@ -123,4 +122,25 @@ public class BusSeatTemplateRepositoryImpl implements BusSeatTemplateRepository 
             return false;
         }
     }
+
+    @Override
+    public int countSeatByBusAndTripId(int busId, int tripId) {
+        Session session = this.factory.getObject().getCurrentSession();
+
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+        Root root = cq.from(BusSeatTrip.class);
+
+        List<Predicate> predicates = new ArrayList<>();
+
+        predicates.add(cb.equal(root.get("busId"), busId));
+        predicates.add(cb.equal(root.get("tripId"), tripId));
+
+        cq.where(predicates.toArray(Predicate[]::new));
+        cq.select(cb.count(root));
+        Query query = session.createQuery(cq);
+
+        return Integer.parseInt(query.getSingleResult().toString());
+    }
+
 }
