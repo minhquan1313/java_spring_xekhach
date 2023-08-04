@@ -64,4 +64,9 @@ public class UserServiceImpl implements UserService {
     public boolean deleteUser(int id) {
         return this.userRepo.deleteUser(id);
     }
+
+    @Override
+    public List<User> searchUsers(Map<String, String> params, String kw, String role) {
+        return this.userRepo.searchUsers(params, kw, role);
+    }
 }

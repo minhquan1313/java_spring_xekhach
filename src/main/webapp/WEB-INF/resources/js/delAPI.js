@@ -1,12 +1,11 @@
 function delAPI(path) {
     fetch(path, {
-        method: "delete",
-    }).then((r) => {
-        if (r.status === 204) {
+        method: "delete"
+    }).then(res => {
+        if (res.status === 204)
             location.reload();
-        } else {
+        else
             alert("Something wrong!!!");
-        }
     });
 }
 

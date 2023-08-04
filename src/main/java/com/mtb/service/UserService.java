@@ -13,9 +13,16 @@ import java.util.Map;
  * @author Duc Hung
  */
 public interface UserService {
+
     List<User> getUsers(Map<String, String> params);
+
+    List<User> searchUsers(Map<String, String> params, String kw, String role);
+
     int countUser();
+
     boolean addOrUpdateUser(User u);
+
     User getUserById(int id);
+
     boolean deleteUser(int id);
 }

@@ -30,8 +30,8 @@ public class IndexController {
     private Environment env;
 
     @ModelAttribute
-    public void commonAttr(Model model) {
-        model.addAttribute("roles", this.roleService.getRoles());
+    public void commonAttr(Model model,@RequestParam Map<String, String> params) {
+        model.addAttribute("roles", this.roleService.getRoles(params));
     }
 
     @RequestMapping("/")

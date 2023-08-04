@@ -4,10 +4,10 @@
  */
 package com.mtb.controllers;
 
+import com.mtb.pojo.Role;
+import com.mtb.service.RoleService;
 import java.util.Map;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,50 +19,42 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.mtb.pojo.User;
-import com.mtb.service.UserService;
-
 /**
  *
  * @author Duc Hung
  */
 @Controller
-public class UserController {
+public class RoleController {
 
     @Autowired
-    private UserService userService;
+    private RoleService roleService;
 
-    @RequestMapping("/users")
-    public String list(Model model, @RequestParam Map<String, String> params, String kw, String roleId) {
-        if ((kw != null && !kw.isEmpty()) || (roleId!=null&&!roleId.isEmpty())) {
-            model.addAttribute("users", this.userService.searchUsers(params, kw, roleId));
-        } else {
-            model.addAttribute("users", this.userService.getUsers(params));
-        }
-        return "users";
+    @RequestMapping("/roles")
+    public String list(Model model, @RequestParam Map<String, String> params) {
+        model.addAttribute("roles", this.roleService.getRoles(params));
+        return "roles";
     }
 
-    @GetMapping("/users/add")
+    @GetMapping("/roles/add")
     public String addForm(Model model) {
-        model.addAttribute("user", new User());
-        return "users.addOrUpdate";
+        model.addAttribute("role", new Role());
+        return "roles.addOrUpdate";
     }
-
-    @GetMapping("/users/{id}")
+    
+      @GetMapping("/roles/{id}")
     public String update(Model model, @PathVariable(value = "id") int id) {
-        model.addAttribute("user", this.userService.getUserById(id));
-        return "users.addOrUpdate";
+        model.addAttribute("role", this.roleService.getRoleById(id));
+        return "roles.addOrUpdate";
     }
 
-    @PostMapping("/users")
-    public String add(@ModelAttribute(value = "user") @Valid User u, BindingResult rs) {
-
+    @PostMapping("/roles")
+    public String add(@ModelAttribute(value = "role") @Valid Role r, BindingResult rs) {
         if (!rs.hasErrors()) {
-            if (this.userService.addOrUpdateUser(u) == true) {
-                return "redirect:/users";
+            if (this.roleService.addOrUpdateRole(r) == true) {
+                return "redirect:/roles";
             }
         }
 
-        return "users.addOrUpdate";
+        return "roles.addOrUpdate";
     }
 }

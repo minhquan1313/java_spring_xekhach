@@ -52,7 +52,7 @@ public class User implements Serializable {
     @NotNull(message="{user.username.notNull}")
     @Size(max = 50, message="{user.username.lenErr}")
     @Basic(optional = false)
-    @Column(name = "username")
+    @Column(name = "username",updatable = false)
     private String username;
     @Basic(optional = false)
     @NotNull
