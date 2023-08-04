@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.mtb.pojo.Trip;
 import com.mtb.repository.TripRepository;
+import com.mtb.service.BusSeatTripService;
 
 @Repository
 @Transactional
@@ -27,6 +28,9 @@ public class TripRepositoryImp implements TripRepository {
 
     @Autowired
     private LocalSessionFactoryBean factory;
+
+    @Autowired
+    private BusSeatTripService busSeatTripService;
 
     @Override
     public List<Trip> getList(Map<String, String> params) {
@@ -79,6 +83,7 @@ public class TripRepositoryImp implements TripRepository {
         Trip p = this.getById(id);
 
         try {
+            busSeatTripService.delMultipleSeatTrip(p.getBusId().getId(), p.getId());
             session.delete(p);
             return true;
         } catch (HibernateException e) {

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mtb.service.BusService;
 import com.mtb.service.RouteService;
+import com.mtb.service.TripService;
 
 @RestController
 @RequestMapping("/api")
@@ -21,6 +22,9 @@ public class ApiController {
     @Autowired
     BusService busService;
 
+    @Autowired
+    TripService tripService;
+
     @DeleteMapping("/routes/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteRoute(@PathVariable(value = "id") int id) {
@@ -31,5 +35,11 @@ public class ApiController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteBus(@PathVariable(value = "id") int id) {
         this.busService.deleteById(id);
+    }
+
+    @DeleteMapping("/trips/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteTrip(@PathVariable(value = "id") int id) {
+        this.tripService.deleteById(id);
     }
 }
