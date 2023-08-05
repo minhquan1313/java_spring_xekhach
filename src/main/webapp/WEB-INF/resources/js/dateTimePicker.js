@@ -1,4 +1,4 @@
-function dateTimePicker(datetimepickerId, inputNameBind) {
+function dateTimePicker({ dateTimePickerId, inputNameBind }) {
     const input = document.querySelector(`input[name=${inputNameBind}]`);
 
     const initDate = input.value ? new Date(input.value) : new Date();
@@ -8,7 +8,7 @@ function dateTimePicker(datetimepickerId, inputNameBind) {
             ? navigator.languages[0]
             : navigator.language;
 
-    const picker = new tempusDominus.TempusDominus(document.getElementById(datetimepickerId), {
+    const picker = new tempusDominus.TempusDominus(document.getElementById(dateTimePickerId), {
         restrictions: {
             minDate: initDate,
         },

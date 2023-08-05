@@ -6,7 +6,8 @@
 <!--  -->
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!--  -->
-<%@page contentType="text/html" pageEncoding="UTF-8"%> add or update
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!--  -->
 <section class="container pt-4 my-auto h-100">
     <c:url value="/trips/add" var="action" />
     <form:form modelAttribute="trip" method="post" action="${action}" enctype="multipart/form-data">
@@ -17,10 +18,10 @@
         <div class="mb-3">
             <div class="input-group">
                 <span class="input-group-text">
-                    <i class="bi bi-dash-square-fill"></i>
+                    <i class="bi bi-cursor"></i>
                 </span>
                 <span class="input-group-text">
-                    <i class="bi bi-dash-square-fill"></i>
+                    <i class="bi bi-geo-fill"></i>
                 </span>
                 <form:select class="form-select" path="routeId">
                     <c:forEach items="${routes}" var="c">
@@ -45,6 +46,9 @@
         <!-- Bus -->
         <div class="mb-3">
             <div class="input-group mb-2">
+                <span class="input-group-text">
+                    <i class="bi bi-bus-front-fill"></i>
+                </span>
                 <form:select class="form-select" path="busId" id="busSelect">
                     <c:forEach items="${buses}" var="c">
                         <c:if test="${c.id == trip.busId.id}">
@@ -57,12 +61,13 @@
                 </form:select>
             </div>
             <div class="col col-md-6 mx-auto">
-                <div class="">
+                <div>
                     <img
-                        id="busImg"
+                        id="busImage"
                         src="?"
-                        class="img-thumbnail rounded d-block w-100 object-fit-contain"
+                        class="img-thumbnail rounded d-block object-fit-contain mx-auto"
                         alt="..."
+                        style="max-height: 60vh"
                     />
                 </div>
             </div>
@@ -72,7 +77,7 @@
         <div class="mb-3">
             <div class="input-group">
                 <span class="input-group-text">
-                    <i class="bi bi-dash-square-fill"></i>
+                    <i class="bi bi-person-rolodex"></i>
                 </span>
                 <form:select class="form-select" path="driverId">
                     <c:forEach items="${drivers}" var="c">
@@ -96,7 +101,7 @@
                 data-td-target-toggle="nearest"
             >
                 <span class="input-group-text">
-                    <i class="bi bi-dash-square-fill"></i>
+                    <i class="bi bi-calendar-event"></i>
                 </span>
                 <input
                     id="datetimepicker1Input"
@@ -110,7 +115,7 @@
                     data-td-target="#datetimepicker1"
                     data-td-toggle="datetimepicker"
                 >
-                    <i class="bi bi-dash-square-fill"></i>
+                    <i class="bi bi-calendar-plus"></i>
                 </span>
             </div>
             <form:hidden path="startAt" />
@@ -121,7 +126,7 @@
         <div class="mb-3">
             <div class="input-group">
                 <span class="input-group-text">
-                    <i class="bi bi-dash-square-fill"></i>
+                    <i class="bi bi-currency-dollar"></i>
                 </span>
                 <form:input type="text" class="form-control" placeholder="Giá tiền" path="price" />
             </div>
@@ -141,16 +146,16 @@
     </form:form>
 </section>
 
-<c:url value="/js/dateTimePicker.js" var="script" />
-<script src="${script}"></script>
+<c:url value="/js/dateTimePicker.js" var="dateTimePicker" />
+<script src="${dateTimePicker}"></script>
 <script>
-    dateTimePicker("datetimepicker1", "startAt");
+    dateTimePicker({ dateTimePickerId: "datetimepicker1", inputNameBind: "startAt" });
 
-    const busImg = document.getElementById("busImg");
+    const busImage = document.getElementById("busImage");
     const busSelect = document.getElementById("busSelect");
-    setImage(busImg, busSelect);
+    setImage(busImage, busSelect);
 
-    busSelect.addEventListener("change", (e) => setImage(busImg, busSelect));
+    busSelect.addEventListener("change", (e) => setImage(busImage, busSelect));
 
     function setImage(img, select) {
         const selected = select.selectedOptions[0];
