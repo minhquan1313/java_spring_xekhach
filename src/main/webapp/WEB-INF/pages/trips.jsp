@@ -6,6 +6,8 @@
 <!--  -->
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!--  -->
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<!--  -->
 <section class="container-fluid mt-4">
     <div class="d-flex align-items-center">
         <a href="#" class="invisible">Thêm</a>
@@ -32,7 +34,9 @@
             <c:forEach items="${trips}" var="item">
                 <tr>
                     <th scope="row">${item.id}</th>
-                    <td>${item.startAt}</td>
+                    <td>
+                        <fmt:formatDate value="${item.startAt}" pattern="${date_pattern}" />
+                    </td>
                     <td>${item.routeId.startLocation}</td>
                     <td>${item.routeId.endLocation}</td>
                     <td>${item.driverId.lastName} ${item.driverId.firstName}</td>
