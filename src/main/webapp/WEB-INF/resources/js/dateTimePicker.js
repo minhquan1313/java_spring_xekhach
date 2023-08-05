@@ -79,7 +79,7 @@ function dateTimePicker({ dateTimePickerId, inputNameBind }) {
             dayViewHeaderFormat: { month: "long", year: "2-digit" },
             locale: userLocale,
             startOfTheWeek: 1,
-            hourCycle: "h24",
+            hourCycle: "h12",
             dateFormats: {
                 LTS: "h:mm:ss T",
                 LT: "h:mm T",

@@ -130,6 +130,7 @@
                     <i class="bi bi-currency-dollar"></i>
                 </span>
                 <form:input type="text" class="form-control" placeholder="Giá tiền" path="price" />
+                <span class="input-group-text"> VND </span>
             </div>
             <form:errors path="price" element="div" cssClass="text-danger" />
         </div>
