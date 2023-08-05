@@ -1,9 +1,14 @@
 package com.mtb.repository.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import org.hibernate.HibernateError;
 import org.hibernate.HibernateException;
@@ -26,9 +31,36 @@ public class RouteRepositoryImpl implements RouteRepository {
     @Override
     public List<Route> getList(Map<String, String> params) {
         Session session = this.factory.getObject().getCurrentSession();
-        Query q = session.createQuery("FROM Route");
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<Route> cq = cb.createQuery(Route.class);
+        Root root = cq.from(Route.class);
 
-        return q.getResultList();
+        if (params != null) {
+            List<Predicate> predicates = new ArrayList<>();
+
+            String orderBy = params.get("orderBy");
+            String order = params.get("order");
+
+            if (order != null && !order.isEmpty()) {
+                if (order != null && order == "desc")
+                    cq.orderBy(cb.desc(root.get(orderBy)));
+                else
+                    cq.orderBy(cb.asc(root.get(orderBy)));
+
+                cq.where(predicates.toArray(Predicate[]::new));
+            }
+        }
+
+        Query query = session.createQuery(cq);
+
+        List<Route> list = query.getResultList();
+
+        return list;
+
+        // Session session = this.factory.getObject().getCurrentSession();
+        // Query q = session.createQuery("FROM Route");
+
+        // return q.getResultList();
     }
 
     @Override

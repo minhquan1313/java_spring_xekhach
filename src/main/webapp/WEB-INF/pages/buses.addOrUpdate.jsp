@@ -17,7 +17,7 @@
         </c:if>
         <div class="mb-3">
             <div class="input-group">
-                <span class="input-group-text" id="basic-addon1">
+                <span class="input-group-text">
                     <i class="bi bi-dash-square-fill"></i>
                 </span>
                 <form:input

@@ -1,5 +1,6 @@
 package com.mtb.controllers;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,9 +18,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mtb.myObject.BusSeats;
+import com.mtb.pojo.Bus;
+import com.mtb.pojo.Route;
 import com.mtb.pojo.Trip;
 import com.mtb.service.BusSeatTripService;
+import com.mtb.service.BusService;
+import com.mtb.service.RoleService;
+import com.mtb.service.RouteService;
 import com.mtb.service.TripService;
+import com.mtb.service.UserService;
 
 @Controller
 public class TripController {
@@ -29,6 +36,18 @@ public class TripController {
 
     @Autowired
     private BusSeatTripService busSeatTripService;
+
+    @Autowired
+    private RouteService routeService;
+
+    @Autowired
+    private BusService busService;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private RoleService roleService;
 
     @RequestMapping("/trips")
     public String index(Model model, @RequestParam Map<String, String> params) {
@@ -42,6 +61,21 @@ public class TripController {
     @GetMapping("/trips/add")
     public String addForm(Model model) {
         model.addAttribute("trip", new Trip());
+
+        Map<String, String> params = new HashMap<>();
+        params.put("orderBy", "startLocation");
+        // asc | desc
+        params.put("order", "asc");
+
+        List<Route> routes = routeService.getList(params);
+        model.addAttribute("routes", routes);
+
+        List<Bus> busList = busService.getList(null);
+        model.addAttribute("buses", busList);
+
+        roleService.getRoles(null);
+        userService.getUsers(null);
+        // model.addAttribute("drivers", busList);
 
         return "trips.addOrUpdate";
     }
