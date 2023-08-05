@@ -7,12 +7,14 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <section class="container mt-4">
     <div class="d-flex align-items-center">
-        <a href="#" class="invisible">Thêm xe</a>
+        <div class="invisible" style="flex: 1">x</div>
 
-        <h3 class="text-center w-100">Các xe hiện có</h3>
+        <h3 class="text-center">Các xe hiện có</h3>
 
         <c:url value="/buses/add" var="createUrl" />
-        <a href="${createUrl}" class="btn btn-outline-info text-nowrap">Thêm xe</a>
+        <div class="d-flex justify-content-end" style="flex: 1">
+            <a href="${createUrl}" class="btn btn-outline-info text-nowrap">Thêm xe</a>
+        </div>
     </div>
 
     <table class="table table-hover">

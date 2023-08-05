@@ -23,7 +23,7 @@
         <put-attribute name="title" value="Users" />
         <put-attribute name="content" value="/WEB-INF/pages/users.addOrUpdate.jsp" />
     </definition>
-  <definition name="roles" extends="baseLayout">
+    <definition name="roles" extends="baseLayout">
         <put-attribute name="title" value="Roles" />
         <put-attribute name="content"
             value="/WEB-INF/pages/roles.jsp" />
@@ -64,9 +64,9 @@
         <put-attribute name="title" value="Thêm chuyến xe" />
         <put-attribute name="content" value="/WEB-INF/pages/trips.addOrUpdate.jsp" />
     </definition>
-    <definition name="trips.detail" extends="baseLayout">
-        <put-attribute name="title" value="Chi tiết chuyến xe" />
-        <put-attribute name="content" value="/WEB-INF/pages/trips.detail.jsp" />
+    <definition name="trips.find" extends="baseLayout">
+        <put-attribute name="title" value="Tìm kiếm chuyến xe" />
+        <put-attribute name="content" value="/WEB-INF/pages/trips.find.jsp" />
     </definition>
 
     <definition name="debug" extends="baseLayout">

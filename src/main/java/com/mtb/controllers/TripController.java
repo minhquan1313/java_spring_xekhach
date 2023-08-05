@@ -109,13 +109,6 @@ public class TripController {
     @PostMapping(value = "/trips/add")
     public String addOrUpdate(@ModelAttribute(value = "trip") @Valid Trip item,
             BindingResult rs) {
-
-        // BusSeats busSeats = new BusSeats();
-        // String seatListStr = formData.getParameter("selectedSeats");
-        // if (seatListStr != null && !seatListStr.isEmpty()) {
-        // busSeats.addMultiPosFromInput(seatListStr);
-        // }
-
         if (!rs.hasErrors()) {
             if (tripService.add(item)) {
                 return "redirect:/trips";
@@ -136,5 +129,11 @@ public class TripController {
         model.addAttribute("seatCount", count);
 
         return "trips.detail";
+    }
+
+    @GetMapping("/trips/find")
+    public String findForm(Model model) {
+
+        return "trips.find";
     }
 }

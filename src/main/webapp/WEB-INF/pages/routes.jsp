@@ -5,12 +5,14 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <section class="container mt-4">
     <div class="d-flex align-items-center">
-        <a href="#" class="invisible">Thêm tuyến</a>
+        <div class="invisible" style="flex: 1">x</div>
 
-        <h3 class="text-center w-100">Các tuyến xe</h3>
+        <h3 class="text-center">Các tuyến xe</h3>
 
-        <c:url value="/routes/add" var="createUrl" />
-        <a href="${createUrl}" class="btn btn-outline-info text-nowrap">Thêm tuyến</a>
+        <div class="d-flex justify-content-end" style="flex: 1">
+            <c:url value="/routes/add" var="createUrl" />
+            <a href="${createUrl}" class="btn btn-outline-info text-nowrap">Thêm tuyến</a>
+        </div>
     </div>
 
     <table class="table table-hover">

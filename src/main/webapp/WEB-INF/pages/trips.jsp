@@ -10,12 +10,16 @@
 <!--  -->
 <section class="container-fluid mt-4">
     <div class="d-flex align-items-center">
-        <a href="#" class="invisible">Thêm</a>
+        <div class="invisible" style="flex: 1">x</div>
 
-        <h3 class="text-center w-100">Các tuyến xe hiện có</h3>
-        <!-- here here here -->
-        <c:url value="/trips/add" var="createUrl" />
-        <a href="${createUrl}" class="btn btn-outline-info text-nowrap">Thêm</a>
+        <h3 class="text-center">Các tuyến xe hiện có</h3>
+        <div class="d-flex justify-content-end" style="flex: 1">
+            <c:url value="/trips/find" var="findUrl" />
+            <a href="${findUrl}" class="btn btn-outline-info text-nowrap">Tìm kiếm</a>
+
+            <c:url value="/trips/add" var="createUrl" />
+            <a href="${createUrl}" class="btn btn-outline-info text-nowrap">Thêm</a>
+        </div>
     </div>
 
     <table class="table table-hover">
@@ -40,7 +44,10 @@
                     <td>${item.routeId.startLocation}</td>
                     <td>${item.routeId.endLocation}</td>
                     <td>${item.driverId.lastName} ${item.driverId.firstName}</td>
-                    <td>${item.busId.licensePlate}</td>
+                    <td>
+                        <c:url value="/buses/${item.busId.id}" var="busDetail" />
+                        <a href="${busDetail}"> ${item.busId.licensePlate}</a>
+                    </td>
                     <td>${item.price}</td>
                     <td>
                         <c:url value="/trips/${item.id}" var="detailUrl" />

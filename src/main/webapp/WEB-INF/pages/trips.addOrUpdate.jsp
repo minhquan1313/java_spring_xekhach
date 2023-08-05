@@ -25,18 +25,13 @@
                 </span>
                 <form:select class="form-select" path="routeId">
                     <c:forEach items="${routes}" var="c">
-                        <c:choose>
-                            <c:when test="${c.id == trip.routeId.id}">
-                                <option value="${c.id}" selected>
-                                    ${c.startLocation} - ${c.endLocation}
-                                </option>
-                            </c:when>
-                            <c:otherwise>
-                                <option value="${c.id}">
-                                    ${c.startLocation} - ${c.endLocation}
-                                </option>
-                            </c:otherwise>
-                        </c:choose>
+                        <c:set value="" var="selected" />
+                        <c:if test="${c.id == trip.routeId.id}">
+                            <c:set value="selected" var="selected" />
+                        </c:if>
+                        <option value="${c.id}" selected>
+                            ${c.startLocation} - ${c.endLocation}
+                        </option>
                     </c:forEach>
                 </form:select>
             </div>
@@ -51,6 +46,7 @@
                 </span>
                 <form:select class="form-select" path="busId" id="busSelect">
                     <c:forEach items="${buses}" var="c">
+                        <c:set value="" var="selected" />
                         <c:if test="${c.id == trip.busId.id}">
                             <c:set value="selected" var="selected" />
                         </c:if>
@@ -81,12 +77,11 @@
                 </span>
                 <form:select class="form-select" path="driverId">
                     <c:forEach items="${drivers}" var="c">
+                        <c:set value="" var="selected" />
                         <c:if test="${c.id == trip.driverId.id}">
                             <c:set value="selected" var="selected" />
                         </c:if>
-                        <option value="${c.id}" ${selected}>
-                            ${c.lastName} ${c.firstName} - ${c.roleId.title}
-                        </option>
+                        <option value="${c.id}" ${selected}>${c.lastName} ${c.firstName}</option>
                     </c:forEach>
                 </form:select>
             </div>
@@ -94,25 +89,13 @@
         </div>
         <!-- startAt -->
         <div class="mb-3">
-            <div
-                class="input-group"
-                id="datetimepicker1"
-                data-td-target-input="nearest"
-                data-td-target-toggle="nearest"
-            >
+            <div class="input-group" id="datetimepicker1">
                 <span class="input-group-text">
                     <i class="bi bi-calendar-event"></i>
                 </span>
-                <input
-                    id="datetimepicker1Input"
-                    type="text"
-                    class="form-control"
-                    data-td-target="#datetimepicker1"
-                    readonly
-                />
+                <input id="datetimepicker1Input" type="text" class="form-control" readonly />
                 <span
                     class="input-group-text"
-                    data-td-target="#datetimepicker1"
                     data-td-toggle="datetimepicker"
                     style="cursor: pointer"
                 >
@@ -134,10 +117,6 @@
             </div>
             <form:errors path="price" element="div" cssClass="text-danger" />
         </div>
-
-        <c:if test="${trip.id == null}">
-            <section class="mb-3"></section>
-        </c:if>
 
         <button type="submit" class="btn btn-outline-info w-100">
             <c:choose>
