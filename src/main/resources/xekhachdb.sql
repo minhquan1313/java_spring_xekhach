@@ -248,11 +248,11 @@ DROP TABLE IF EXISTS `trip`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `trip` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `route_id` int DEFAULT NULL,
-  `driver_id` int DEFAULT NULL,
-  `bus_id` int DEFAULT NULL,
-  `start_at` timestamp NULL DEFAULT NULL,
-  `price` int DEFAULT NULL,
+  `route_id` int NOT NULL,
+  `driver_id` int NOT NULL,
+  `bus_id` int NOT NULL,
+  `start_at` timestamp NOT NULL,
+  `price` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `route_id` (`route_id`),
   KEY `driver_id` (`driver_id`),
@@ -313,4 +313,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-08-04 10:13:27
+-- Dump completed on 2023-08-05 15:58:19
