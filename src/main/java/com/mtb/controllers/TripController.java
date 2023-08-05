@@ -59,9 +59,15 @@ public class TripController {
     }
 
     // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-    @GetMapping("/trips/add")
-    public String addForm(Model model) {
-        model.addAttribute("trip", new Trip());
+    /**
+     * 
+     * @param model
+     * @param id    = 0 | ...
+     * @return
+     */
+    private String addOrEditForm(Model model, int id) {
+        Trip trip = id == 0 ? new Trip() : tripService.getById(id);
+        model.addAttribute("trip", trip);
 
         Map<String, String> params = new HashMap<>();
         params.put("orderBy", "startLocation");
@@ -83,12 +89,14 @@ public class TripController {
         return "trips.addOrUpdate";
     }
 
+    @GetMapping("/trips/add")
+    public String addForm(Model model) {
+        return addOrEditForm(model, 0);
+    }
+
     @GetMapping("/trips/edit/{id}")
     public String editForm(Model model, @PathVariable(value = "id") int id) {
-        Trip trip = tripService.getById(id);
-        model.addAttribute("trip", trip);
-
-        return "trips.addOrUpdate";
+        return addOrEditForm(model, id);
     }
 
     @PostMapping(value = "/trips/add")
