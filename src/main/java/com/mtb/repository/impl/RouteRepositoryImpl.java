@@ -43,9 +43,13 @@ public class RouteRepositoryImpl implements RouteRepository {
             String order = params.get("order");
 
             if (order != null && !order.isEmpty()) {
-                if (order != null && order == "desc")
-                    cq.orderBy(cb.desc(root.get(orderBy)), cb.asc(root.get(orderByAlt)));
-                else
+                if (order != null && order == "desc") {
+                    if (orderByAlt != null && !orderByAlt.isEmpty()) {
+                        cq.orderBy(cb.desc(root.get(orderBy)), cb.asc(root.get(orderByAlt)));
+                    } else {
+                        cq.orderBy(cb.desc(root.get(orderBy)));
+                    }
+                } else
                     cq.orderBy(cb.asc(root.get(orderBy)), cb.asc(root.get(orderByAlt)));
 
                 cq.where(predicates.toArray(Predicate[]::new));
