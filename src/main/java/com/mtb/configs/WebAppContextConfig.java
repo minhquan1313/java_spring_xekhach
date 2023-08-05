@@ -22,7 +22,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.mtb.formatter.BusFormatter;
 import com.mtb.formatter.RoleFormatter;
+import com.mtb.formatter.RouteFormatter;
+import com.mtb.formatter.UserFormatter;
 
 @Configuration
 @EnableWebMvc
@@ -46,6 +49,9 @@ public class WebAppContextConfig implements WebMvcConfigurer {
     @Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addFormatter(new RoleFormatter());
+        registry.addFormatter(new BusFormatter());
+        registry.addFormatter(new RouteFormatter());
+        registry.addFormatter(new UserFormatter());
     }
 
     // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

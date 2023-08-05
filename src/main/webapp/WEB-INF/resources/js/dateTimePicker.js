@@ -1,6 +1,8 @@
 function dateTimePicker(datetimepickerId, inputNameBind) {
     const input = document.querySelector(`input[name=${inputNameBind}]`);
 
+    const initDate = input.value ? new Date(input.value) : new Date();
+
     const userLocale =
         navigator.languages && navigator.languages.length
             ? navigator.languages[0]
@@ -8,7 +10,7 @@ function dateTimePicker(datetimepickerId, inputNameBind) {
 
     const picker = new tempusDominus.TempusDominus(document.getElementById(datetimepickerId), {
         restrictions: {
-            minDate: new Date(),
+            minDate: initDate,
         },
         display: {
             icons: {
@@ -103,6 +105,5 @@ function dateTimePicker(datetimepickerId, inputNameBind) {
         console.log({ year, month, date, hours, minutes, newLocal });
     });
 
-    const newDate = input.value ? new Date(input.value) : new Date();
-    picker.dates.setValue(tempusDominus.DateTime.convert(newDate));
+    picker.dates.setValue(tempusDominus.DateTime.convert(initDate));
 }

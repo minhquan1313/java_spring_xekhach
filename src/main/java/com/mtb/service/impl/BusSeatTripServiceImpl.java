@@ -38,30 +38,8 @@ public class BusSeatTripServiceImpl implements BusSeatTripService {
         return this.repository.getBusSeatsByBusAndTripId(busId, tripId);
     }
 
-    @Override
-    public boolean makeMultipleSeatTrip(int busId, int tripId, BusSeats busSeats) {
-        Bus b = busService.getById(busId);
-        Trip t = tripService.getById(tripId);
+    private List<BusSeatTrip> getBusSeatTripFromBusAndTripId(int busId, int tripId, BusSeats busSeats) {
         List<BusSeatTrip> l = new ArrayList<>();
-        for (Pos pos : busSeats.getArray()) {
-            BusSeatTrip item = new BusSeatTrip();
-
-            item.setBusId(b);
-            item.setTripId(t);
-            item.setBusSeatX(pos.getX());
-            item.setBusSeatY(pos.getY());
-            item.setAvailable(true);
-
-            l.add(item);
-        }
-
-        return this.repository.makeMultipleSeatTrip(l);
-    }
-
-    @Override
-    public boolean editMultipleSeatTrip(int busId, int tripId, BusSeats busSeats) {
-        List<BusSeatTrip> l = new ArrayList<>();
-
         Bus b = busService.getById(busId);
         Trip t = tripService.getById(tripId);
 
@@ -76,6 +54,20 @@ public class BusSeatTripServiceImpl implements BusSeatTripService {
 
             l.add(item);
         }
+
+        return l;
+    }
+
+    @Override
+    public boolean makeOrEditMultipleSeatTrip(int busId, int tripId, BusSeats busSeats) {
+        List<BusSeatTrip> l = this.getBusSeatTripFromBusAndTripId(busId, tripId, busSeats);
+
+        return this.repository.makeMultipleSeatTrip(l);
+    }
+
+    @Override
+    public boolean editMultipleSeatTrip(int busId, int tripId, BusSeats busSeats) {
+        List<BusSeatTrip> l = this.getBusSeatTripFromBusAndTripId(busId, tripId, busSeats);
 
         return this.repository.editMultipleSeatTrip(l);
 

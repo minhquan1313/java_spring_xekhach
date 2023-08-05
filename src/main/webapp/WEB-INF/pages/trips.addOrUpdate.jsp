@@ -4,6 +4,8 @@
 <!--  -->
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!--  -->
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<!--  -->
 <%@page contentType="text/html" pageEncoding="UTF-8"%> add or update
 <section class="container pt-4 my-auto h-100">
     <c:url value="/trips/add" var="action" />
@@ -42,26 +44,49 @@
 
         <!-- Bus -->
         <div class="mb-3">
+            <div class="input-group mb-2">
+                <form:select class="form-select" path="busId" id="busSelect">
+                    <c:forEach items="${buses}" var="c">
+                        <c:if test="${c.id == trip.busId.id}">
+                            <c:set value="selected" var="selected" />
+                        </c:if>
+                        <option value="${c.id}" data-image="${c.image}" ${selected}>
+                            ${c.licensePlate} - ${fn:length(c.busSeatTemplateSet)} chỗ
+                        </option>
+                    </c:forEach>
+                </form:select>
+            </div>
+            <div class="col col-md-6 mx-auto">
+                <div class="">
+                    <img
+                        id="busImg"
+                        src="?"
+                        class="img-thumbnail rounded d-block w-100 object-fit-contain"
+                        alt="..."
+                    />
+                </div>
+            </div>
+            <form:errors path="busId" element="div" cssClass="text-danger" />
+        </div>
+        <!-- driverId -->
+        <div class="mb-3">
             <div class="input-group">
                 <span class="input-group-text">
                     <i class="bi bi-dash-square-fill"></i>
                 </span>
-                <form:select class="form-select" path="busId">
-                    <c:forEach items="${buses}" var="c">
-                        <c:choose>
-                            <c:when test="${c.id == trip.busId.id}">
-                                <option value="${c.id}" selected>${c.licensePlate}</option>
-                            </c:when>
-                            <c:otherwise>
-                                <option value="${c.id}">${c.licensePlate}</option>
-                            </c:otherwise>
-                        </c:choose>
+                <form:select class="form-select" path="driverId">
+                    <c:forEach items="${drivers}" var="c">
+                        <c:if test="${c.id == trip.driverId.id}">
+                            <c:set value="selected" var="selected" />
+                        </c:if>
+                        <option value="${c.id}" ${selected}>
+                            ${c.lastName} ${c.firstName} - ${c.roleId.title}
+                        </option>
                     </c:forEach>
                 </form:select>
             </div>
-            <form:errors path="busId" element="div" cssClass="text-danger" />
+            <form:errors path="driverId" element="div" cssClass="text-danger" />
         </div>
-
         <!-- startAt -->
         <div class="mb-3">
             <div
@@ -78,6 +103,7 @@
                     type="text"
                     class="form-control"
                     data-td-target="#datetimepicker1"
+                    readonly
                 />
                 <span
                     class="input-group-text"
@@ -119,4 +145,18 @@
 <script src="${script}"></script>
 <script>
     dateTimePicker("datetimepicker1", "startAt");
+
+    const busImg = document.getElementById("busImg");
+    const busSelect = document.getElementById("busSelect");
+    setImage(busImg, busSelect);
+
+    busSelect.addEventListener("change", (e) => setImage(busImg, busSelect));
+
+    function setImage(img, select) {
+        const selected = select.selectedOptions[0];
+        const url = selected.getAttribute("data-image");
+        img.src = url;
+
+        console.log({ selected, url });
+    }
 </script>

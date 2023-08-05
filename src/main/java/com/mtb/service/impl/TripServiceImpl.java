@@ -40,9 +40,10 @@ public class TripServiceImpl implements TripService {
         boolean isTripAdded = repository.addOrUpdate(item);
 
         BusSeats busSeats = busSeatTemplateService.getBusSeatsByBusId(item.getBusId().getId());
+        busSeats.getArray().forEach(r -> r.setAvailable(true));
 
         boolean isSeatsAdded = busSeatTripService
-                .makeMultipleSeatTrip(item.getBusId().getId(), item.getId(), busSeats);
+                .makeOrEditMultipleSeatTrip(item.getBusId().getId(), item.getId(), busSeats);
 
         return isTripAdded && isSeatsAdded;
     }

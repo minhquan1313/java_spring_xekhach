@@ -7,6 +7,10 @@ import com.mtb.myObject.BusSeats;
 import com.mtb.pojo.Bus;
 
 public interface BusService {
+    /**
+     * params:
+     * getSeats : boolean |
+     */
     List<Bus> getList(Map<String, String> params);
 
     Bus getById(int id);

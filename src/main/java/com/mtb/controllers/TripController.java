@@ -21,9 +21,10 @@ import com.mtb.myObject.BusSeats;
 import com.mtb.pojo.Bus;
 import com.mtb.pojo.Route;
 import com.mtb.pojo.Trip;
+import com.mtb.pojo.User;
+import com.mtb.service.BusSeatTemplateService;
 import com.mtb.service.BusSeatTripService;
 import com.mtb.service.BusService;
-import com.mtb.service.RoleService;
 import com.mtb.service.RouteService;
 import com.mtb.service.TripService;
 import com.mtb.service.UserService;
@@ -38,6 +39,9 @@ public class TripController {
     private BusSeatTripService busSeatTripService;
 
     @Autowired
+    private BusSeatTemplateService busSeatTemplateService;
+
+    @Autowired
     private RouteService routeService;
 
     @Autowired
@@ -45,9 +49,6 @@ public class TripController {
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private RoleService roleService;
 
     @RequestMapping("/trips")
     public String index(Model model, @RequestParam Map<String, String> params) {
@@ -64,18 +65,20 @@ public class TripController {
 
         Map<String, String> params = new HashMap<>();
         params.put("orderBy", "startLocation");
-        // asc | desc
+        params.put("orderByAlt", "endLocation");
         params.put("order", "asc");
-
         List<Route> routes = routeService.getList(params);
         model.addAttribute("routes", routes);
 
-        List<Bus> busList = busService.getList(null);
+        Map<String, String> busParams = new HashMap<>();
+        busParams.put("getSeats", "");
+        List<Bus> busList = busService.getList(busParams);
         model.addAttribute("buses", busList);
 
-        roleService.getRoles(null);
-        userService.getUsers(null);
-        // model.addAttribute("drivers", busList);
+        Map<String, String> userParams = new HashMap<>();
+        userParams.put("roleId", "3");
+        List<User> drivers = userService.getUsers(userParams);
+        model.addAttribute("drivers", drivers);
 
         return "trips.addOrUpdate";
     }
@@ -89,7 +92,7 @@ public class TripController {
     }
 
     @PostMapping(value = "/trips/add")
-    public String addOrUpdate(Model model, @ModelAttribute(value = "bus") @Valid Trip item,
+    public String addOrUpdate(@ModelAttribute(value = "trip") @Valid Trip item,
             BindingResult rs) {
 
         // BusSeats busSeats = new BusSeats();
