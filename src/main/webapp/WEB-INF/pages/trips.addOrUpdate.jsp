@@ -114,6 +114,7 @@
                     class="input-group-text"
                     data-td-target="#datetimepicker1"
                     data-td-toggle="datetimepicker"
+                    style="cursor: pointer"
                 >
                     <i class="bi bi-calendar-plus"></i>
                 </span>
