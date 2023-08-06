@@ -130,7 +130,11 @@
 <c:url value="/js/dateTimePicker.js" var="dateTimePicker" />
 <script src="${dateTimePicker}"></script>
 <script>
-    dateTimePicker({ dateTimePickerId: "datetimepicker1", inputNameBind: "startAt" });
+    dateTimePicker({
+        dateTimePickerId: "datetimepicker1",
+        inputNameBind: "startAt",
+        minDate: new Date(),
+    });
 
     const busImage = document.getElementById("busImage");
     const busSelect = document.getElementById("busSelect");

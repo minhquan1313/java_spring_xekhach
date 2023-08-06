@@ -1,16 +1,18 @@
-function dateTimePicker({ dateTimePickerId, inputNameBind }) {
+"use strict";
+function dateTimePicker({ dateTimePickerId, inputNameBind, initTime, minDate }) {
     const input = document.querySelector(`input[name=${inputNameBind}]`);
-
-    const initDate = input.value ? new Date(input.value) : new Date();
-
+    if (!input) {
+        console.error("No input");
+        return;
+    }
+    const initDate = input.value ? new Date(input.value) : initTime ?? new Date();
     const userLocale =
         navigator.languages && navigator.languages.length
             ? navigator.languages[0]
             : navigator.language;
-
     const picker = new tempusDominus.TempusDominus(document.getElementById(dateTimePickerId), {
         restrictions: {
-            minDate: initDate,
+            minDate: minDate,
         },
         display: {
             icons: {
@@ -21,7 +23,7 @@ function dateTimePicker({ dateTimePickerId, inputNameBind }) {
                 down: "bi bi-arrow-down-short",
                 previous: "bi bi-arrow-left-short",
                 next: "bi bi-arrow-right-short",
-                today: "bi bi-calendar-check",
+                today: "bi bi-calendar-event",
                 clear: "bi bi-x",
                 close: "bi bi-x-square",
             },
@@ -45,7 +47,6 @@ function dateTimePicker({ dateTimePickerId, inputNameBind }) {
                 hours: true,
                 minutes: true,
                 seconds: false,
-                useTwentyfourHour: undefined,
             },
             inline: false,
             theme: "auto",
@@ -77,7 +78,7 @@ function dateTimePicker({ dateTimePickerId, inputNameBind }) {
             selectTime: "Chọn giờ",
             selectDate: "Chọn ngày",
             dayViewHeaderFormat: { month: "long", year: "2-digit" },
-            locale: userLocale,
+            locale: "vi-VN" || userLocale,
             startOfTheWeek: 1,
             hourCycle: "h12",
             dateFormats: {
@@ -92,18 +93,13 @@ function dateTimePicker({ dateTimePickerId, inputNameBind }) {
             format: "LL",
         },
     });
-
     picker.subscribe(tempusDominus.Namespace.events.change, (e) => {
         const { year, month, date, hours, minutes } = e.date;
-
         const newLocal = new Date(year, month, date, hours, minutes);
-
-        input.value = newLocal;
-
-        console.log(e);
-        console.log(input.value);
-        console.log({ year, month, date, hours, minutes, newLocal });
+        input.value = newLocal.getTime().toString();
+        input.disabled = false;
     });
+    input.disabled = true;
 
-    picker.dates.setValue(tempusDominus.DateTime.convert(initDate));
+    initDate && picker.dates.setValue(tempusDominus.DateTime.convert(initDate));
 }

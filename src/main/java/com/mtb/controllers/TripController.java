@@ -133,6 +133,12 @@ public class TripController {
 
     @GetMapping("/trips/find")
     public String findForm(Model model) {
+        model.addAttribute("routesStart", "");
+        model.addAttribute("routesEnd", "");
+        model.addAttribute("buses", "");
+        model.addAttribute("drivers", "");
+        model.addAttribute("fromPrice", "");
+        model.addAttribute("toPrice", "");
 
         return "trips.find";
     }

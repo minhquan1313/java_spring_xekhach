@@ -17,7 +17,7 @@
                 <span class="input-group-text">
                     <i class="bi bi-cursor"></i>
                 </span>
-                <select class="form-select" name="startLocation">
+                <select class="form-select" id="startLocation">
                     <option value="" selected disabled>Chọn điểm đi</option>
 
                     <c:forEach items="${routesStart}" var="c">
@@ -25,13 +25,14 @@
                     </c:forEach>
                 </select>
             </div>
+            <input type="hidden" name="startLocation" />
         </div>
         <div class="mb-3">
             <div class="input-group">
                 <span class="input-group-text">
                     <i class="bi bi-geo-fill"></i>
                 </span>
-                <select class="form-select" name="endLocation">
+                <select class="form-select" id="endLocation">
                     <option value="" selected disabled>Chọn điểm đến</option>
 
                     <c:forEach items="${routesEnd}" var="c">
@@ -39,6 +40,7 @@
                     </c:forEach>
                 </select>
             </div>
+            <input type="hidden" name="endLocation" />
         </div>
 
         <!-- Bus -->
@@ -47,7 +49,7 @@
                 <span class="input-group-text">
                     <i class="bi bi-bus-front-fill"></i>
                 </span>
-                <select class="form-select" name="busId">
+                <select class="form-select" id="busId">
                     <option value="" selected disabled>Chọn xe khách</option>
 
                     <c:forEach items="${buses}" var="c">
@@ -57,28 +59,19 @@
                     </c:forEach>
                 </select>
             </div>
+            <input type="hidden" name="busId" />
         </div>
 
         <!-- price -->
         <div class="mb-3">
             <div class="input-group mb-3">
                 <span class="input-group-text">Khoảng giá</span>
-                <input
-                    type="text"
-                    id="fromPrice"
-                    name="fromPrice"
-                    class="form-control"
-                    placeholder="Từ"
-                />
+                <input type="text" id="fromPrice" class="form-control" placeholder="Từ" />
                 <span class="input-group-text">-</span>
-                <input
-                    type="text"
-                    id="toPrice"
-                    name="toPrice"
-                    class="form-control"
-                    placeholder="Đến"
-                />
+                <input type="text" id="toPrice" class="form-control" placeholder="Đến" />
             </div>
+            <input type="hidden" name="fromPrice" />
+            <input type="hidden" name="toPrice" />
 
             <div class="range-slide">
                 <div class="slide bg-secondary">
@@ -100,6 +93,7 @@
                     <style>
                         :root {
                             --height: 4px;
+                            --thumb-size: 18px;
                         }
 
                         .range-slide {
@@ -135,9 +129,11 @@
                             outline: none;
                             top: 50%;
                             transform: translateY(-50%);
-                            height: 18px;
-                            width: 18px;
-                            margin-left: -9px;
+                            height: var(--thumb-size);
+                            width: var(--thumb-size);
+                        }
+                        .thumb#thumbMax {
+                            transform: translate(-100%, -50%);
                         }
 
                         input[type="range"] {
@@ -146,7 +142,7 @@
                             position: absolute;
                             pointer-events: none;
                             z-index: 3;
-                            height: 3px;
+                            height: var(--height);
                             top: 0;
                             width: 100%;
                             opacity: 0;
@@ -159,13 +155,13 @@
                             pointer-events: all;
                             border-radius: 50%;
                             cursor: pointer;
-                            width: 18px;
-                            height: 18px;
+                            width: var(--thumb-size);
+                            height: var(--thumb-size);
                         }
                     </style>
                     <script>
-                        const minInit = document.getElementById("rangeMin").min;
-                        const maxInit = document.getElementById("rangeMin").max;
+                        const minInit = parseInt(document.getElementById("rangeMin").min);
+                        const maxInit = parseInt(document.getElementById("rangeMin").max);
                         const gap = maxInit / 10;
 
                         let min = minInit;
@@ -181,7 +177,8 @@
                         $("#rangeMin").on("input", rangeMinHandler);
                         $("#rangeMax").on("input", rangeMaxHandler);
                         function rangeMinHandler() {
-                            const newValue = this.value;
+                            const newValue = parseInt(this.value);
+                            // console.log({ newValue, min, max, b: newValue + gap > max });
                             if (newValue + gap > max) {
                                 $(this).val(min);
                                 return;
@@ -192,10 +189,12 @@
                                 left: calcLeftPosition(newValue) + "%",
                                 right: 100 - calcLeftPosition(max) + "%",
                             });
-                            $("#fromPrice").val(min);
+                            $("input[name=fromPrice]").val(max);
+                            $("#fromPrice").val(min.toLocaleString());
                         }
                         function rangeMaxHandler() {
-                            const newValue = this.value;
+                            const newValue = parseInt(this.value);
+                            // console.log({ newValue, min, max, b: newValue - gap < min });
                             if (newValue - gap < min) {
                                 $(this).val(max);
                                 return;
@@ -206,7 +205,8 @@
                                 left: calcLeftPosition(min) + "%",
                                 right: 100 - calcLeftPosition(newValue) + "%",
                             });
-                            $("#toPrice").val(max);
+                            $("input[name=toPrice]").val(max);
+                            $("#toPrice").val(max.toLocaleString());
                         }
                     </script>
                 </div>
@@ -220,7 +220,7 @@
                     <i class="bi bi-person-rolodex"></i>
                 </span>
 
-                <select class="form-select" name="driverId">
+                <select class="form-select" id="driverId">
                     <option value="" selected disabled>Chọn tài xế</option>
 
                     <c:forEach items="${drivers}" var="c">
@@ -228,73 +228,52 @@
                     </c:forEach>
                 </select>
             </div>
+            <input type="hidden" name="driverId" />
         </div>
 
         <!-- startAt -->
         <div class="mb-3 row">
-            <div id="datetimepickerFrom" class="input-group col col-md-6">
-                <span class="input-group-text"> Từ </span>
-                <input type="hidden" name="timeFrom" />
-                <input id="datetimepickerFromInput" type="text" class="form-control" readonly />
+            <div class="col col-md-6">
+                <div id="dateTimePickerFrom" class="input-group">
+                    <span class="input-group-text"> Từ </span>
+                    <input type="text" class="form-control" readonly />
+                </div>
             </div>
 
-            <div id="datetimepickerTo" class="input-group col col-md-6">
-                <span class="input-group-text"> Đến </span>
-                <input type="hidden" name="timeTo" />
-                <input id="datetimepickerToInput" type="text" class="form-control" readonly />
+            <div class="col col-md-6">
+                <div id="dateTimePickerTo" class="input-group">
+                    <span class="input-group-text"> Đến </span>
+                    <input type="text" class="form-control" readonly />
+                </div>
             </div>
-        </div>
-        <!-- here here here  -->
-        <div class="mb-3">
-            <div
-                class="input-group"
-                id="datetimepicker1"
-                data-td-target-input="nearest"
-                data-td-target-toggle="nearest"
-            >
-                <span class="input-group-text">
-                    <i class="bi bi-calendar-event"></i>
-                </span>
-                <input
-                    id="datetimepicker1Input"
-                    type="text"
-                    class="form-control"
-                    data-td-target="#datetimepicker1"
-                    readonly
-                />
-                <span
-                    class="input-group-text"
-                    data-td-target="#datetimepicker1"
-                    data-td-toggle="datetimepicker"
-                    style="cursor: pointer"
-                >
-                    <i class="bi bi-calendar-plus"></i>
-                </span>
-            </div>
-            <hidden path="startAt" />
-            <errors path="startAt" element="div" cssClass="text-danger" />
+
+            <input type="hidden" name="timeFrom" />
+            <input type="hidden" name="timeTo" />
         </div>
 
         <button type="submit" class="btn btn-outline-info w-100">Tìm</button>
     </form>
 </section>
 
+<c:url value="/js/selectBindInput.js" var="selectBindInput" />
+<script src="${selectBindInput}"></script>
+
 <c:url value="/js/dateTimePicker.js" var="dateTimePicker" />
 <script src="${dateTimePicker}"></script>
 <script>
-    // dateTimePicker({ dateTimePickerId: "datetimepicker1", inputNameBind: "startAt" });
+    dateTimePicker({
+        dateTimePickerId: "dateTimePickerFrom",
+        inputNameBind: "timeFrom",
+        initTime: "",
+    });
+    dateTimePicker({
+        dateTimePickerId: "dateTimePickerTo",
+        inputNameBind: "timeTo",
+        initTime: "",
+    });
 
-    // const busImage = document.getElementById("busImage");
-    // const busSelect = document.getElementById("busSelect");
-    // setImage(busImage, busSelect);
-
-    // busSelect.addEventListener("change", (e) => setImage(busImage, busSelect));
-
-    // function setImage(img, select) {
-    //     const selected = select.selectedOptions[0];
-    //     const url = selected.getAttribute("data-image");
-    //     img.src = url;
-
-    //     console.log({ selected, url });
-    // }
+    selectBindInput({ selectId: "startLocation", inputBindName: "startLocation" });
+    selectBindInput({ selectId: "endLocation", inputBindName: "endLocation" });
+    selectBindInput({ selectId: "busId", inputBindName: "busId" });
+    selectBindInput({ selectId: "driverId", inputBindName: "driverId" });
 </script>
