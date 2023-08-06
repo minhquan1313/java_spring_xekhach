@@ -21,7 +21,7 @@
                     <option value="" selected disabled>Chọn điểm đi</option>
 
                     <c:forEach items="${routesStart}" var="c">
-                        <option value="${c.id}">${c.startLocation}</option>
+                        <option value="${c.startLocation}">${c.startLocation}</option>
                     </c:forEach>
                 </select>
             </div>
@@ -36,7 +36,7 @@
                     <option value="" selected disabled>Chọn điểm đến</option>
 
                     <c:forEach items="${routesEnd}" var="c">
-                        <option value="${c.id}">${c.endLocation}</option>
+                        <option value="${c.endLocation}">${c.endLocation}</option>
                     </c:forEach>
                 </select>
             </div>
@@ -173,56 +173,6 @@
                             height: var(--thumb-size);
                         }
                     </style>
-                    <script>
-                        const minInit = parseInt(document.getElementById("rangeMin").min);
-                        const maxInit = parseInt(document.getElementById("rangeMin").max);
-                        const gap = maxInit / 10;
-
-                        let min = minInit;
-                        let max = maxInit;
-
-                        rangeMinHandler.call($("#rangeMin")[0]);
-                        rangeMaxHandler.call($("#rangeMax")[0]);
-
-                        function calcLeftPosition(value) {
-                            return (value * 100) / maxInit;
-                        }
-
-                        $("#rangeMin").on("input", rangeMinHandler);
-                        $("#rangeMax").on("input", rangeMaxHandler);
-                        function rangeMinHandler() {
-                            const newValue = parseInt(this.value);
-                            // console.log({ newValue, min, max, b: newValue + gap > max });
-                            if (newValue + gap > max) {
-                                $(this).val(min);
-                                return;
-                            }
-                            min = newValue;
-                            $("#thumbMin").css("left", calcLeftPosition(newValue) + "%");
-                            $("#line").css({
-                                left: calcLeftPosition(newValue) + "%",
-                                right: 100 - calcLeftPosition(max) + "%",
-                            });
-                            $("input[name=fromPrice]").val(max);
-                            $("#fromPrice").val(min.toLocaleString());
-                        }
-                        function rangeMaxHandler() {
-                            const newValue = parseInt(this.value);
-                            // console.log({ newValue, min, max, b: newValue - gap < min });
-                            if (newValue - gap < min) {
-                                $(this).val(max);
-                                return;
-                            }
-                            max = newValue;
-                            $("#thumbMax").css("left", calcLeftPosition(newValue) + "%");
-                            $("#line").css({
-                                left: calcLeftPosition(min) + "%",
-                                right: 100 - calcLeftPosition(newValue) + "%",
-                            });
-                            $("input[name=toPrice]").val(max);
-                            $("#toPrice").val(max.toLocaleString());
-                        }
-                    </script>
                 </div>
             </div>
         </div>
@@ -268,7 +218,68 @@
         <button type="submit" class="btn btn-outline-info w-100">Tìm</button>
     </form>
 </section>
+<script>
+    const minInit = parseInt(document.getElementById("rangeMin").min);
+    const maxInit = parseInt(document.getElementById("rangeMin").max);
+    const gap = maxInit / 10;
 
+    let min = minInit;
+    let max = maxInit;
+
+    $("input[name=fromPrice]").attr("disabled", "");
+    $("input[name=toPrice]").attr("disabled", "");
+    rangeMinHandler.call($("#rangeMin")[0]);
+    rangeMaxHandler.call($("#rangeMax")[0]);
+
+    function calcLeftPosition(value) {
+        return (value * 100) / maxInit;
+    }
+
+    $("#rangeMin").on("input", rangeMinHandler);
+    $("#rangeMax").on("input", rangeMaxHandler);
+    function rangeMinHandler() {
+        const newValue = parseInt(this.value);
+        // console.log({ newValue, min, max, b: newValue + gap > max });
+        if (newValue + gap > max) {
+            $(this).val(min);
+            return;
+        }
+        min = newValue;
+        $("#thumbMin").css("left", calcLeftPosition(newValue) + "%");
+        $("#line").css({
+            left: calcLeftPosition(newValue) + "%",
+            right: 100 - calcLeftPosition(max) + "%",
+        });
+        $("#fromPrice").val(min.toLocaleString());
+
+        // console.log(min != minInit);
+        if (min != minInit) {
+            $("input[name=fromPrice]").val(min);
+            $("input[name=fromPrice]").removeAttr("disabled");
+        }
+    }
+    function rangeMaxHandler() {
+        const newValue = parseInt(this.value);
+        // console.log({ newValue, min, max, b: newValue - gap < min });
+        if (newValue - gap < min) {
+            $(this).val(max);
+            return;
+        }
+        max = newValue;
+        $("#thumbMax").css("left", calcLeftPosition(newValue) + "%");
+        $("#line").css({
+            left: calcLeftPosition(min) + "%",
+            right: 100 - calcLeftPosition(newValue) + "%",
+        });
+        $("#toPrice").val(max.toLocaleString());
+
+        // console.log(max != maxInit);
+        if (max != maxInit) {
+            $("input[name=toPrice]").val(max);
+            $("input[name=toPrice]").removeAttr("disabled");
+        }
+    }
+</script>
 <c:url value="/js/selectBindInput.js" var="selectBindInput" />
 <script src="${selectBindInput}"></script>
 

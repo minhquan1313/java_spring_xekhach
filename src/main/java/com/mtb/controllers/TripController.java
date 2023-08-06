@@ -52,6 +52,14 @@ public class TripController {
     @Autowired
     private Environment env;
 
+    /**
+     * 
+     * @param model
+     * @param params
+     *               startLocation | endLocation | busId | fromPrice | toPrice |
+     *               driverId | timeFrom | timeTo
+     * @return
+     */
     @RequestMapping("/trips")
     public String index(Model model, @RequestParam Map<String, String> params) {
         List<Trip> list = tripService.getList(params);
@@ -145,9 +153,12 @@ public class TripController {
         List<User> drivers = userService.getUsers(userParams);
         model.addAttribute("drivers", drivers);
 
-        model.addAttribute("fromPrice", tripService.getLowestPrice());
+        model.addAttribute("fromPrice", 0);
 
-        model.addAttribute("toPrice", tripService.getHightestPrice());
+        // model.addAttribute("fromPrice", tripService.getLowestPrice());
+        int hightestPrice = tripService.getHightestPrice();
+        int toPrice = (int) Math.floor((0.0 + hightestPrice) / 1000) * 1000;
+        model.addAttribute("toPrice", toPrice);
 
         return "trips.find";
     }

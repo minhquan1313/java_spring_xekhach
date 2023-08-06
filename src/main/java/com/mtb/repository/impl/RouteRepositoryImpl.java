@@ -55,6 +55,17 @@ public class RouteRepositoryImpl implements RouteRepository {
 
                 cq.where(predicates.toArray(Predicate[]::new));
             }
+            String start_location = params.get("start_location");
+            if (start_location != null && !start_location.isEmpty()) {
+                predicates.add(cb.like(route.get("startLocation"), "%%" + start_location + "%%"));
+
+            }
+
+            String end_location = params.get("end_location");
+            if (end_location != null && !end_location.isEmpty()) {
+                predicates.add(cb.like(route.get("endLocation"), "%%" + end_location + "%%"));
+            }
+            cq.where(predicates.toArray(Predicate[]::new));
         }
 
         Query query = session.createQuery(cq);

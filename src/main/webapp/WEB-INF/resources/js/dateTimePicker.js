@@ -96,7 +96,7 @@ function dateTimePicker({ dateTimePickerId, inputNameBind, initTime, minDate }) 
     picker.subscribe(tempusDominus.Namespace.events.change, (e) => {
         const { year, month, date, hours, minutes } = e.date;
         const newLocal = new Date(year, month, date, hours, minutes);
-        input.value = newLocal.getTime().toString();
+        input.value = newLocal.toString();
         input.disabled = false;
     });
     input.disabled = true;

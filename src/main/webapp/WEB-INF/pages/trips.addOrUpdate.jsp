@@ -29,7 +29,7 @@
                         <c:if test="${c.id == trip.routeId.id}">
                             <c:set value="selected" var="selected" />
                         </c:if>
-                        <option value="${c.id}" selected>
+                        <option value="${c.id}" ${selected}>
                             ${c.startLocation} - ${c.endLocation}
                         </option>
                     </c:forEach>

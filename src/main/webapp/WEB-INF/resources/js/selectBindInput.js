@@ -7,17 +7,18 @@ function selectBindInput({ selectId, inputBindName }) {
         return;
     }
 
-    select?.addEventListener("change", () => bindDataHandler(input));
+    select?.addEventListener("change", bindDataHandler);
 
     input.disabled = true;
 
     if (select.selectedOptions[0].value) {
-        input.disabled = false;
     }
 
-    function bindDataHandler(input) {
-        const value = this.value;
+    function bindDataHandler() {
+        const value = this.selectedOptions?.[0].value;
+        console.log({ x: this, input, value });
 
         input.value = value;
+        if (value != "") input.disabled = false;
     }
 }

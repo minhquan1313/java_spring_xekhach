@@ -48,7 +48,13 @@
                         <c:url value="/buses/${item.busId.id}" var="busDetail" />
                         <a href="${busDetail}"> ${item.busId.licensePlate}</a>
                     </td>
-                    <td>${item.price}</td>
+                    <td>
+                        <fmt:formatNumber
+                            type="number"
+                            maxFractionDigits="0"
+                            value="${item.price}"
+                        />
+                    </td>
                     <td>
                         <c:url value="/trips/${item.id}" var="detailUrl" />
                         <a href="${detailUrl}" class="btn btn-primary">Xem chi tiết</a>
