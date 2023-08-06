@@ -33,7 +33,8 @@ public class RouteRepositoryImpl implements RouteRepository {
         Session session = this.factory.getObject().getCurrentSession();
         CriteriaBuilder cb = session.getCriteriaBuilder();
         CriteriaQuery<Route> cq = cb.createQuery(Route.class);
-        Root root = cq.from(Route.class);
+        Root route = cq.from(Route.class);
+        cq.select(route);
 
         if (params != null) {
             List<Predicate> predicates = new ArrayList<>();
@@ -45,15 +46,26 @@ public class RouteRepositoryImpl implements RouteRepository {
             if (order != null && !order.isEmpty()) {
                 if (order != null && order == "desc") {
                     if (orderByAlt != null && !orderByAlt.isEmpty()) {
-                        cq.orderBy(cb.desc(root.get(orderBy)), cb.asc(root.get(orderByAlt)));
+                        cq.orderBy(cb.desc(route.get(orderBy)), cb.asc(route.get(orderByAlt)));
                     } else {
-                        cq.orderBy(cb.desc(root.get(orderBy)));
+                        cq.orderBy(cb.desc(route.get(orderBy)));
                     }
                 } else
-                    cq.orderBy(cb.asc(root.get(orderBy)), cb.asc(root.get(orderByAlt)));
+                    cq.orderBy(cb.asc(route.get(orderBy)), cb.asc(route.get(orderByAlt)));
 
                 cq.where(predicates.toArray(Predicate[]::new));
             }
+            String start_location = params.get("start_location");
+            if (start_location != null && !start_location.isEmpty()) {
+                predicates.add(cb.like(route.get("startLocation"), "%%" + start_location + "%%"));
+
+            }
+
+            String end_location = params.get("end_location");
+            if (end_location != null && !end_location.isEmpty()) {
+                predicates.add(cb.like(route.get("endLocation"), "%%" + end_location + "%%"));
+            }
+            cq.where(predicates.toArray(Predicate[]::new));
         }
 
         Query query = session.createQuery(cq);
@@ -104,5 +116,33 @@ public class RouteRepositoryImpl implements RouteRepository {
         } catch (HibernateException e) {
             return false;
         }
+    }
+
+    @Override
+    public List<Route> getListStart() {
+        Session session = this.factory.getObject().getCurrentSession();
+        // SELECT *
+        // FROM route
+        // WHERE id IN (
+        // SELECT MIN(id) as id
+        // FROM route
+        // GROUP BY start_location
+        // )
+        Query query = session
+                .createQuery(
+                        "FROM Route WHERE id IN (SELECT MIN(id) as id FROM Route GROUP BY startLocation) ORDER BY startLocation ASC");
+        List<Route> resultList = query.getResultList();
+        return resultList;
+    }
+
+    @Override
+    public List<Route> getListEnd() {
+        Session session = this.factory.getObject().getCurrentSession();
+
+        Query query = session
+                .createQuery(
+                        "FROM Route WHERE id IN (SELECT MIN(id) as id FROM Route GROUP BY endLocation) ORDER BY endLocation ASC");
+        List<Route> resultList = query.getResultList();
+        return resultList;
     }
 }

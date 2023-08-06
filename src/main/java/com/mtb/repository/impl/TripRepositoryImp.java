@@ -1,12 +1,15 @@
 package com.mtb.repository.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -18,11 +21,12 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mtb.pojo.Route;
 import com.mtb.pojo.Trip;
+import com.mtb.pojo.Trip_;
 import com.mtb.repository.TripRepository;
 import com.mtb.service.BusSeatTripService;
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
+import com.mtb.service.RouteService;
 
 @Repository
 @Transactional
@@ -34,15 +38,85 @@ public class TripRepositoryImp implements TripRepository {
     @Autowired
     private BusSeatTripService busSeatTripService;
 
+    @Autowired
+    private RouteService routeService;
+
+    /**
+     * params: startLocation | endLocation | busId | fromPrice | toPrice |
+     * driverId | timeFrom | timeTo
+     */
     @Override
     public List<Trip> getList(Map<String, String> params) {
         Session session = this.factory.getObject().getCurrentSession();
         CriteriaBuilder cb = session.getCriteriaBuilder();
         CriteriaQuery<Trip> cq = cb.createQuery(Trip.class);
-        Root root = cq.from(Trip.class);
+        Root trip = cq.from(Trip.class);
 
-        if (params != null) {
+        if (params != null && !params.isEmpty()) {
             List<Predicate> predicates = new ArrayList<>();
+
+            String startLocation = params.get("startLocation");
+            if (startLocation != null && !startLocation.isEmpty()) {
+                Expression<String> routeId = trip.get(Trip_.routeId);
+                Map<String, String> routeParams = new HashMap<>();
+                routeParams.put("start_location", startLocation);
+
+                List<Route> routesToMatch = routeService.getList(routeParams);
+                List<Integer> routeIdToMatch = new ArrayList<>();
+                for (Route r : routesToMatch) {
+                    routeIdToMatch.add(r.getId());
+                }
+
+                predicates.add(routeId.in(routeIdToMatch));
+            }
+
+            String endLocation = params.get("endLocation");
+            if (endLocation != null && !endLocation.isEmpty()) {
+                Expression<String> routeId = trip.get(Trip_.routeId);
+                Map<String, String> routeParams = new HashMap<>();
+                routeParams.put("end_location", endLocation);
+
+                List<Route> routesToMatch = routeService.getList(routeParams);
+                List<Integer> routeIdToMatch = new ArrayList<>();
+                for (Route r : routesToMatch) {
+                    routeIdToMatch.add(r.getId());
+                }
+
+                predicates.add(routeId.in(routeIdToMatch));
+
+            }
+
+            String busId = params.get("busId");
+            if (busId != null && !busId.isEmpty()) {
+                predicates.add(cb.equal(trip.get("busId"), Integer.parseInt(busId)));
+            }
+
+            String fromPrice = params.get("fromPrice");
+            if (fromPrice != null && !fromPrice.isEmpty()) {
+                predicates.add(cb.greaterThanOrEqualTo(trip.get("price"), Integer.parseInt(fromPrice)));
+            }
+
+            String toPrice = params.get("toPrice");
+            if (toPrice != null && !toPrice.isEmpty()) {
+                predicates.add(cb.lessThanOrEqualTo(trip.get("price"), Integer.parseInt(toPrice)));
+            }
+
+            String driverId = params.get("driverId");
+            if (driverId != null && !driverId.isEmpty()) {
+                predicates.add(cb.equal(trip.get("driverId"), Integer.parseInt(driverId)));
+            }
+
+            String timeFrom = params.get("timeFrom");
+            if (timeFrom != null && !timeFrom.isEmpty()) {
+                Date time = new Date(timeFrom);
+                predicates.add(cb.greaterThanOrEqualTo(trip.get("startAt"), time));
+            }
+
+            String timeTo = params.get("timeTo");
+            if (timeTo != null && !timeTo.isEmpty()) {
+                Date time = new Date(timeTo);
+                predicates.add(cb.lessThanOrEqualTo(trip.get("startAt"), time));
+            }
 
             cq.where(predicates.toArray(Predicate[]::new));
         }
@@ -93,5 +167,35 @@ public class TripRepositoryImp implements TripRepository {
         }
     }
     
+
+    @Override
+    public int getLowestPrice() {
+        Session session = this.factory.getObject().getCurrentSession();
+        Query query = session
+                .createQuery(
+                        "SELECT MIN(price) FROM Trip");
+
+        try {
+            int parseInt = Integer.parseInt(query.getSingleResult().toString());
+            return parseInt;
+        } catch (NumberFormatException e) {
+            return 0;
+        }
+    }
+
+    @Override
+    public int getHightestPrice() {
+        Session session = this.factory.getObject().getCurrentSession();
+        Query query = session
+                .createQuery(
+                        "SELECT MAX(price) FROM Trip");
+
+        try {
+            int parseInt = Integer.parseInt(query.getSingleResult().toString());
+            return parseInt;
+        } catch (NumberFormatException e) {
+            return 0;
+        }
+    }
 
 }

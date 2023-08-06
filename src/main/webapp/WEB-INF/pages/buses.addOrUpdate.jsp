@@ -6,7 +6,23 @@
 <!--  -->
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<section class="container pt-4 my-auto h-100">
+<section class="container my-4">
+    <div class="d-flex align-items-center mb-3">
+        <div class="d-flex justify-content-start" style="flex: 1">
+            <c:url value="/buses" var="backUrl" />
+            <a href="${backUrl}" class="btn btn-outline-info text-nowrap">Quay lại</a>
+        </div>
+        <h3 class="text-center">
+            <c:choose>
+                <c:when test="${bus.id == null}"> Thêm </c:when>
+                <c:otherwise> Cập nhật </c:otherwise>
+            </c:choose>
+            xe khách
+        </h3>
+
+        <div class="invisible" style="flex: 1"></div>
+    </div>
+
     <c:url value="/buses/add" var="action" />
     <form:form method="post" action="${action}" modelAttribute="bus" enctype="multipart/form-data">
         <form:errors path="*" element="div" cssClass="alert alert-danger" />
@@ -53,7 +69,7 @@
 
         <c:if test="${bus.id == null}">
             <section class="mb-3">
-                <label for="seatSelect" class="form-label"> Chọn kích cỡ xe khách </label>
+                <label for="seatSelect" class="form-label"> Chọn kích cỡ mẫu </label>
                 <select id="seatSelect" class="form-select mb-3">
                     <option selected value="5x10">5x10</option>
                     <option value="10x20">10x20</option>

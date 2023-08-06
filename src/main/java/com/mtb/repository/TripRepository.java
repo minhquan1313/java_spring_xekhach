@@ -14,4 +14,7 @@ public interface TripRepository {
 
     boolean deleteById(int id);
 
+    int getLowestPrice();
+
+    int getHightestPrice();
 }

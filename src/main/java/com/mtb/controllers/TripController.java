@@ -24,7 +24,6 @@ import com.mtb.pojo.Bus;
 import com.mtb.pojo.Route;
 import com.mtb.pojo.Trip;
 import com.mtb.pojo.User;
-import com.mtb.service.BusSeatTemplateService;
 import com.mtb.service.BusSeatTripService;
 import com.mtb.service.BusService;
 import com.mtb.service.RouteService;
@@ -43,9 +42,6 @@ public class TripController {
     private BusSeatTripService busSeatTripService;
 
     @Autowired
-    private BusSeatTemplateService busSeatTemplateService;
-
-    @Autowired
     private RouteService routeService;
 
     @Autowired
@@ -57,6 +53,14 @@ public class TripController {
     @Autowired
     private Environment env;
 
+    /**
+     * 
+     * @param model
+     * @param params
+     *               startLocation | endLocation | busId | fromPrice | toPrice |
+     *               driverId | timeFrom | timeTo
+     * @return
+     */
     @RequestMapping("/trips")
     public String index(Model model, @RequestParam Map<String, String> params) {
         List<Trip> list = tripService.getList(params);
@@ -134,12 +138,28 @@ public class TripController {
 
     @GetMapping("/trips/find")
     public String findForm(Model model) {
-        model.addAttribute("routesStart", "");
-        model.addAttribute("routesEnd", "");
-        model.addAttribute("buses", "");
-        model.addAttribute("drivers", "");
-        model.addAttribute("fromPrice", "");
-        model.addAttribute("toPrice", "");
+        List<Route> routesStart = routeService.getListStart();
+        model.addAttribute("routesStart", routesStart);
+
+        List<Route> routesEnd = routeService.getListEnd();
+        model.addAttribute("routesEnd", routesEnd);
+
+        Map<String, String> busParams = new HashMap<>();
+        busParams.put("getSeats", "");
+        List<Bus> busList = busService.getList(busParams);
+        model.addAttribute("buses", busList);
+
+        Map<String, String> userParams = new HashMap<>();
+        userParams.put("roleId", "3");
+        List<User> drivers = userService.getUsers(userParams);
+        model.addAttribute("drivers", drivers);
+
+        model.addAttribute("fromPrice", 0);
+
+        // model.addAttribute("fromPrice", tripService.getLowestPrice());
+        int hightestPrice = tripService.getHightestPrice();
+        int toPrice = (int) Math.floor((0.0 + hightestPrice) / 1000) * 1000;
+        model.addAttribute("toPrice", toPrice);
 
         return "trips.find";
     }

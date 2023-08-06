@@ -15,6 +15,10 @@ public interface TripService {
 
     boolean update(Trip item, BusSeats busSeats);
 
+    int getLowestPrice();
+
+    int getHightestPrice();
+
     boolean deleteById(int id);
 
 }

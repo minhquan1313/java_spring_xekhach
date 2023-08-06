@@ -35,4 +35,16 @@ public class RouteServiceImpl implements RouteService {
     public boolean deleteById(int id) {
         return routeRepository.deleteById(id);
     }
+
+    @Override
+    public List<Route> getListStart() {
+        return routeRepository.getListStart();
+
+    }
+
+    @Override
+    public List<Route> getListEnd() {
+        return routeRepository.getListEnd();
+
+    }
 }
