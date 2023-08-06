@@ -166,18 +166,4 @@
             console.log({ selected, url });
         },
     });
-
-    // const busImage = document.getElementById("busImage");
-    // const busSelect = document.getElementById("busSelect");
-    // setImage(busImage, busSelect);
-
-    // busSelect.addEventListener("change", (e) => setImage(busImage, busSelect));
-
-    // function setImage(img, select) {
-    //     const selected = select.selectedOptions[0];
-    //     const url = selected.getAttribute("data-image");
-    //     img.src = url;
-
-    //     console.log({ selected, url });
-    // }
 </script>
