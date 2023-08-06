@@ -4,10 +4,15 @@
  */
 package com.mtb.repository.impl;
 
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.pdf.PdfWriter;
 import com.mtb.pojo.Role;
 import com.mtb.pojo.User;
 import com.mtb.repository.RoleRepository;
 import com.mtb.repository.UserRepository;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +21,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.servlet.http.HttpServletResponse;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -173,4 +179,23 @@ public class UserRepositoryImpl implements UserRepository {
         Query query = session.createQuery(q);
         return query.getResultList();
     }
+
+    @Override
+    public void exportUsersToPdf(User u, OutputStream outputStream)throws DocumentException {
+          Document document = new Document();
+        PdfWriter.getInstance(document, outputStream);
+        document.open();
+
+        // Add user data
+        document.add(new Paragraph("ID: " + u.getId()));
+        document.add(new Paragraph("Họ và tên: " + u.getFirstName() + " " + u.getLastName()));
+        document.add(new Paragraph("Tài khoản: " + u.getUsername()));
+        document.add(new Paragraph("Password: " + u.getPassword()));
+        document.add(new Paragraph("Vai trò: " + u.getRoleId().getTitle()));
+
+        document.close();
+    }
+    
+   
+    
 }

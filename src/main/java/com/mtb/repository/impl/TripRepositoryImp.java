@@ -21,6 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.mtb.pojo.Trip;
 import com.mtb.repository.TripRepository;
 import com.mtb.service.BusSeatTripService;
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
 @Repository
 @Transactional
@@ -90,5 +92,6 @@ public class TripRepositoryImp implements TripRepository {
             return false;
         }
     }
+    
 
 }

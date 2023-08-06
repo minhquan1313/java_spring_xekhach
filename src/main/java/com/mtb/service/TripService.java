@@ -16,4 +16,5 @@ public interface TripService {
     boolean update(Trip item, BusSeats busSeats);
 
     boolean deleteById(int id);
+
 }

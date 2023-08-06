@@ -4,9 +4,13 @@
  */
 package com.mtb.repository;
 
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.pdf.codec.Base64.OutputStream;
 import com.mtb.pojo.User;
 import java.util.List;
 import java.util.Map;
+import javax.servlet.http.HttpServletResponse;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -19,4 +23,5 @@ public interface UserRepository {
     boolean addOrUpdateUser(User u);
     User getUserById(int id);
     boolean deleteUser(int id);
+    void exportUsersToPdf(User u, java.io.OutputStream outputStream)throws DocumentException;
 }

@@ -13,15 +13,15 @@
 <c:url value="/users" var="action" />
 <div>
     <form class="d-flex mt-1" action="${action}">
-    <input class=" me-2" type="text" name="kw"  placeholder="Nhập ...">
-    <select name="roleId">
-        <option value="">Role</option>
-        <c:forEach items="${roles}" var="r">
-            <option value="${r.id}">${r.title}</option>
-        </c:forEach>
-    </select>
-    <button class="btn btn-primary" type="submit">Tìm</button>
-</form>
+        <input class=" me-2" type="text" name="kw"  placeholder="Nhập ...">
+        <select name="roleId">
+            <option value="">Role</option>
+            <c:forEach items="${roles}" var="r">
+                <option value="${r.id}">${r.title}</option>
+            </c:forEach>
+        </select>
+        <button class="btn btn-primary" type="submit">Tìm</button>
+    </form>
 </div>
 <table class="table table-hover">
     <thead>
@@ -33,6 +33,7 @@
             <th>Tài khoản</th>
             <th>Mật khẩu</th>
             <th>Vai trò</th>
+            <th></th>
             <th></th>
             <th></th>
         </tr>
@@ -50,6 +51,8 @@
                 <td>${u.password}</td>
                 <td>${u.roleId.title}</td>
                 <td>
+                    <c:url value="/users/export/${u.id}" var="exportUrl" />
+                    <a href="${exportUrl}" class="btn btn-primary mt-1" target="_blank">Xuất PDF</a>
                     <c:url value="/users/${u.id}" var="api" />
                     <a href="${api}" class="btn btn-success">Cập nhật</a>
 

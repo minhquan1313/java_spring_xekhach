@@ -18,4 +18,5 @@ public interface RoleRepository {
     boolean addOrUpdateRole(Role r);
     Role getRoleById(int id);
     boolean deleteRole(int id);
+    
 }
