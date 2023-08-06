@@ -7,8 +7,6 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,7 +29,6 @@ import com.mtb.service.TripService;
 import com.mtb.service.UserService;
 
 @Controller
-@PropertySource("classpath:configs.properties")
 public class TripController {
 
     @Autowired
@@ -49,9 +46,6 @@ public class TripController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private Environment env;
-
     /**
      * 
      * @param model
@@ -64,7 +58,6 @@ public class TripController {
     public String index(Model model, @RequestParam Map<String, String> params) {
         List<Trip> list = tripService.getList(params);
         model.addAttribute("trips", list);
-        model.addAttribute("date_pattern", this.env.getProperty("date_pattern"));
 
         return "trips";
     }
@@ -155,7 +148,6 @@ public class TripController {
 
         model.addAttribute("fromPrice", 0);
 
-        // model.addAttribute("fromPrice", tripService.getLowestPrice());
         int hightestPrice = tripService.getHightestPrice();
         int toPrice = (int) Math.floor((0.0 + hightestPrice) / 1000) * 1000;
         model.addAttribute("toPrice", toPrice);

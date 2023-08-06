@@ -44,15 +44,17 @@
                     <td>${bus.licensePlate}</td>
                     <td>${fn:length(bus.busSeatTemplateSet)}</td>
                     <td>
-                        <c:url value="/buses/${bus.id}" var="detailUrl" />
-                        <a href="${detailUrl}" class="btn btn-primary">Xem chi tiết</a>
+                        <div style="display: grid; grid-auto-flow: column; gap: 0.5rem">
+                            <c:url value="/buses/${bus.id}" var="detailUrl" />
+                            <a href="${detailUrl}" class="btn btn-primary">Xem chi tiết</a>
 
-                        <c:url value="/buses/edit/${bus.id}" var="editUrl" />
-                        <a href="${editUrl}" class="btn btn-primary">Sửa</a>
+                            <c:url value="/buses/edit/${bus.id}" var="editUrl" />
+                            <a href="${editUrl}" class="btn btn-primary">Sửa</a>
 
-                        <c:url value="/api/buses/${bus.id}" var="delUrl" />
-                        <c:set value="onclick=(delAPI('${delUrl}'))" var="delClick" />
-                        <button class="btn btn-danger" ${delClick}>Xoá</button>
+                            <c:url value="/api/buses/${bus.id}" var="delUrl" />
+                            <c:set value="onclick=(delAPI('${delUrl}'))" var="delClick" />
+                            <button class="btn btn-danger" ${delClick}>Xoá</button>
+                        </div>
                     </td>
                 </tr>
             </c:forEach>

@@ -33,13 +33,14 @@
                     <td>${route.startLocation}</td>
                     <td>${route.endLocation}</td>
                     <td>
-                        <!--  -->
-                        <c:url value="/routes/edit/${route.id}" var="editUrl" />
-                        <a href="${editUrl}" class="btn btn-primary">Sửa</a>
+                        <div style="display: grid; grid-auto-flow: column; gap: 0.5rem">
+                            <c:url value="/routes/edit/${route.id}" var="editUrl" />
+                            <a href="${editUrl}" class="btn btn-primary">Sửa</a>
 
-                        <c:url value="/api/routes/${route.id}" var="delUrl" />
-                        <c:set value="onclick=(delAPI('${delUrl}'))" var="delClick" />
-                        <button class="btn btn-danger" ${delClick}>Xoá</button>
+                            <c:url value="/api/routes/${route.id}" var="delUrl" />
+                            <c:set value="onclick=(delAPI('${delUrl}'))" var="delClick" />
+                            <button class="btn btn-danger" ${delClick}>Xoá</button>
+                        </div>
                     </td>
                 </tr>
             </c:forEach>

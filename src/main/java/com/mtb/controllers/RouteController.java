@@ -35,6 +35,7 @@ public class RouteController {
     // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     @GetMapping("/routes/add")
     public String addForm(Model model) {
+
         Route route = new Route();
         model.addAttribute("route", route);
 
@@ -53,9 +54,20 @@ public class RouteController {
     @PostMapping("/routes/add")
     public String addOrUpdate(@ModelAttribute(value = "route") @Valid Route item, BindingResult rs,
             HttpServletRequest formData) {
-        String x = formData.getParameter("startLocation");
+        String round_trip = formData.getParameter("round_trip");
+
         if (!rs.hasErrors()) {
+
             if (routeService.addOrUpdate(item)) {
+                if (round_trip != null && !round_trip.isEmpty()) {
+                    Route item2 = new Route();
+                    item2.setStartLocation(item.getEndLocation());
+                    item2.setEndLocation(item.getStartLocation());
+
+                    if (routeService.addOrUpdate(item2)) {
+                        return "redirect:/routes";
+                    }
+                }
                 return "redirect:/routes";
             }
         }
