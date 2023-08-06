@@ -4,6 +4,8 @@
  */
 package com.mtb.service;
 
+import com.lowagie.text.DocumentException;
+import java.io.OutputStream;
 import com.mtb.pojo.User;
 import java.util.List;
 import java.util.Map;
@@ -25,4 +27,7 @@ public interface UserService {
     User getUserById(int id);
 
     boolean deleteUser(int id);
+     void exportUserToPdf(int userId, OutputStream outputStream) throws DocumentException;
+     
+    
 }

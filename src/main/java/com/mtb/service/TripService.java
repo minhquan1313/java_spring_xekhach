@@ -20,4 +20,5 @@ public interface TripService {
     int getHightestPrice();
 
     boolean deleteById(int id);
+
 }

@@ -166,6 +166,7 @@ public class TripRepositoryImp implements TripRepository {
             return false;
         }
     }
+    
 
     @Override
     public int getLowestPrice() {

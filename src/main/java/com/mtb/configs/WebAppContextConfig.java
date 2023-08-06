@@ -114,4 +114,5 @@ public class WebAppContextConfig implements WebMvcConfigurer {
                 "secure", true));
         return cloudinary;
     }
+  
 }

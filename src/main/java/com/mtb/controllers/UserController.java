@@ -4,6 +4,10 @@
  */
 package com.mtb.controllers;
 
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.pdf.PdfWriter;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -21,6 +25,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mtb.pojo.User;
 import com.mtb.service.UserService;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.List;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  *
@@ -64,5 +72,22 @@ public class UserController {
         }
 
         return "users.addOrUpdate";
+    }
+    
+     @GetMapping("/users/export/{id}")
+    public void exportUserToPdf(@PathVariable int id, HttpServletResponse response) throws DocumentException {
+        try {
+                 
+            response.setContentType("application/pdf");
+            //response.setHeader("Content-Disposition", "attachment; filename=\"user_" + id + ".pdf\"");
+            response.setHeader("Content-Disposition", "inline; filename=\"user_"+id+".pdf\"");
+
+            
+
+            userService.exportUserToPdf(id, response.getOutputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
     }
 }

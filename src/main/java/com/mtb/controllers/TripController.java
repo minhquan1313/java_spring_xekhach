@@ -27,6 +27,7 @@ import com.mtb.service.BusService;
 import com.mtb.service.RouteService;
 import com.mtb.service.TripService;
 import com.mtb.service.UserService;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class TripController {
@@ -154,4 +155,6 @@ public class TripController {
 
         return "trips.find";
     }
+    
+
 }
