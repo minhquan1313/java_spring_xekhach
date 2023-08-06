@@ -39,20 +39,33 @@
         </div>
 
         <!-- Bus -->
+        <!-- Không cho phép thay đổi xe - vì liên quan đến chỗ ngồi -->
         <div class="mb-3">
             <div class="input-group mb-2">
                 <span class="input-group-text">
                     <i class="bi bi-bus-front-fill"></i>
                 </span>
+
+                <c:set value="" var="disabled" />
+                <c:if test="${trip.id != null}">
+                    <c:set value="disabled" var="disabled" />
+                </c:if>
+
                 <form:select class="form-select" path="busId" id="busSelect">
                     <c:forEach items="${buses}" var="c">
                         <c:set value="" var="selected" />
                         <c:if test="${c.id == trip.busId.id}">
                             <c:set value="selected" var="selected" />
+                            <option value="${c.id}" data-image="${c.image}" ${selected}>
+                                ${c.licensePlate} - ${fn:length(c.busSeatTemplateSet)} chỗ
+                            </option>
                         </c:if>
-                        <option value="${c.id}" data-image="${c.image}" ${selected}>
-                            ${c.licensePlate} - ${fn:length(c.busSeatTemplateSet)} chỗ
-                        </option>
+
+                        <c:if test="${trip.id == null}">
+                            <option value="${c.id}" data-image="${c.image}" ${selected}>
+                                ${c.licensePlate} - ${fn:length(c.busSeatTemplateSet)} chỗ
+                            </option>
+                        </c:if>
                     </c:forEach>
                 </form:select>
             </div>
@@ -127,26 +140,44 @@
     </form:form>
 </section>
 
+<c:url value="/js/selectBindInput.js" var="selectBindInput" />
+<script src="${selectBindInput}"></script>
+
 <c:url value="/js/dateTimePicker.js" var="dateTimePicker" />
 <script src="${dateTimePicker}"></script>
+
 <script>
+    let initStartAt = $("#startAt").val();
+    let x = initStartAt ? new Date(initStartAt) : new Date();
     dateTimePicker({
         dateTimePickerId: "datetimepicker1",
         inputNameBind: "startAt",
-        minDate: new Date(),
+        minDate: x,
     });
 
-    const busImage = document.getElementById("busImage");
-    const busSelect = document.getElementById("busSelect");
-    setImage(busImage, busSelect);
+    selectBindInput({
+        selectId: "busSelect",
+        inputBindName: null,
+        cb: (selected) => {
+            const url = selected.getAttribute("data-image");
+            const busImage = document.getElementById("busImage");
+            busImage.src = url;
 
-    busSelect.addEventListener("change", (e) => setImage(busImage, busSelect));
+            console.log({ selected, url });
+        },
+    });
 
-    function setImage(img, select) {
-        const selected = select.selectedOptions[0];
-        const url = selected.getAttribute("data-image");
-        img.src = url;
+    // const busImage = document.getElementById("busImage");
+    // const busSelect = document.getElementById("busSelect");
+    // setImage(busImage, busSelect);
 
-        console.log({ selected, url });
-    }
+    // busSelect.addEventListener("change", (e) => setImage(busImage, busSelect));
+
+    // function setImage(img, select) {
+    //     const selected = select.selectedOptions[0];
+    //     const url = selected.getAttribute("data-image");
+    //     img.src = url;
+
+    //     console.log({ selected, url });
+    // }
 </script>

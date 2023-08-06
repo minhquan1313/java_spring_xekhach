@@ -1,24 +1,24 @@
-function selectBindInput({ selectId, inputBindName }) {
+function selectBindInput({ selectId, inputBindName, cb }) {
     const select = document.querySelector(`#${selectId}`);
     const input = document.querySelector(`input[name=${inputBindName}]`);
 
-    if (!input || !select) {
+    if (!select) {
         console.error("No input or select");
         return;
     }
 
     select?.addEventListener("change", bindDataHandler);
-
-    input.disabled = true;
-
-    if (select.selectedOptions[0].value) {
-    }
+    bindDataHandler.call(select);
+    input && (input.disabled = true);
 
     function bindDataHandler() {
-        const value = this.selectedOptions?.[0].value;
-        console.log({ x: this, input, value });
-
-        input.value = value;
-        if (value != "") input.disabled = false;
+        const selected = this.selectedOptions?.[0];
+        const value = selected.value;
+        // console.log({ x: this, input, value });
+        if (!cb) {
+            if (!input) return;
+            input.value = value;
+            if (value != "") input.disabled = false;
+        } else cb(selected, input);
     }
 }

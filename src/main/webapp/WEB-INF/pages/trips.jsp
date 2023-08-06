@@ -56,9 +56,6 @@
                         />
                     </td>
                     <td>
-                        <c:url value="/trips/${item.id}" var="detailUrl" />
-                        <a href="${detailUrl}" class="btn btn-primary">Xem chi tiết</a>
-
                         <c:url value="/trips/edit/${item.id}" var="editUrl" />
                         <a href="${editUrl}" class="btn btn-primary">Sửa</a>
 
