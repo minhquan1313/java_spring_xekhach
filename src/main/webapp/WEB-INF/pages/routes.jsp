@@ -3,15 +3,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!--  -->
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<section class="container mt-4">
-    <div class="d-flex align-items-center">
-        <div class="invisible" style="flex: 1">x</div>
+<section class="container-fluid my-4">
+    <div class="d-flex align-items-center mb-3">
+        <div class="d-flex justify-content-start" style="flex: 1">
+            <c:url value="/" var="backUrl" />
+            <a href="${backUrl}" class="btn btn-outline-info text-nowrap">Quay lại</a>
+        </div>
 
-        <h3 class="text-center">Các tuyến xe</h3>
-
+        <h3 class="text-center">Các tuyến xe hiện có</h3>
         <div class="d-flex justify-content-end" style="flex: 1">
             <c:url value="/routes/add" var="createUrl" />
-            <a href="${createUrl}" class="btn btn-outline-info text-nowrap">Thêm tuyến</a>
+            <a href="${createUrl}" class="btn btn-outline-info text-nowrap">Thêm</a>
         </div>
     </div>
 

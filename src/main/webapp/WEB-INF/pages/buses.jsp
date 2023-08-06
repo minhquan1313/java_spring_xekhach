@@ -5,9 +5,12 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!--  -->
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<section class="container mt-4">
-    <div class="d-flex align-items-center">
-        <div class="invisible" style="flex: 1">x</div>
+<section class="container-fluid my-4">
+    <div class="d-flex align-items-center mb-3">
+        <div class="d-flex justify-content-start" style="flex: 1">
+            <c:url value="/" var="backUrl" />
+            <a href="${backUrl}" class="btn btn-outline-info text-nowrap">Quay lại</a>
+        </div>
 
         <h3 class="text-center">Các xe hiện có</h3>
 

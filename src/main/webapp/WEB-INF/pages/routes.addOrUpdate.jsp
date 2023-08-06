@@ -6,7 +6,17 @@
 <!--  -->
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<section class="container pt-4 my-auto h-100">
+<section class="container-fluid my-4">
+    <div class="d-flex align-items-center mb-3">
+        <div class="d-flex justify-content-start" style="flex: 1">
+            <c:url value="/routes" var="backUrl" />
+            <a href="${backUrl}" class="btn btn-outline-info text-nowrap">Quay lại</a>
+        </div>
+        <h3 class="text-center">Thêm tuyến xe</h3>
+
+        <div class="invisible" style="flex: 1"></div>
+    </div>
+
     <c:url value="/routes/add" var="action" />
     <form:form
         method="post"
