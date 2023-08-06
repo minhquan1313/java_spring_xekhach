@@ -73,8 +73,5 @@
         <put-attribute name="title" value="Debug" />
         <put-attribute name="content" value="/WEB-INF/pages/debug.jsp" />
     </definition>
-      <definition name="trips.countByRoute" extends="baseLayout">
-        <put-attribute name="title" value="thống kê" />
-        <put-attribute name="content" value="/WEB-INF/pages/trips.countByRoute.jsp" />
-    </definition>
+      
 </tiles-definitions>
