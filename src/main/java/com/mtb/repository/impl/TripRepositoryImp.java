@@ -91,4 +91,34 @@ public class TripRepositoryImp implements TripRepository {
         }
     }
 
+    @Override
+    public int getLowestPrice() {
+        Session session = this.factory.getObject().getCurrentSession();
+        Query query = session
+                .createQuery(
+                        "SELECT MIN(price) FROM Trip");
+
+        try {
+            int parseInt = Integer.parseInt(query.getSingleResult().toString());
+            return parseInt;
+        } catch (NumberFormatException e) {
+            return 0;
+        }
+    }
+
+    @Override
+    public int getHightestPrice() {
+        Session session = this.factory.getObject().getCurrentSession();
+        Query query = session
+                .createQuery(
+                        "SELECT MAX(price) FROM Trip");
+
+        try {
+            int parseInt = Integer.parseInt(query.getSingleResult().toString());
+            return parseInt;
+        } catch (NumberFormatException e) {
+            return 0;
+        }
+    }
+
 }

@@ -63,4 +63,14 @@ public class TripServiceImpl implements TripService {
         return repository.deleteById(id);
     }
 
+    @Override
+    public int getLowestPrice() {
+        return repository.getLowestPrice();
+    }
+
+    @Override
+    public int getHightestPrice() {
+        return repository.getHightestPrice();
+    }
+
 }

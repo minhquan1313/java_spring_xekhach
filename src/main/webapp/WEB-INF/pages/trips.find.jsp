@@ -54,7 +54,7 @@
 
                     <c:forEach items="${buses}" var="c">
                         <option value="${c.id}">
-                            ${c.licensePlate} - ${fn:length(bus.busSeatTemplateSet)} chỗ
+                            ${c.licensePlate} - ${fn:length(c.busSeatTemplateSet)} chỗ
                         </option>
                     </c:forEach>
                 </select>
@@ -87,8 +87,22 @@
                         style="left: 100%"
                     ></span>
                 </div>
-                <input id="rangeMin" type="range" max="300000" min="0" step="1000" value="0" />
-                <input id="rangeMax" type="range" max="300000" min="0" step="1000" value="300000" />
+                <input
+                    id="rangeMin"
+                    type="range"
+                    max="${toPrice}"
+                    min="${fromPrice}"
+                    step="1000"
+                    value="${fromPrice}"
+                />
+                <input
+                    id="rangeMax"
+                    type="range"
+                    max="${toPrice}"
+                    min="${fromPrice}"
+                    step="1000"
+                    value="${toPrice}"
+                />
                 <div>
                     <style>
                         :root {

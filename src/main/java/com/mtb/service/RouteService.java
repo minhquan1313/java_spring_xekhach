@@ -18,6 +18,10 @@ public interface RouteService {
 
     Route getById(int id);
 
+    List<Route> getListStart();
+
+    List<Route> getListEnd();
+
     boolean addOrUpdate(Route item);
 
     boolean deleteById(int id);

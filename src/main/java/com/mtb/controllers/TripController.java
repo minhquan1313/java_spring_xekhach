@@ -24,7 +24,6 @@ import com.mtb.pojo.Bus;
 import com.mtb.pojo.Route;
 import com.mtb.pojo.Trip;
 import com.mtb.pojo.User;
-import com.mtb.service.BusSeatTemplateService;
 import com.mtb.service.BusSeatTripService;
 import com.mtb.service.BusService;
 import com.mtb.service.RouteService;
@@ -40,9 +39,6 @@ public class TripController {
 
     @Autowired
     private BusSeatTripService busSeatTripService;
-
-    @Autowired
-    private BusSeatTemplateService busSeatTemplateService;
 
     @Autowired
     private RouteService routeService;
@@ -133,12 +129,25 @@ public class TripController {
 
     @GetMapping("/trips/find")
     public String findForm(Model model) {
-        model.addAttribute("routesStart", "");
-        model.addAttribute("routesEnd", "");
-        model.addAttribute("buses", "");
-        model.addAttribute("drivers", "");
-        model.addAttribute("fromPrice", "");
-        model.addAttribute("toPrice", "");
+        List<Route> routesStart = routeService.getListStart();
+        model.addAttribute("routesStart", routesStart);
+
+        List<Route> routesEnd = routeService.getListEnd();
+        model.addAttribute("routesEnd", routesEnd);
+
+        Map<String, String> busParams = new HashMap<>();
+        busParams.put("getSeats", "");
+        List<Bus> busList = busService.getList(busParams);
+        model.addAttribute("buses", busList);
+
+        Map<String, String> userParams = new HashMap<>();
+        userParams.put("roleId", "3");
+        List<User> drivers = userService.getUsers(userParams);
+        model.addAttribute("drivers", drivers);
+
+        model.addAttribute("fromPrice", tripService.getLowestPrice());
+
+        model.addAttribute("toPrice", tripService.getHightestPrice());
 
         return "trips.find";
     }

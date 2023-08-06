@@ -13,4 +13,8 @@ public interface TripRepository {
     boolean addOrUpdate(Trip item);
 
     boolean deleteById(int id);
+
+    int getLowestPrice();
+
+    int getHightestPrice();
 }
