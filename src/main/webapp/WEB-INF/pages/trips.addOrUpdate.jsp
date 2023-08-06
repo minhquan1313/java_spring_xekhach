@@ -8,13 +8,19 @@
 <!--  -->
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!--  -->
-<section class="container-fluid my-4">
+<section class="container my-4">
     <div class="d-flex align-items-center mb-3">
         <div class="d-flex justify-content-start" style="flex: 1">
             <c:url value="/trips" var="backUrl" />
             <a href="${backUrl}" class="btn btn-outline-info text-nowrap">Quay lại</a>
         </div>
-        <h3 class="text-center">Thêm chuyến xe</h3>
+        <h3 class="text-center">
+            <c:choose>
+                <c:when test="${trip.id == null}"> Thêm </c:when>
+                <c:otherwise> Cập nhật </c:otherwise>
+            </c:choose>
+            chuyến xe
+        </h3>
 
         <div class="invisible" style="flex: 1"></div>
     </div>
@@ -44,6 +50,14 @@
                         </option>
                     </c:forEach>
                 </form:select>
+
+                <c:url value="/routes/add" var="createUrl" />
+                <a
+                    href="${createUrl}"
+                    class="input-group-text link-underline link-underline-opacity-0 bg-info-subtle"
+                >
+                    <i class="bi bi-plus-square-dotted"></i>
+                </a>
             </div>
             <form:errors path="routeId" element="div" cssClass="text-danger" />
         </div>
@@ -78,6 +92,13 @@
                         </c:if>
                     </c:forEach>
                 </form:select>
+                <c:url value="/buses/add" var="createUrl" />
+                <a
+                    href="${createUrl}"
+                    class="input-group-text link-underline link-underline-opacity-0 bg-info-subtle"
+                >
+                    <i class="bi bi-plus-square-dotted"></i>
+                </a>
             </div>
             <div class="col col-md-6 mx-auto">
                 <div>
@@ -107,7 +128,16 @@
                         <option value="${c.id}" ${selected}>${c.lastName} ${c.firstName}</option>
                     </c:forEach>
                 </form:select>
+
+                <c:url value="/users/add" var="createUrl" />
+                <a
+                    href="${createUrl}"
+                    class="input-group-text link-underline link-underline-opacity-0 bg-info-subtle"
+                >
+                    <i class="bi bi-plus-square-dotted"></i>
+                </a>
             </div>
+
             <form:errors path="driverId" element="div" cssClass="text-danger" />
         </div>
         <!-- startAt -->
@@ -158,7 +188,7 @@
 
 <script>
     let initStartAt = $("#startAt").val();
-    let x = initStartAt ? new Date(initStartAt) : new Date();
+    let x = initStartAt ? undefined : new Date();
     dateTimePicker({
         dateTimePickerId: "datetimepicker1",
         inputNameBind: "startAt",

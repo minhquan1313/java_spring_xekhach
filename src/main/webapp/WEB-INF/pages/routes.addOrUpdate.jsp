@@ -6,13 +6,19 @@
 <!--  -->
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<section class="container-fluid my-4">
+<section class="container my-4">
     <div class="d-flex align-items-center mb-3">
         <div class="d-flex justify-content-start" style="flex: 1">
             <c:url value="/routes" var="backUrl" />
             <a href="${backUrl}" class="btn btn-outline-info text-nowrap">Quay lại</a>
         </div>
-        <h3 class="text-center">Thêm tuyến xe</h3>
+        <h3 class="text-center">
+            <c:choose>
+                <c:when test="${route.id == null}"> Thêm </c:when>
+                <c:otherwise> Cập nhật </c:otherwise>
+            </c:choose>
+            tuyến xe
+        </h3>
 
         <div class="invisible" style="flex: 1"></div>
     </div>

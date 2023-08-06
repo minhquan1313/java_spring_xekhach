@@ -10,6 +10,7 @@ function dateTimePicker({ dateTimePickerId, inputNameBind, initTime, minDate }) 
         navigator.languages && navigator.languages.length
             ? navigator.languages[0]
             : navigator.language;
+    //
     const picker = new tempusDominus.TempusDominus(document.getElementById(dateTimePickerId), {
         restrictions: {
             minDate: minDate,

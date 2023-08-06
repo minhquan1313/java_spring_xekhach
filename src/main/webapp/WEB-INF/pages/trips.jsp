@@ -9,19 +9,21 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!--  -->
 <section class="container-fluid my-4">
-    <div class="d-flex align-items-center mb-3">
-        <div class="d-flex justify-content-start" style="flex: 1">
-            <c:url value="/" var="backUrl" />
-            <a href="${backUrl}" class="btn btn-outline-info text-nowrap">Quay lại</a>
-        </div>
+    <div class="container">
+        <div class="d-flex align-items-center mb-3">
+            <div class="d-flex justify-content-start" style="flex: 1">
+                <c:url value="/" var="backUrl" />
+                <a href="${backUrl}" class="btn btn-outline-info text-nowrap">Quay lại</a>
+            </div>
 
-        <h3 class="text-center">Các chuyến xe hiện có</h3>
-        <div class="d-flex justify-content-end" style="flex: 1">
-            <c:url value="/trips/find" var="findUrl" />
-            <a href="${findUrl}" class="btn btn-outline-info text-nowrap me-2">Tìm kiếm</a>
+            <h3 class="text-center">Các chuyến xe hiện có</h3>
+            <div class="d-flex justify-content-end" style="flex: 1">
+                <c:url value="/trips/find" var="findUrl" />
+                <a href="${findUrl}" class="btn btn-outline-info text-nowrap me-2">Tìm kiếm</a>
 
-            <c:url value="/trips/add" var="createUrl" />
-            <a href="${createUrl}" class="btn btn-outline-info text-nowrap">Thêm</a>
+                <c:url value="/trips/add" var="createUrl" />
+                <a href="${createUrl}" class="btn btn-outline-info text-nowrap">Thêm</a>
+            </div>
         </div>
     </div>
 
@@ -57,6 +59,7 @@
                             maxFractionDigits="0"
                             value="${item.price}"
                         />
+                        VNĐ
                     </td>
                     <td>
                         <c:url value="/trips/edit/${item.id}" var="editUrl" />
