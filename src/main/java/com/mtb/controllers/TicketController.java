@@ -1,6 +1,7 @@
 package com.mtb.controllers;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -17,10 +18,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.mtb.pojo.Bus;
 import com.mtb.pojo.Ticket;
 import com.mtb.pojo.Trip;
 import com.mtb.pojo.User;
+import com.mtb.service.BusSeatTripService;
 import com.mtb.service.BusService;
 import com.mtb.service.TicketService;
 import com.mtb.service.TripService;
@@ -39,6 +40,9 @@ public class TicketController {
     private BusService busService;
 
     @Autowired
+    private BusSeatTripService busSeatTripService;
+
+    @Autowired
     private TripService tripService;
 
     @RequestMapping("/tickets")
@@ -50,45 +54,62 @@ public class TicketController {
     }
 
     // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-    private String addOrEditForm(Model model, int id) {
-        Ticket ticket = id == 0 ? new Ticket() : ticketService.getById(id);
+
+    @GetMapping("/tickets/add")
+    public String addForm(Model model, @RequestParam Map<String, String> params) {
+        Ticket ticket = new Ticket();
         model.addAttribute("ticket", ticket);
 
-        // List<Trip> trips = tripService.getList(null);
-        // model.addAttribute("trips", trips);
+        List<Trip> trips = tripService.getList(null);
+        trips.forEach(r -> {
+            int bId = r.getBusId().getId();
+            int tId = r.getId();
+            r.getBusId().setBusSeatTripSet(new HashSet<>(busSeatTripService.getListByBusAndTripId(bId, tId)));
+        });
+        model.addAttribute("trips", trips);
 
-        Map<String, String> busParams = new HashMap<>();
-        busParams.put("getSeats", "");
-        List<Bus> busList = busService.getList(busParams);
-        model.addAttribute("buses", busList);
+        Trip trip;
+        String tripId = params.get("tripId");
+        if (tripId != null && !tripId.isEmpty()) {
+            trip = tripService.getById(Integer.parseInt(tripId));
+        } else {
+            trip = trips.get(0);
+        }
+        model.addAttribute("trip", trip);
+
+        // trip.getBusId().getBusSeatTripSet();
+
+        // Map<String, String> busParams = new HashMap<>();
+        // busParams.put("getSeats", "");
+        // busParams.put("id", String.valueOf(trip.getBusId().getId()));
+        // Bus bus = busService.getList(busParams).get(0);
+        // model.addAttribute("bus", trip.getBusId());
 
         Map<String, String> userParams = new HashMap<>();
-        userParams.put("roleId", "3");
-        List<User> drivers = userService.getUsers(userParams);
-        model.addAttribute("drivers", drivers);
+        userParams.put("roleId", "4");
+        List<User> bookingUsers = userService.getUsers(userParams);
+        model.addAttribute("bookingUsers", bookingUsers);
+
+        int extraPrice = 10;
+        model.addAttribute("extraPrice", extraPrice);
 
         return "tickets.add";
     }
 
-    @GetMapping("/tickets/add")
-    public String addForm(Model model, @RequestParam Map<String, String> params) {
-        // here here here
-        String tripId = params.get("tripId");
-        return addOrEditForm(model, 0);
-    }
-
     @GetMapping("/tickets/edit/{id}")
     public String editForm(Model model, @PathVariable(value = "id") int id) {
-        return addOrEditForm(model, id);
+        // return addOrEditForm(model, id);
+
+        return "tickets.edit";
     }
 
     @PostMapping(value = "/tickets/add")
     public String addOrUpdate(@ModelAttribute(value = "ticket") @Valid Ticket item,
             BindingResult rs) {
         if (!rs.hasErrors()) {
-            if (ticketService.addOrUpdate(item)) {
-                return "redirect:/tickets";
-            }
+            // if (ticketService.addOrUpdate(item)) {
+            // return "redirect:/tickets";
+            // }
         }
 
         return "tickets.add";

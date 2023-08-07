@@ -1,5 +1,6 @@
 package com.mtb.repository.impl;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +9,7 @@ import java.util.Set;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.hibernate.HibernateError;
@@ -41,13 +43,23 @@ public class BusRepositoryImpl implements BusRepository {
         CriteriaQuery<Bus> cq = cb.createQuery(Bus.class);
         Root bus = cq.from(Bus.class);
         cq.select(bus);
+
+        if (params != null) {
+
+            List<Predicate> predicates = new ArrayList<>();
+
+            String id = params.get("id");
+            if (id != null && !id.isEmpty()) {
+                predicates.add(cb.equal(bus.get("id"), Integer.parseInt(id)));
+            }
+
+            cq.where(predicates.toArray(Predicate[]::new));
+        }
+
         Query qBus = session.createQuery(cq);
         List<Bus> list = qBus.getResultList();
 
         if (params != null) {
-
-            // List<Predicate> predicates = new ArrayList<>();
-
             String getSeats = params.get("getSeats");
             if (getSeats != null) {
                 list.forEach(r -> {
@@ -55,12 +67,7 @@ public class BusRepositoryImpl implements BusRepository {
                     Set<BusSeatTemplate> targetSet = new HashSet<>(seatTemplates);
                     r.setBusSeatTemplateSet(targetSet);
                 });
-                // predicates.add(cb.all());
-                // // predicates.add(builder.like(root.get("name"), String.format("%%%s%%",
-                // kw)));
             }
-
-            // cq.where(predicates.toArray(Predicate[]::new));
         }
 
         return list;

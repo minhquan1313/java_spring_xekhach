@@ -71,27 +71,20 @@
                     <i class="bi bi-geo-fill"></i>
                 </span>
 
+                <c:set value="${trip}" var="c" />
                 <form:select class="form-select" path="tripId">
-                    <c:forEach items="${trips}" var="c">
+                    <!-- <c:forEach items="${trips}" var="c">
                         <c:set value="" var="selected" />
                         <c:if test="${c.id == trip.id || c.id == ticket.tripId.id}">
                             <c:set value="selected" var="selected" />
-                        </c:if>
-                        <c:url value="/tickets/add" var="reloadUrl">
-                            <c:param name="tripId" value="${c.id}" />
-                        </c:url>
-                        <option
-                            value="${c.id}"
-                            data-url="${reloadUrl}"
-                            data-basePrice="${c.price}"
-                            ${selected}
-                        >
-                            id: ${c.id}
-                        </option>
-                    </c:forEach>
+                        </c:if> -->
+                    <option value="${c.id}" data-url="" data-basePrice="${c.price}" ${selected}>
+                        id: ${c.id}
+                    </option>
+                    <!-- </c:forEach> -->
                 </form:select>
-                <c:set value="${trip}" var="c" />
 
+                <!-- <c:forEach items="${trips}" var="c"> -->
                 <div class="form-control tripIdSelectData" data-tripId="${c.id}">
                     <div>${c.routeId.startLocation} -> ${c.routeId.endLocation}</div>
                     <div>
@@ -100,12 +93,10 @@
                     <div>${c.busId.licensePlate} - ${fn:length(c.busId.busSeatTripSet)}</div>
                     <div>${c.driverId.lastName} ${c.driverId.firstName}</div>
                 </div>
+                <!-- </c:forEach> -->
                 <script>
                     $(document).ready(() => {
-                        $("#tripId").on("change", () => {
-                            let $selected = $("#tripId").find(":selected");
-                            location.replace($selected.attr("data-url"));
-                        });
+                        $("#tripId").on("change", () => {});
 
                         changeHandler();
 
