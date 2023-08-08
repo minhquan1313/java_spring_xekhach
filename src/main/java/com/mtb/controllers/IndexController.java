@@ -31,7 +31,7 @@ public class IndexController {
 
     @ModelAttribute
     public void commonAttr(Model model,@RequestParam Map<String, String> params) {
-        model.addAttribute("roles", this.roleService.getRoles(params));
+        
     }
 
     @RequestMapping("/")

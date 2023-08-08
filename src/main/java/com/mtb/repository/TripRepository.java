@@ -17,4 +17,6 @@ public interface TripRepository {
     int getLowestPrice();
 
     int getHightestPrice();
+    
+    List<Object[]> countTripsByRoute();
 }

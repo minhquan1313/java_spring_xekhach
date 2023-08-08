@@ -73,4 +73,8 @@ public class TripServiceImpl implements TripService {
         return repository.getHightestPrice();
     }
 
+    @Override
+    public List<Object[]> countTripsByRoute() {
+        return repository.countTripsByRoute();
+    }
 }

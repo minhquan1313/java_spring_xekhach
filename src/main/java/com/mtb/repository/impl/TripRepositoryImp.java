@@ -27,6 +27,8 @@ import com.mtb.pojo.Trip_;
 import com.mtb.repository.TripRepository;
 import com.mtb.service.BusSeatTripService;
 import com.mtb.service.RouteService;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 @Repository
 @Transactional
@@ -198,4 +200,14 @@ public class TripRepositoryImp implements TripRepository {
         }
     }
 
+    @PersistenceContext
+    private EntityManager entityManager;
+
+    @Override
+    public List<Object[]> countTripsByRoute() {
+        String queryString = "SELECT t.routeId.id, COUNT(*) AS trip_count FROM Trip t GROUP BY t.routeId";
+        Query query = entityManager.createQuery(queryString);
+
+        return query.getResultList();
+    }
 }

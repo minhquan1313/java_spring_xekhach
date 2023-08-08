@@ -164,5 +164,13 @@ public class TripController {
         return "trips.find";
     }
     
-
+    @GetMapping("/trips/count")
+    public String countTripsByRoute(Model model) {
+        List<Object[]> tripCounts = tripService.countTripsByRoute();
+        model.addAttribute("tripCounts", tripCounts);
+        ////////////////////////////
+       
+        ////////////////////////
+        return "trips.count"; 
+    }
 }

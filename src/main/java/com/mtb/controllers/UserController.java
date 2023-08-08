@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mtb.pojo.User;
+import com.mtb.service.RoleService;
 import com.mtb.service.UserService;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -39,6 +40,14 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    
+    @Autowired
+    private RoleService roleService;
+    
+    @ModelAttribute
+    public void commonAttr(Model model,@RequestParam Map<String, String> params) {
+        model.addAttribute("roles", this.roleService.getRoles(params));
+    }
 
     @RequestMapping("/users")
     public String list(Model model, @RequestParam Map<String, String> params, String kw, String roleId) {
