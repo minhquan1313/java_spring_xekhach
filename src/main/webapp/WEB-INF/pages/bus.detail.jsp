@@ -33,6 +33,7 @@
                             <c:choose>
                                 <c:when test="${seat.available == true}">
                                     <button
+                                        type="button"
                                         data-pos="${seat.x}_${seat.y}"
                                         class="text-primary d-flex align-items-center justify-content-center"
                                         style="--x: ${seat.x}; --y: ${seat.y};"

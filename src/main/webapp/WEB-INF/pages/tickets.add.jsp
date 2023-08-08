@@ -36,6 +36,8 @@
     >
         <form:errors path="*" element="div" cssClass="alert alert-danger" />
         <form:hidden path="id" />
+        <form:hidden path="id" />
+        <input type="hidden" name="selectedSeats" id="selectedSeats" value="" />
 
         <!-- bookingUsers -->
         <div class="mb-3">
@@ -148,7 +150,7 @@
                             placeholder="Giá chuyến"
                             readonly
                         />
-                        <span class="input-group-text"> + </span>
+                        <span class="input-group-text"> ${extraPriceTitle} </span>
                         <input
                             type="text"
                             id="extraPrice"
@@ -228,6 +230,95 @@
                 <label class="form-check-label" for="isPaid" style="cursor: pointer">
                     Đã thanh toán
                 </label>
+            </div>
+        </div>
+
+        <!-- selectSeat -->
+        <div class="mb-3">
+            <label class="form-label">Chọn ghế ngồi</label>
+            <select id="seatSelect" class="d-none">
+                <option selected value="5x10">5x10</option>
+            </select>
+
+            <div class="align-items-center d-flex flex-column mb-3">
+                <div id="seatArrayContainer" style="--col: ${seats.col}; --row: ${seats.row}">
+                    <c:forEach items="${seats.array}" var="c" varStatus="i">
+                        <c:set value="" var="disabled" />
+                        <c:if test="${c.available != true}">
+                            <c:set value="disabled" var="disabled" />
+                        </c:if>
+
+                        <button
+                            type="button"
+                            data-id="${c.id}"
+                            data-pos="${c.x}_${c.y}"
+                            class="text-primary"
+                            style="--x: ${c.x}; --y: ${c.y};"
+                            ${disabled}
+                        >
+                            <h3 class="m-0" withoutActive>
+                                <i class="bi bi-circle"></i>
+                            </h3>
+                            <h3 class="m-0" withActive>
+                                <i class="bi bi-circle-fill"></i>
+                            </h3>
+                        </button>
+                    </c:forEach>
+                </div>
+            </div>
+
+            <div class="d-flex">
+                <span class="">Tổng số chỗ ngồi đã chọn: </span>
+                <span id="seatCount" class="ms-3">1</span>
+            </div>
+
+            <div class="d-none">
+                <style>
+                    #seatArrayContainer {
+                        display: grid;
+                        grid-template-columns: repeat(var(--col), 3rem);
+                        grid-template-rows: repeat(var(--row), 1fr);
+                    }
+                    button[data-pos] {
+                        aspect-ratio: 1/1;
+                        background-color: transparent;
+                        border-color: transparent;
+                        grid-column: var(--x);
+                        grid-row: var(--y);
+
+                        filter: grayscale(1);
+                    }
+                    button[data-pos] *.bi {
+                        font-size: 2rem;
+                    }
+                    button[data-pos]:disabled {
+                        filter: grayscale(1);
+                    }
+                    button[data-pos][active] {
+                        filter: hue-rotate(300deg);
+                    }
+                    button[data-pos] *[withActive] {
+                        display: none;
+                    }
+                    button[data-pos] *[withoutActive] {
+                        display: block;
+                    }
+                    button[data-pos][active] *[withActive] {
+                        display: block;
+                    }
+                    button[data-pos][active] *[withoutActive] {
+                        display: none;
+                    }
+                </style>
+
+                <script>
+                    $("button[data-pos]:not(disabled)").on("click", function () {
+                        const $btn = $(this);
+                        $btn.attr("active", (i, v) => (v == "" ? null : ""));
+
+                        // const isSelected = $btn.attr("active") != undefined;
+                    });
+                </script>
             </div>
         </div>
 

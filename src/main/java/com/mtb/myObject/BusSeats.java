@@ -3,11 +3,9 @@ package com.mtb.myObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 public class BusSeats {
     private int col;
     private int row;
@@ -29,6 +27,10 @@ public class BusSeats {
 
     public void addPos(int x, int y, boolean available) {
         this.array.add(new Pos(x, y, available));
+    }
+
+    public void addPos(int id, int x, int y, boolean available) {
+        this.array.add(new Pos(id, x, y, available));
     }
 
     public void addMultiPosFromInput(String input) {
@@ -68,9 +70,9 @@ public class BusSeats {
 
     // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
-    @Getter
-    @Setter
+    @Data
     public class Pos {
+        private Integer id;
         private int x;
         private int y;
         private boolean available;
@@ -85,6 +87,13 @@ public class BusSeats {
         }
 
         public Pos(int x, int y, boolean available) {
+            this.x = x;
+            this.y = y;
+            this.available = available;
+        }
+
+        public Pos(Integer id, int x, int y, boolean available) {
+            this.id = id;
             this.x = x;
             this.y = y;
             this.available = available;

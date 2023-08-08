@@ -21,13 +21,13 @@ public class ApiController {
     private RouteService routeService;
 
     @Autowired
-    BusService busService;
+    private BusService busService;
 
     @Autowired
-    TripService tripService;
+    private TripService tripService;
 
     @Autowired
-    TicketService ticketService;
+    private TicketService ticketService;
 
     @DeleteMapping("/routes/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

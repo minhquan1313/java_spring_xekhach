@@ -68,14 +68,23 @@ public class TicketController {
         });
         model.addAttribute("trips", trips);
 
-        Trip trip;
+        Trip trip = trips.get(0);
         String tripId = params.get("tripId");
         if (tripId != null && !tripId.isEmpty()) {
-            trip = tripService.getById(Integer.parseInt(tripId));
-        } else {
-            trip = trips.get(0);
+            int tId = Integer.parseInt(tripId);
+
+            for (Trip t : trips)
+                if (t.getId() == tId) {
+                    trip = t;
+                    break;
+                }
         }
+        int bId = trip.getBusId().getId();
+        int tId = trip.getId();
+        trip.getBusId().setBusSeatTripSet(new HashSet<>(busSeatTripService.getListByBusAndTripId(bId, tId)));
         model.addAttribute("trip", trip);
+
+        model.addAttribute("seats", busSeatTripService.getBusSeats(bId, tId));
 
         // trip.getBusId().getBusSeatTripSet();
 
@@ -91,6 +100,7 @@ public class TicketController {
         model.addAttribute("bookingUsers", bookingUsers);
 
         int extraPrice = 10;
+        model.addAttribute("extraPriceTitle", "Phí tết");
         model.addAttribute("extraPrice", extraPrice);
 
         return "tickets.add";

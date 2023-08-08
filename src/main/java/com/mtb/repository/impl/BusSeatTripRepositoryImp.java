@@ -54,24 +54,25 @@ public class BusSeatTripRepositoryImp implements BusSeatTripRepository {
         List<BusSeatTrip> list = this.getListByBusAndTripId(busId, tripId);
         BusSeats busSeats = new BusSeats();
 
-        int x = 1;
-        int y = 1;
+        int colTotal = 1;
+        int rowTotal = 1;
 
         for (BusSeatTrip r : list) {
             int _x = r.getBusSeatX();
             int _y = r.getBusSeatY();
+            int _id = r.getId();
             boolean available = r.getAvailable();
 
-            if (x < _x)
-                x = _x;
-            if (y < _y)
-                y = _y;
+            if (colTotal < _x)
+                colTotal = _x;
+            if (rowTotal < _y)
+                rowTotal = _y;
 
-            busSeats.addPos(_x, _y, available);
+            busSeats.addPos(_id, _x, _y, available);
         }
 
-        busSeats.setCol(x);
-        busSeats.setRow(y);
+        busSeats.setCol(colTotal);
+        busSeats.setRow(rowTotal);
 
         return busSeats;
     }
