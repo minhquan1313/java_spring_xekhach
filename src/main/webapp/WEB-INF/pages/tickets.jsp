@@ -28,12 +28,13 @@
             <thead>
                 <tr>
                     <th scope="col">id</th>
+                    <th scope="col">Mã chuyến</th>
                     <th scope="col">Khởi hành</th>
                     <th scope="col">Điểm đi</th>
                     <th scope="col">Điểm đến</th>
-                    <th scope="col">Tên tài xế</th>
-                    <th scope="col">Giá tiền</th>
+                    <th scope="col">Thanh toán</th>
                     <th scope="col">Thanh toán bằng</th>
+                    <th scope="col">Đã thanh toán</th>
                     <th scope="col">Xe</th>
                     <th scope="col">Ngày đặt vé</th>
                 </tr>
@@ -42,12 +43,18 @@
                 <c:forEach items="${tickets}" var="item">
                     <tr>
                         <th scope="row">${item.id}</th>
+                        <th scope="row">
+                            <c:url value="/trips?id=${item.tripId.id}" var="tripFindIdUrl" />
+                            <a href="${tripFindIdUrl}"> ${item.tripId.id}</a>
+                        </th>
                         <td>
-                            <fmt:formatDate value="${item.startAt}" pattern="${date_pattern}" />
+                            <fmt:formatDate
+                                value="${item.tripId.startAt}"
+                                pattern="${date_pattern}"
+                            />
                         </td>
-                        <td>${item.routeId.startLocation}</td>
-                        <td>${item.routeId.endLocation}</td>
-                        <td>${item.driverId.lastName} ${item.driverId.firstName}</td>
+                        <td>${item.tripId.routeId.startLocation}</td>
+                        <td>${item.tripId.routeId.endLocation}</td>
                         <td>
                             <fmt:formatNumber
                                 type="number"
@@ -58,12 +65,15 @@
                         </td>
                         <td>${item.paidWith}</td>
                         <td>
-                            <c:url value="/buses/${item.busId.id}" var="busDetail" />
-                            <a href="${busDetail}"> ${item.busId.licensePlate}</a>
+                            <c:set value="" var="checked" />
+                            <c:if test="${item.isPaid == true}">
+                                <c:set value="checked" var="checked" />
+                            </c:if>
+                            <input class="form-check-input" type="checkbox" readonly ${checked} />
                         </td>
                         <td>
-                            <c:url value="/buses/${item.busId.id}" var="busDetail" />
-                            <a href="${busDetail}"> ${item.busId.licensePlate}</a>
+                            <c:url value="/buses/${item.tripId.busId.id}" var="busDetail" />
+                            <a href="${busDetail}"> ${item.tripId.busId.licensePlate}</a>
                         </td>
                         <td>
                             <fmt:formatDate value="${item.createdAt}" pattern="${date_pattern}" />
@@ -71,11 +81,11 @@
                         <td>
                             <div style="display: grid; grid-auto-flow: column; gap: 0.5rem">
                                 <c:url value="/tickets/edit/${item.id}" var="editUrl" />
-                                <a href="${editUrl}" class="btn btn-primary">Sửa</a>
+                                <!-- <a href="${editUrl}" class="btn btn-primary">Sửa</a> -->
 
                                 <c:url value="/api/tickets/${item.id}" var="delUrl" />
                                 <c:set value="onclick=(delAPI('${delUrl}'))" var="delClick" />
-                                <button class="btn btn-danger" ${delClick}>Xoá</button>
+                                <!-- <button class="btn btn-danger" ${delClick}>Xoá</button> -->
                             </div>
                         </td>
                     </tr>

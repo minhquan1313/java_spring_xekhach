@@ -5,6 +5,7 @@
 package com.mtb.pojo;
 
 import java.io.Serializable;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,9 +16,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -33,6 +36,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "BusSeatTrip.findByBusSeatY", query = "SELECT b FROM BusSeatTrip b WHERE b.busSeatY = :busSeatY"),
     @NamedQuery(name = "BusSeatTrip.findByAvailable", query = "SELECT b FROM BusSeatTrip b WHERE b.available = :available")})
 public class BusSeatTrip implements Serializable {
+
+    @OneToMany(mappedBy = "busSeatTripId")
+    private Set<TicketDetail> ticketDetailSet;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -144,6 +150,15 @@ public class BusSeatTrip implements Serializable {
     @Override
     public String toString() {
         return "com.mtb.pojo.BusSeatTrip[ id=" + id + " ]";
+    }
+
+    @XmlTransient
+    public Set<TicketDetail> getTicketDetailSet() {
+        return ticketDetailSet;
+    }
+
+    public void setTicketDetailSet(Set<TicketDetail> ticketDetailSet) {
+        this.ticketDetailSet = ticketDetailSet;
     }
 
 }

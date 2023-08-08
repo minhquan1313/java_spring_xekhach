@@ -45,7 +45,7 @@ public class TripRepositoryImp implements TripRepository {
 
     /**
      * params: startLocation | endLocation | busId | fromPrice | toPrice |
-     * driverId | timeFrom | timeTo
+     * driverId | timeFrom | timeTo | id
      */
     @Override
     public List<Trip> getList(Map<String, String> params) {
@@ -86,6 +86,11 @@ public class TripRepositoryImp implements TripRepository {
 
                 predicates.add(routeId.in(routeIdToMatch));
 
+            }
+
+            String id = params.get("id");
+            if (id != null && !id.isEmpty()) {
+                predicates.add(cb.equal(trip.get("id"), Integer.parseInt(id)));
             }
 
             String busId = params.get("busId");

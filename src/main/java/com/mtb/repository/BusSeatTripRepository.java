@@ -8,7 +8,11 @@ import com.mtb.pojo.BusSeatTrip;
 public interface BusSeatTripRepository {
     List<BusSeatTrip> getListByBusAndTripId(int busId, int tripId);
 
+    BusSeatTrip getById(int id);
+
     BusSeats getBusSeatsByBusAndTripId(int busId, int tripId);
+
+    boolean addOrUpdate(BusSeatTrip item);
 
     boolean makeMultipleSeatTrip(List<BusSeatTrip> list);
 

@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +19,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.mtb.myObject.BusSeats;
 import com.mtb.pojo.Ticket;
 import com.mtb.pojo.Trip;
 import com.mtb.pojo.User;
 import com.mtb.service.BusSeatTripService;
-import com.mtb.service.BusService;
 import com.mtb.service.TicketService;
 import com.mtb.service.TripService;
 import com.mtb.service.UserService;
@@ -35,9 +36,6 @@ public class TicketController {
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private BusService busService;
 
     @Autowired
     private BusSeatTripService busSeatTripService;
@@ -86,14 +84,6 @@ public class TicketController {
 
         model.addAttribute("seats", busSeatTripService.getBusSeats(bId, tId));
 
-        // trip.getBusId().getBusSeatTripSet();
-
-        // Map<String, String> busParams = new HashMap<>();
-        // busParams.put("getSeats", "");
-        // busParams.put("id", String.valueOf(trip.getBusId().getId()));
-        // Bus bus = busService.getList(busParams).get(0);
-        // model.addAttribute("bus", trip.getBusId());
-
         Map<String, String> userParams = new HashMap<>();
         userParams.put("roleId", "4");
         List<User> bookingUsers = userService.getUsers(userParams);
@@ -115,11 +105,19 @@ public class TicketController {
 
     @PostMapping(value = "/tickets/add")
     public String addOrUpdate(@ModelAttribute(value = "ticket") @Valid Ticket item,
-            BindingResult rs) {
-        if (!rs.hasErrors()) {
-            // if (ticketService.addOrUpdate(item)) {
-            // return "redirect:/tickets";
-            // }
+            BindingResult rs,
+            HttpServletRequest formData) {
+
+        String selectedSeats = formData.getParameter("selectedSeats");
+        BusSeats busSeats = new BusSeats();
+        if (selectedSeats != null && !selectedSeats.isEmpty()) {
+            busSeats.addMultiPosFromInputWithIdAndAvailable(selectedSeats, false);
+        }
+
+        if (!rs.hasErrors() && !selectedSeats.isEmpty()) {
+            if (ticketService.add(item, busSeats)) {
+                return "redirect:/tickets";
+            }
         }
 
         return "tickets.add";

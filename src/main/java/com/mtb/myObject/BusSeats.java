@@ -38,17 +38,17 @@ public class BusSeats {
 
         int minX = 0, minY = 0;
         int diffX, diffY;
-        int i = 0;
+        boolean isFirstTime = true;
 
         for (String pair : l) {
             String[] numStr = pair.split("_");
             int x = Integer.parseInt(numStr[0]);
             int y = Integer.parseInt(numStr[1]);
 
-            if (i == 0) {
+            if (isFirstTime) {
                 minX = x;
                 minY = y;
-                i++;
+                isFirstTime = false;
             } else {
                 if (minX > x)
                     minX = x;
@@ -57,6 +57,43 @@ public class BusSeats {
             }
 
             this.addPos(x, y);
+        }
+
+        diffX = minX - 1;
+        diffY = minY - 1;
+
+        this.array.forEach(p -> {
+            p.x -= diffX;
+            p.y -= diffY;
+        });
+    }
+
+    public void addMultiPosFromInputWithIdAndAvailable(String input, boolean available) {
+        String[] l = input.split(",");
+
+        int minX = 0, minY = 0;
+        int diffX, diffY;
+        boolean isFirsTime = true;
+
+        for (String pair : l) {
+            String[] numStr = pair.split("_");
+            int i = 0;
+            int id = Integer.parseInt(numStr[i++]);
+            int x = Integer.parseInt(numStr[i++]);
+            int y = Integer.parseInt(numStr[i++]);
+
+            if (isFirsTime) {
+                minX = x;
+                minY = y;
+                isFirsTime = false;
+            } else {
+                if (minX > x)
+                    minX = x;
+                if (minY > y)
+                    minY = y;
+            }
+
+            this.addPos(id, x, y, available);
         }
 
         diffX = minX - 1;

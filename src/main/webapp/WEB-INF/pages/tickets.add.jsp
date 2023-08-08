@@ -36,8 +36,6 @@
     >
         <form:errors path="*" element="div" cssClass="alert alert-danger" />
         <form:hidden path="id" />
-        <form:hidden path="id" />
-        <input type="hidden" name="selectedSeats" id="selectedSeats" value="" />
 
         <!-- bookingUsers -->
         <div class="mb-3">
@@ -77,6 +75,7 @@
                     <c:forEach items="${trips}" var="c">
                         <c:set value="" var="selected" />
                         <c:if test="${c.id == trip.id || c.id == ticket.tripId.id}">
+                            <c:set value="${c.price}" var="basePrice" />
                             <c:set value="selected" var="selected" />
                         </c:if>
                         <c:url value="/tickets/add" var="reloadUrl">
@@ -102,27 +101,6 @@
                     <div>${c.busId.licensePlate} - ${fn:length(c.busId.busSeatTripSet)}</div>
                     <div>${c.driverId.lastName} ${c.driverId.firstName}</div>
                 </div>
-                <script>
-                    $(document).ready(() => {
-                        $("#tripId").on("change", () => {
-                            let $selected = $("#tripId").find(":selected");
-                            location.replace($selected.attr("data-url"));
-                        });
-
-                        changeHandler();
-
-                        function changeHandler() {
-                            let $selected = $("#tripId").find(":selected");
-                            let id = $selected.val();
-
-                            $(".tripIdSelectData").each((i, item) => {
-                                let itemId = $(item).attr("data-tripId");
-                                $(item).attr("style", itemId == id ? "" : "display:none");
-                            });
-                            $("#basePrice").val($selected.attr("data-basePrice"));
-                        }
-                    });
-                </script>
 
                 <c:url value="/trips/add" var="createUrl" />
                 <a
@@ -150,14 +128,16 @@
                             placeholder="Giá chuyến"
                             readonly
                         />
-                        <span class="input-group-text"> ${extraPriceTitle} </span>
-                        <input
-                            type="text"
-                            id="extraPrice"
-                            class="form-control"
-                            placeholder="Phí phát sinh"
-                            value="${extraPrice}"
-                        />
+                        <c:if test="${not empty extraPriceTitle}">
+                            <span class="input-group-text"> ${extraPriceTitle} </span>
+                            <input
+                                type="text"
+                                id="extraPrice"
+                                class="form-control"
+                                placeholder="Phí phát sinh"
+                                value="${extraPrice}"
+                            />
+                        </c:if>
                         <span class="input-group-text"> = </span>
                         <form:input
                             type="text"
@@ -166,26 +146,34 @@
                             path="paidPrice"
                         />
                         <script>
-                            $(document).ready(() => {
-                                priceInputHandler();
+                            setPriceOnInputs();
+                            priceInputHandler();
 
-                                $("#tripId").on("change", priceInputHandler);
+                            $("#extraPrice, #basePrice").on("input", priceInputHandler);
+                            function priceInputHandler() {
+                                const baseP = $("#basePrice").val() ?? "0";
+                                const extraP = $("#extraPrice").val() ?? "0";
 
-                                $("#extraPrice, #basePrice").on("input", priceInputHandler);
-                                function priceInputHandler() {
-                                    $("#paidPrice").val(
-                                        parseInt($("#basePrice").val()) +
-                                            parseInt($("#extraPrice").val())
-                                    );
-                                }
+                                $("#paidPrice").val(parseInt(baseP) + parseInt(extraP));
+                            }
 
-                                $("#paidPrice").on("input", () => {
-                                    $("#extraPrice").val(
-                                        parseInt($("#paidPrice").val()) -
-                                            parseInt($("#basePrice").val())
-                                    );
-                                });
+                            $("#paidPrice").on("input", () => {
+                                const paidP = $("#paidPrice").val() ?? "0";
+                                const baseP = $("#basePrice").val() ?? "0";
+
+                                $("#extraPrice").val(parseInt(paidP) - parseInt(baseP));
                             });
+
+                            function setPriceOnInputs() {
+                                const $initSelected = $("#tripId").find(":selected");
+
+                                $("#tripId").on("change", () => {
+                                    const $selected = $("#tripId").find(":selected");
+                                    location.replace($selected.attr("data-url"));
+                                });
+
+                                $("#basePrice").val($initSelected.attr("data-basePrice"));
+                            }
                         </script>
                     </c:when>
 
@@ -236,12 +224,13 @@
         <!-- selectSeat -->
         <div class="mb-3">
             <label class="form-label">Chọn ghế ngồi</label>
-            <select id="seatSelect" class="d-none">
-                <option selected value="5x10">5x10</option>
-            </select>
 
             <div class="align-items-center d-flex flex-column mb-3">
-                <div id="seatArrayContainer" style="--col: ${seats.col}; --row: ${seats.row}">
+                <div
+                    id="seatArrayContainer"
+                    class="d-none"
+                    style="--col: ${seats.col}; --row: ${seats.row}"
+                >
                     <c:forEach items="${seats.array}" var="c" varStatus="i">
                         <c:set value="" var="disabled" />
                         <c:if test="${c.available != true}">
@@ -268,57 +257,14 @@
             </div>
 
             <div class="d-flex">
-                <span class="">Tổng số chỗ ngồi đã chọn: </span>
+                <span>Tổng số chỗ ngồi đã chọn: </span>
                 <span id="seatCount" class="ms-3">1</span>
             </div>
+            <input type="hidden" name="selectedSeats" id="selectedSeats" />
 
             <div class="d-none">
-                <style>
-                    #seatArrayContainer {
-                        display: grid;
-                        grid-template-columns: repeat(var(--col), 3rem);
-                        grid-template-rows: repeat(var(--row), 1fr);
-                    }
-                    button[data-pos] {
-                        aspect-ratio: 1/1;
-                        background-color: transparent;
-                        border-color: transparent;
-                        grid-column: var(--x);
-                        grid-row: var(--y);
-
-                        filter: grayscale(1);
-                    }
-                    button[data-pos] *.bi {
-                        font-size: 2rem;
-                    }
-                    button[data-pos]:disabled {
-                        filter: grayscale(1);
-                    }
-                    button[data-pos][active] {
-                        filter: hue-rotate(300deg);
-                    }
-                    button[data-pos] *[withActive] {
-                        display: none;
-                    }
-                    button[data-pos] *[withoutActive] {
-                        display: block;
-                    }
-                    button[data-pos][active] *[withActive] {
-                        display: block;
-                    }
-                    button[data-pos][active] *[withoutActive] {
-                        display: none;
-                    }
-                </style>
-
-                <script>
-                    $("button[data-pos]:not(disabled)").on("click", function () {
-                        const $btn = $(this);
-                        $btn.attr("active", (i, v) => (v == "" ? null : ""));
-
-                        // const isSelected = $btn.attr("active") != undefined;
-                    });
-                </script>
+                <c:url value="/css/busSeat.css" var="busSeat" />
+                <link rel="stylesheet" href="${busSeat}" />
             </div>
         </div>
 
@@ -350,40 +296,17 @@
     </form:form>
 </section>
 
-<c:url value="/js/selectBindInput.js" var="selectBindInput" />
-<script src="${selectBindInput}"></script>
-
 <c:url value="/js/dateTimePicker.js" var="dateTimePicker" />
 <script src="${dateTimePicker}"></script>
 
+<c:url value="/js/busSeatTripTicketSelect.js" var="busSeatTripTicketSelect" />
+<script src="${busSeatTripTicketSelect}"></script>
+
 <c:if test="${ticket.id != null}">
     <script>
-        // let initStartAt = $("#createdAt").val();
-        // let x = initStartAt ? undefined : new Date();
         dateTimePicker({
             dateTimePickerId: "datetimepicker1",
             inputNameBind: "createdAt",
         });
     </script>
 </c:if>
-<script>
-    // let initStartAt = $("#startAt").val();
-    // let x = initStartAt ? undefined : new Date();
-    // dateTimePicker({
-    //     dateTimePickerId: "datetimepicker1",
-    //     inputNameBind: "startAt",
-    //     minDate: x,
-    // });
-
-    // selectBindInput({
-    //     selectId: "busSelect",
-    //     inputBindName: null,
-    //     cb: (selected) => {
-    //         const url = selected.getAttribute("data-image");
-    //         const busImage = document.getElementById("busImage");
-    //         busImage.src = url;
-
-    //         console.log({ selected, url });
-    //     },
-    // });
-</script>

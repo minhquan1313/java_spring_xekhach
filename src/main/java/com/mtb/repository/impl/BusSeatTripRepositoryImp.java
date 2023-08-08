@@ -144,4 +144,28 @@ public class BusSeatTripRepositoryImp implements BusSeatTripRepository {
         return Integer.parseInt(query.getSingleResult().toString());
     }
 
+    @Override
+    public BusSeatTrip getById(int id) {
+        Session session = this.factory.getObject().getCurrentSession();
+        return session.get(BusSeatTrip.class, id);
+    }
+
+    @Override
+    public boolean addOrUpdate(BusSeatTrip item) {
+        Session session = this.factory.getObject().getCurrentSession();
+        try {
+            if (item.getId() == null) {
+                // Create new
+                session.save(item);
+                return true;
+            }
+
+            // Update
+            session.update(item);
+            return true;
+        } catch (HibernateError e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
