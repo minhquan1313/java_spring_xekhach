@@ -69,7 +69,7 @@
                             <c:if test="${item.isPaid == true}">
                                 <c:set value="checked" var="checked" />
                             </c:if>
-                            <input class="form-check-input" type="checkbox" readonly ${checked} />
+                            <input class="form-check-input" type="checkbox" disabled ${checked} />
                         </td>
                         <td>
                             <c:url value="/buses/${item.tripId.busId.id}" var="busDetail" />
