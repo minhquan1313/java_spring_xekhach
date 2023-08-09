@@ -18,7 +18,7 @@ public interface UserService {
 
     List<User> getUsers(Map<String, String> params);
 
-    List<User> searchUsers(Map<String, String> params, String kw, String role);
+    List<User> searchUsers(Map<String, String> params,String id, String kw, String role);
 
     int countUser();
 

@@ -50,9 +50,9 @@ public class UserController {
     }
 
     @RequestMapping("/users")
-    public String list(Model model, @RequestParam Map<String, String> params, String kw, String roleId) {
-        if ((kw != null && !kw.isEmpty()) || (roleId!=null&&!roleId.isEmpty())) {
-            model.addAttribute("users", this.userService.searchUsers(params, kw, roleId));
+    public String list(Model model, @RequestParam Map<String, String> params,String id, String kw, String roleId) {
+        if ((kw != null && !kw.isEmpty()) || (roleId!=null&&!roleId.isEmpty()) || (id != null && !id.isEmpty())) {
+            model.addAttribute("users", this.userService.searchUsers(params,id, kw, roleId));
         } else {
             model.addAttribute("users", this.userService.getUsers(params));
         }

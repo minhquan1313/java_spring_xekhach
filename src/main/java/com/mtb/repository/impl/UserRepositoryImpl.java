@@ -129,7 +129,7 @@ public class UserRepositoryImpl implements UserRepository {
             if (u.getId() == null) {
                 s.save(u);
             } else {
-                
+
                 s.update(u);
             }
 
@@ -160,7 +160,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public List<User> searchUsers(Map<String, String> params, String kw, String role) {
+    public List<User> searchUsers(Map<String, String> params, String id, String kw, String role) {
         Session session = this.factory.getObject().getCurrentSession();
 
         CriteriaBuilder b = session.getCriteriaBuilder();
@@ -169,6 +169,11 @@ public class UserRepositoryImpl implements UserRepository {
         q.select(root);
         if (params != null) {
             List<Predicate> predicates = new ArrayList<>();
+
+            if (id != null && !id.isEmpty()) {
+                predicates.add(b.equal(root.get("id"), Integer.parseInt(id)));
+            }
+
             if (kw != null && !kw.isEmpty()) {
                 String pattern = "%" + kw + "%";
                 predicates.add(b.or(
@@ -195,25 +200,25 @@ public class UserRepositoryImpl implements UserRepository {
         Document document = new Document();
         PdfWriter.getInstance(document, outputStream);
         document.open();
-        
+
         BaseFont bf = null;
         try {
             bf = BaseFont.createFont("D:\\java_spring_xekhach\\java_spring_xekhach\\src\\main\\resources\\vuArial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
         } catch (IOException ex) {
             Logger.getLogger(UserRepositoryImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         Font f = new Font(bf, 25, Font.BOLD, Color.blue);
         Font f1 = new Font(bf, 20, Font.NORMAL);
         Font f2 = new Font(bf, 15, Font.ITALIC, Color.CYAN);
         Font f3 = new Font(bf, 15, Font.NORMAL);
-        
+
         Chunk txt1 = new Chunk("(Giá đã bao gồm thuế VAT và BHHK)", f2);
-        
+
         Date timeNow = new Date();
         SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
         String formatTime = format.format(timeNow);
-        
+
         Paragraph title = new Paragraph("VÉ XE KHÁCH JAVA SPRING", f);
         title.setAlignment(Element.ALIGN_CENTER);
         title.setSpacingAfter(20f);
@@ -246,12 +251,12 @@ public class UserRepositoryImpl implements UserRepository {
         role.add(" ");
         role.add(txt1);
         document.add(role);
-        
+
         Paragraph time = new Paragraph("Thời gian in vé: " + formatTime, f3);
         time.setAlignment(Element.ALIGN_RIGHT);
         time.setIndentationRight(50f);
         document.add(time);
-        
+
         Paragraph txt2 = new Paragraph("NGƯỜI BÁN", f3);
         txt2.setAlignment(Element.ALIGN_RIGHT);
         txt2.setIndentationRight(130f);
