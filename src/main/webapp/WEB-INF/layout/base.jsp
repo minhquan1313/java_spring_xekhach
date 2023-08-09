@@ -1,5 +1,7 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <!--  -->
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!--  -->
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html data-bs-theme="dark" class="h-100 overflow-y-scroll">
@@ -42,13 +44,15 @@
             src="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.7.11/dist/js/tempus-dominus.min.js"
             crossorigin="anonymous"
         ></script>
-
-        <!-- Tempus Dominus Styles -->
         <link
             rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.7.11/dist/css/tempus-dominus.min.css"
             crossorigin="anonymous"
         />
+
+        <!-- tooltips -->
+        <c:url value="/js/globalTooltips.js" var="globalTooltips" />
+        <script defer src="${globalTooltips}"></script>
     </head>
     <body class="h-100 d-flex flex-column">
         <tiles:insertAttribute name="header" />
