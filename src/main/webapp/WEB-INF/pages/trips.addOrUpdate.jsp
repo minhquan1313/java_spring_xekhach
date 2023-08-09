@@ -125,7 +125,7 @@
                         <c:if test="${c.id == trip.driverId.id}">
                             <c:set value="selected" var="selected" />
                         </c:if>
-                        <option value="${c.id}" ${selected}>${c.lastName} ${c.firstName}</option>
+                        <option value="${c.id}" ${selected}>${c}</option>
                     </c:forEach>
                 </form:select>
 

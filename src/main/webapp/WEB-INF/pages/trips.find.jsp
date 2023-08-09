@@ -198,7 +198,7 @@
                     <option value="" selected disabled>Chọn tài xế</option>
 
                     <c:forEach items="${drivers}" var="c">
-                        <option value="${c.id}">${c.lastName} ${c.firstName}</option>
+                        <option value="${c.id}">${c}</option>
                     </c:forEach>
                 </select>
             </div>

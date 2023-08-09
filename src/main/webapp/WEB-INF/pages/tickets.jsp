@@ -29,14 +29,14 @@
                 <tr>
                     <th scope="col">id</th>
                     <th scope="col">Mã chuyến</th>
-                    <th scope="col">Khởi hành</th>
+                    <th scope="col">Ngày đặt vé</th>
                     <th scope="col">Điểm đi</th>
                     <th scope="col">Điểm đến</th>
                     <th scope="col">Thanh toán</th>
                     <th scope="col">Thanh toán bằng</th>
                     <th scope="col">Đã thanh toán</th>
+                    <th scope="col">Nhân viên xuất vé</th>
                     <th scope="col">Xe</th>
-                    <th scope="col">Ngày đặt vé</th>
                 </tr>
             </thead>
             <tbody class="table-group-divider">
@@ -45,13 +45,15 @@
                         <th scope="row">${item.id}</th>
                         <th scope="row">
                             <c:url value="/trips?id=${item.tripId.id}" var="tripFindIdUrl" />
-                            <a href="${tripFindIdUrl}"> ${item.tripId.id}</a>
+                            <a
+                                href="${tripFindIdUrl}"
+                                class="link-underline link-underline-opacity-0 text-primary-emphasis"
+                            >
+                                ${item.tripId.id}</a
+                            >
                         </th>
                         <td>
-                            <fmt:formatDate
-                                value="${item.tripId.startAt}"
-                                pattern="${date_pattern}"
-                            />
+                            <fmt:formatDate value="${item.createdAt}" pattern="${date_pattern}" />
                         </td>
                         <td>${item.tripId.routeId.startLocation}</td>
                         <td>${item.tripId.routeId.endLocation}</td>
@@ -72,14 +74,28 @@
                             <input class="form-check-input" type="checkbox" disabled ${checked} />
                         </td>
                         <td>
-                            <c:url value="/buses/${item.tripId.busId.id}" var="busDetail" />
-                            <a href="${busDetail}"> ${item.tripId.busId.licensePlate}</a>
+                            <c:url value="/users?id=${ticket.staffId.id}" var="userFind" />
+                            <a
+                                href="${userFind}"
+                                class="link-underline link-underline-opacity-0 text-primary-emphasis"
+                                >${ticket.staffId}
+                            </a>
                         </td>
                         <td>
-                            <fmt:formatDate value="${item.createdAt}" pattern="${date_pattern}" />
+                            <c:url value="/buses/${item.tripId.busId.id}" var="busDetail" />
+                            <a
+                                href="${busDetail}"
+                                class="link-underline link-underline-opacity-0 text-primary-emphasis"
+                            >
+                                ${item.tripId.busId.licensePlate}</a
+                            >
                         </td>
+
                         <td>
                             <div style="display: grid; grid-auto-flow: column; gap: 0.5rem">
+                                <c:url value="/tickets/${item.id}" var="detailUrl" />
+                                <a href="${detailUrl}" class="btn btn-primary">Chi tiết</a>
+
                                 <c:url value="/tickets/edit/${item.id}" var="editUrl" />
                                 <!-- <a href="${editUrl}" class="btn btn-primary">Sửa</a> -->
 

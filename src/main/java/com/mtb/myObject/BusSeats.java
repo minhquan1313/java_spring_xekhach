@@ -113,6 +113,7 @@ public class BusSeats {
         private int x;
         private int y;
         private boolean available;
+        private boolean userChosen;
 
         // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         public Pos() {
