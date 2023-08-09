@@ -40,7 +40,11 @@
         <!-- bookingUsers -->
         <div class="mb-3">
             <div class="input-group">
-                <span class="input-group-text">
+                <span
+                    class="input-group-text"
+                    data-bs-toggle="tooltip"
+                    data-bs-title="User nào đặt vé"
+                >
                     <i class="bi bi-person"></i>
                 </span>
                 <form:select class="form-select" path="userId">
@@ -49,7 +53,7 @@
                         <c:if test="${c.id == ticket.userId.id}">
                             <c:set value="selected" var="selected" />
                         </c:if>
-                        <option value="${c.id}" ${selected}>${c.lastName} ${c.firstName}</option>
+                        <option value="${c.id}" ${selected}>${c}</option>
                     </c:forEach>
                 </form:select>
 
@@ -99,7 +103,7 @@
                         <fmt:formatDate value="${c.startAt}" pattern="${date_pattern}" />
                     </div>
                     <div>${c.busId.licensePlate} - ${fn:length(c.busId.busSeatTripSet)}</div>
-                    <div>${c.driverId.lastName} ${c.driverId.firstName}</div>
+                    <div>${c.driverId}</div>
                 </div>
 
                 <c:url value="/trips/add" var="createUrl" />

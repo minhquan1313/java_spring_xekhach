@@ -1,5 +1,6 @@
 package com.mtb.controllers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -21,9 +22,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mtb.myObject.BusSeats;
 import com.mtb.pojo.Ticket;
+import com.mtb.pojo.TicketDetail;
 import com.mtb.pojo.Trip;
 import com.mtb.pojo.User;
 import com.mtb.service.BusSeatTripService;
+import com.mtb.service.TicketDetailService;
 import com.mtb.service.TicketService;
 import com.mtb.service.TripService;
 import com.mtb.service.UserService;
@@ -33,6 +36,9 @@ public class TicketController {
 
     @Autowired
     private TicketService ticketService;
+
+    @Autowired
+    private TicketDetailService ticketDetailService;
 
     @Autowired
     private UserService userService;
@@ -100,7 +106,8 @@ public class TicketController {
     public String editForm(Model model, @PathVariable(value = "id") int id) {
         // return addOrEditForm(model, id);
 
-        return "tickets.edit";
+        return "/tickets";
+        // return "tickets.edit";
     }
 
     @PostMapping(value = "/tickets/add")
@@ -125,7 +132,28 @@ public class TicketController {
 
     @GetMapping("/tickets/{id}")
     public String detailForm(Model model, @PathVariable(value = "id") int id) {
+        Ticket ticket = ticketService.getById(id);
+        Trip trip = ticket.getTripId();
+        int bId = trip.getBusId().getId();
+        int tId = trip.getId();
+        trip.getBusId().setBusSeatTripSet(new HashSet<>(busSeatTripService.getListByBusAndTripId(bId, tId)));
+        model.addAttribute("ticket", ticket);
+        // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+        List<TicketDetail> ticketsDetail = ticketDetailService.getListByTicketId(tId);
+        List<Integer> ticketsDetailSeatId = new ArrayList<>();
+        for (TicketDetail ticketDetail : ticketsDetail) {
+            ticketsDetailSeatId.add(ticketDetail.getBusSeatTripId().getId());
+        }
 
+        BusSeats seats = busSeatTripService.getBusSeats(bId, tId);
+        seats.getArray().forEach(r -> {
+            if (ticketsDetailSeatId.contains(r.getId())) {
+                r.setUserChosen(true);
+            }
+        });
+        // model.addAttribute("ticketsDetail", ticketsDetail);
+        model.addAttribute("seats", seats);
+        // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         return "tickets.detail";
     }
 }

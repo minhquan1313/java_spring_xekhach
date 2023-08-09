@@ -48,7 +48,7 @@
                         </td>
                         <td>${item.routeId.startLocation}</td>
                         <td>${item.routeId.endLocation}</td>
-                        <td>${item.driverId.lastName} ${item.driverId.firstName}</td>
+                        <td>${item.driverId}</td>
                         <td>
                             <c:url value="/buses/${item.busId.id}" var="busDetail" />
                             <a href="${busDetail}"> ${item.busId.licensePlate}</a>

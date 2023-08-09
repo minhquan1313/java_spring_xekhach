@@ -27,7 +27,6 @@ import com.mtb.service.BusService;
 import com.mtb.service.RouteService;
 import com.mtb.service.TripService;
 import com.mtb.service.UserService;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class TripController {
@@ -154,15 +153,5 @@ public class TripController {
         model.addAttribute("toPrice", toPrice);
 
         return "trips.find";
-    }
-    
-    @GetMapping("/trips/count")
-    public String countTripsByRoute(Model model) {
-        List<Object[]> tripCounts = tripService.countTripsByRoute();
-        model.addAttribute("tripCounts", tripCounts);
-        ////////////////////////////
-       
-        ////////////////////////
-        return "trips.count"; 
     }
 }
