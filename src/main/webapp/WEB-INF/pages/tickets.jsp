@@ -78,7 +78,7 @@
                             <a
                                 href="${userFind}"
                                 class="link-underline link-underline-opacity-0 text-primary-emphasis"
-                                >${ticket.staffId}
+                                >${item.staffId}
                             </a>
                         </td>
                         <td>

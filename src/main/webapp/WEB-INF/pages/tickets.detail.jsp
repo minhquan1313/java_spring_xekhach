@@ -66,12 +66,14 @@
             </span>
 
             <c:url value="/trips?id=${ticket.tripId.id}" var="tripFind" />
-            <a
-                href="${tripFind}"
-                class="form-control link-underline link-underline-opacity-0 text-primary-emphasis"
-            >
-                Mã chuyến: ${ticket.tripId.id}
-            </a>
+            <div class="form-control">
+                <a
+                    href="${tripFind}"
+                    class="link-underline link-underline-opacity-0 text-primary-emphasis"
+                >
+                    Mã chuyến: ${ticket.tripId.id}
+                </a>
+            </div>
 
             <ul
                 class="list-group tripIdSelectData"
@@ -157,11 +159,13 @@
                     <span class="input-group-text"> Nhân viên xuất vé </span>
 
                     <c:url value="/users?id=${ticket.staffId.id}" var="userFind" />
-                    <a
-                        href="${userFind}"
-                        class="form-control link-underline link-underline-opacity-0 text-primary-emphasis"
-                        >${ticket.staffId}
-                    </a>
+                    <div class="form-control">
+                        <a
+                            href="${userFind}"
+                            class="link-underline link-underline-opacity-0 text-primary-emphasis"
+                            >${ticket.staffId}
+                        </a>
+                    </div>
                 </div>
             </div>
         </c:if>

@@ -51,7 +51,12 @@
                         <td>${item.driverId}</td>
                         <td>
                             <c:url value="/buses/${item.busId.id}" var="busDetail" />
-                            <a href="${busDetail}"> ${item.busId.licensePlate}</a>
+                            <a
+                                href="${busDetail}"
+                                class="link-underline link-underline-opacity-0 text-primary-emphasis"
+                            >
+                                ${item.busId.licensePlate}</a
+                            >
                         </td>
                         <td>
                             <fmt:formatNumber
