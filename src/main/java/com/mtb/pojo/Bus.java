@@ -61,6 +61,8 @@ public class Bus implements Serializable {
     @OneToMany(mappedBy = "busId")
     private Set<BusSeatTrip> busSeatTripSet;
 
+    private Integer seatCount;
+
     @Transient
     private MultipartFile file;
 
@@ -160,4 +162,11 @@ public class Bus implements Serializable {
         return "com.mtb.pojo.Bus[ id=" + id + " ]";
     }
 
+    public Integer getSeatCount() {
+        return seatCount;
+    }
+
+    public void setSeatCount(Integer seatCount) {
+        this.seatCount = seatCount;
+    }
 }

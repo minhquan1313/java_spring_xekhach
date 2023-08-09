@@ -271,10 +271,8 @@
 
                         if ($selected.val()) {
                             $("#isPaid").prop("checked", true);
-                            $("#isPaid").attr("disabled", "");
                         } else {
                             $("#isPaid").prop("checked", false);
-                            $("#isPaid").attr("disabled", null);
                         }
                     }
                 </script>

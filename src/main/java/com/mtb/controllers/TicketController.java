@@ -95,6 +95,11 @@ public class TicketController {
         List<User> bookingUsers = userService.getUsers(userParams);
         model.addAttribute("bookingUsers", bookingUsers);
 
+        Map<String, String> staffParams = new HashMap<>();
+        staffParams.put("roleId", "2");
+        List<User> staffUsers = userService.getUsers(staffParams);
+        model.addAttribute("staffUsers", staffUsers);
+
         int extraPrice = 10;
         model.addAttribute("extraPriceTitle", "Phí tết");
         model.addAttribute("extraPrice", extraPrice);

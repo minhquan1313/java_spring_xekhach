@@ -32,10 +32,10 @@
                     <th scope="col">Ngày đặt vé</th>
                     <th scope="col">Điểm đi</th>
                     <th scope="col">Điểm đến</th>
-                    <th scope="col">Thanh toán</th>
-                    <th scope="col">Thanh toán bằng</th>
+                    <th scope="col">Giá</th>
+                    <th scope="col">Thanh toán với</th>
                     <th scope="col">Đã thanh toán</th>
-                    <th scope="col">Nhân viên xuất vé</th>
+                    <th scope="col">Xuất vé</th>
                     <th scope="col">Xe</th>
                 </tr>
             </thead>
@@ -74,7 +74,7 @@
                             <input class="form-check-input" type="checkbox" disabled ${checked} />
                         </td>
                         <td>
-                            <c:url value="/users?id=${ticket.staffId.id}" var="userFind" />
+                            <c:url value="/users?id=${item.staffId.id}" var="userFind" />
                             <a
                                 href="${userFind}"
                                 class="link-underline link-underline-opacity-0 text-primary-emphasis"

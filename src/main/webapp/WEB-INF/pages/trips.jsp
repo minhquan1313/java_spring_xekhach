@@ -17,9 +17,12 @@
             </div>
 
             <h3 class="text-center">Các chuyến xe hiện có</h3>
-            <div class="d-flex justify-content-end" style="flex: 1">
+            <div class="d-flex justify-content-end flex-wrap" style="flex: 1">
                 <c:url value="/trips/find" var="findUrl" />
                 <a href="${findUrl}" class="btn btn-outline-info text-nowrap me-2">Tìm kiếm</a>
+
+                <c:url value="/trips/chart" var="chartUrl" />
+                <a href="${chartUrl}" class="btn btn-outline-info text-nowrap me-2">Chart</a>
 
                 <c:url value="/trips/add" var="createUrl" />
                 <a href="${createUrl}" class="btn btn-outline-info text-nowrap">Thêm</a>
@@ -72,14 +75,16 @@
                                 <c:url value="/tickets/add" var="ticketUrl">
                                     <c:param name="tripId" value="${item.id}" />
                                 </c:url>
-                                <a href="${ticketUrl}" class="btn btn-outline-success">Đặt vé</a>
+                                <a href="${ticketUrl}" class="btn btn-outline-success text-nowrap"
+                                    >Đặt vé</a
+                                >
 
                                 <c:url value="/trips/edit/${item.id}" var="editUrl" />
-                                <a href="${editUrl}" class="btn btn-primary">Sửa</a>
+                                <a href="${editUrl}" class="btn btn-primary text-nowrap">Sửa</a>
 
                                 <c:url value="/api/trips/${item.id}" var="delUrl" />
                                 <c:set value="onclick=(delAPI('${delUrl}'))" var="delClick" />
-                                <button class="btn btn-danger" ${delClick}>Xoá</button>
+                                <button class="btn btn-danger text-nowrap" ${delClick}>Xoá</button>
                             </div>
                         </td>
                     </tr>
