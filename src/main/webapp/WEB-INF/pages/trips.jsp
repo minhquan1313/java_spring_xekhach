@@ -61,13 +61,21 @@
                             />
                             VNĐ
                         </td>
+                        <!-- here here here  -->
                         <td>
-                            <c:url value="/trips/edit/${item.id}" var="editUrl" />
-                            <a href="${editUrl}" class="btn btn-primary">Sửa</a>
+                            <div style="display: grid; grid-auto-flow: column; gap: 0.5rem">
+                                <c:url value="/tickets/add" var="ticketUrl">
+                                    <c:param name="tripId" value="${item.id}" />
+                                </c:url>
+                                <a href="${ticketUrl}" class="btn btn-outline-success">Đặt vé</a>
 
-                            <c:url value="/api/trips/${item.id}" var="delUrl" />
-                            <c:set value="onclick=(delAPI('${delUrl}'))" var="delClick" />
-                            <button class="btn btn-danger" ${delClick}>Xoá</button>
+                                <c:url value="/trips/edit/${item.id}" var="editUrl" />
+                                <a href="${editUrl}" class="btn btn-primary">Sửa</a>
+
+                                <c:url value="/api/trips/${item.id}" var="delUrl" />
+                                <c:set value="onclick=(delAPI('${delUrl}'))" var="delClick" />
+                                <button class="btn btn-danger" ${delClick}>Xoá</button>
+                            </div>
                         </td>
                     </tr>
                 </c:forEach>

@@ -28,6 +28,7 @@ function renewArray(col, row) {
                     type="button"
                     data-pos="${c}_${r}"
                     class="text-primary d-flex align-items-center justify-content-center"
+                    style="--x: ${c}; --y: ${r};"
                 >
                     <h3 class="m-0" withoutActive>
                         <i class="bi bi-circle"></i>

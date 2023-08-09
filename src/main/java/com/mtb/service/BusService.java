@@ -8,8 +8,10 @@ import com.mtb.pojo.Bus;
 
 public interface BusService {
     /**
-     * params:
-     * getSeats : boolean |
+     * 
+     * @param params
+     *               getSeats,id
+     * @return
      */
     List<Bus> getList(Map<String, String> params);
 

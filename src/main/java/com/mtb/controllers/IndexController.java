@@ -30,8 +30,8 @@ public class IndexController {
     private Environment env;
 
     @ModelAttribute
-    public void commonAttr(Model model,@RequestParam Map<String, String> params) {
-        
+    public void commonAttr(Model model, @RequestParam Map<String, String> params) {
+        model.addAttribute("date_pattern", this.env.getProperty("date_pattern"));
     }
 
     @RequestMapping("/")

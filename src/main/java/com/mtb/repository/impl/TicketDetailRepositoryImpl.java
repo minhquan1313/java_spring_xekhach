@@ -1,10 +1,9 @@
 package com.mtb.repository.impl;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -20,93 +19,85 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.mtb.pojo.Bus;
-import com.mtb.pojo.BusSeatTemplate;
-import com.mtb.repository.BusRepository;
-import com.mtb.service.BusSeatTemplateService;
+import com.mtb.pojo.TicketDetail;
+import com.mtb.repository.TicketDetailRepository;
 
 @Repository
 @Transactional
-public class BusRepositoryImpl implements BusRepository {
+public class TicketDetailRepositoryImpl implements TicketDetailRepository {
 
     @Autowired
     private LocalSessionFactoryBean factory;
 
-    @Autowired
-    BusSeatTemplateService busSeatTemplateService;
-
+    /**
+     * params: ticketId
+     */
     @Override
-    public List<Bus> getList(Map<String, String> params) {
+    public List<TicketDetail> getList(Map<String, String> params) {
         Session session = this.factory.getObject().getCurrentSession();
-
         CriteriaBuilder cb = session.getCriteriaBuilder();
-        CriteriaQuery<Bus> cq = cb.createQuery(Bus.class);
-        Root bus = cq.from(Bus.class);
-        cq.select(bus);
+        CriteriaQuery<TicketDetail> cq = cb.createQuery(TicketDetail.class);
+        Root ticketDetail = cq.from(TicketDetail.class);
+        cq.select(ticketDetail);
 
         if (params != null) {
-
             List<Predicate> predicates = new ArrayList<>();
 
-            String id = params.get("id");
-            if (id != null && !id.isEmpty()) {
-                predicates.add(cb.equal(bus.get("id"), Integer.parseInt(id)));
+            String ticketId = params.get("ticketId");
+            if (ticketId != null && !ticketId.isEmpty()) {
+                predicates.add(cb.equal(ticketDetail.get("ticketId"), Integer.parseInt(ticketId)));
             }
 
             cq.where(predicates.toArray(Predicate[]::new));
         }
 
-        Query qBus = session.createQuery(cq);
-        List<Bus> list = qBus.getResultList();
+        Query query = session.createQuery(cq);
 
-        if (params != null) {
-            String getSeats = params.get("getSeats");
-            if (getSeats != null) {
-                list.forEach(r -> {
-                    List<BusSeatTemplate> seatTemplates = busSeatTemplateService.getListByBusId(r.getId());
-                    Set<BusSeatTemplate> targetSet = new HashSet<>(seatTemplates);
-                    r.setBusSeatTemplateSet(targetSet);
-                });
-            }
-        }
+        List<TicketDetail> list = query.getResultList();
 
         return list;
     }
 
     @Override
-    public Bus getById(int id) {
-        Session session = this.factory.getObject().getCurrentSession();
-        return session.get(Bus.class, id);
+    public List<TicketDetail> getListByTicketId(int ticketId) {
+        Map<String, String> params = new HashMap<>();
+        params.put("ticketId", String.valueOf(ticketId));
+
+        return this.getList(params);
     }
 
     @Override
-    public Bus addOrUpdate(Bus item) {
+    public TicketDetail getById(int id) {
+        Session session = this.factory.getObject().getCurrentSession();
+        return session.get(TicketDetail.class, id);
+    }
+
+    @Override
+    public boolean addOrUpdate(TicketDetail item) {
         Session session = this.factory.getObject().getCurrentSession();
         try {
             if (item.getId() == null) {
                 // Create new
                 session.save(item);
-                return item;
+                return true;
             }
 
             // Update
             session.update(item);
-            return item;
+            return true;
         } catch (HibernateError e) {
             e.printStackTrace();
-            return null;
+            return false;
         }
     }
 
     @Override
     public boolean deleteById(int id) {
         Session session = this.factory.getObject().getCurrentSession();
-        Bus p = this.getById(id);
+        TicketDetail p = this.getById(id);
 
         try {
-            busSeatTemplateService.delMultipleSeatTemplateByBusId(id);
             session.delete(p);
-
             return true;
         } catch (HibernateException e) {
             return false;

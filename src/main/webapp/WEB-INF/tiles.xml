@@ -69,6 +69,15 @@
         <put-attribute name="content" value="/WEB-INF/pages/trips.find.jsp" />
     </definition>
 
+    <definition name="tickets" extends="baseLayout">
+        <put-attribute name="title" value="Các vé xe" />
+        <put-attribute name="content" value="/WEB-INF/pages/tickets.jsp" />
+    </definition>
+    <definition name="tickets.add" extends="baseLayout">
+        <put-attribute name="title" value="Thêm vé xe" />
+        <put-attribute name="content" value="/WEB-INF/pages/tickets.add.jsp" />
+    </definition>
+
     <definition name="debug" extends="baseLayout">
         <put-attribute name="title" value="Debug" />
         <put-attribute name="content" value="/WEB-INF/pages/debug.jsp" />

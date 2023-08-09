@@ -33,6 +33,7 @@
                             <c:choose>
                                 <c:when test="${seat.available == true}">
                                     <button
+                                        type="button"
                                         data-pos="${seat.x}_${seat.y}"
                                         class="text-primary d-flex align-items-center justify-content-center"
                                         style="--x: ${seat.x}; --y: ${seat.y};"
@@ -66,43 +67,8 @@
                     </div>
                 </div>
 
-                <style>
-                    #seatArrayContainer {
-                        display: grid;
-                        grid-template-columns: repeat(var(--col), 3rem);
-                        grid-template-rows: repeat(var(--row), 1fr);
-                    }
-                    button[data-pos] {
-                        aspect-ratio: 1/1;
-                        background-color: transparent;
-                        border-color: transparent;
-                        grid-column: var(--x);
-                        grid-row: var(--y);
-
-                        filter: grayscale(1);
-                    }
-                    button[data-pos] *.bi {
-                        font-size: 2rem;
-                    }
-                    button[data-pos]:disabled {
-                        filter: grayscale(1);
-                    }
-                    button[data-pos][active] {
-                        filter: hue-rotate(300deg);
-                    }
-                    button[data-pos] *[withActive] {
-                        display: none;
-                    }
-                    button[data-pos] *[withoutActive] {
-                        display: block;
-                    }
-                    button[data-pos][active] *[withActive] {
-                        display: block;
-                    }
-                    button[data-pos][active] *[withoutActive] {
-                        display: none;
-                    }
-                </style>
+                <c:url value="/css/busSeat.css" var="busSeat" />
+                <link rel="stylesheet" href="${busSeat}" />
 
                 <c:url value="/js/busDetailSeat.js" var="busDetailSeat" />
                 <script src="${busDetailSeat}"></script>

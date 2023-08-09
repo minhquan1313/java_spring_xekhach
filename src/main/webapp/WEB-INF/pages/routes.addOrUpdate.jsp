@@ -62,6 +62,20 @@
             </div>
             <form:errors path="endLocation" element="div" cssClass="text-danger" />
         </div>
+
+        <div class="mb-3">
+            <div class="form-check">
+                <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="round_trip"
+                    name="round_trip"
+                    checked
+                />
+                <label class="form-check-label" for="round_trip"> 2 chiều </label>
+            </div>
+        </div>
+
         <button type="submit" class="btn btn-outline-info w-100">
             <c:choose>
                 <c:when test="${route.id == null}"> Thêm </c:when>

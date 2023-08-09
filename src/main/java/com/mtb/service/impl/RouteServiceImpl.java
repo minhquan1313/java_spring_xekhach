@@ -14,37 +14,37 @@ import com.mtb.service.RouteService;
 public class RouteServiceImpl implements RouteService {
 
     @Autowired
-    private RouteRepository routeRepository;
+    private RouteRepository repository;
 
     @Override
     public List<Route> getList(Map<String, String> params) {
-        return routeRepository.getList(params);
+        return repository.getList(params);
     }
 
     @Override
     public Route getById(int id) {
-        return routeRepository.getById(id);
+        return repository.getById(id);
     }
 
     @Override
     public boolean addOrUpdate(Route item) {
-        return routeRepository.addOrUpdate(item);
+        return repository.addOrUpdate(item);
     }
 
     @Override
     public boolean deleteById(int id) {
-        return routeRepository.deleteById(id);
+        return repository.deleteById(id);
     }
 
     @Override
     public List<Route> getListStart() {
-        return routeRepository.getListStart();
+        return repository.getListStart();
 
     }
 
     @Override
     public List<Route> getListEnd() {
-        return routeRepository.getListEnd();
+        return repository.getListEnd();
 
     }
 }

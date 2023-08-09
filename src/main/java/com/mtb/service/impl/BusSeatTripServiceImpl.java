@@ -83,4 +83,14 @@ public class BusSeatTripServiceImpl implements BusSeatTripService {
         return this.repository.countSeatByBusAndTripId(busId, tripId);
     }
 
+    @Override
+    public BusSeatTrip getById(int id) {
+        return this.repository.getById(id);
+    }
+
+    @Override
+    public boolean addOrUpdate(BusSeatTrip item) {
+        return repository.addOrUpdate(item);
+    }
+
 }

@@ -3,6 +3,7 @@ package com.mtb.repository.impl;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +22,7 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mtb.pojo.BusSeatTrip;
 import com.mtb.pojo.Route;
 import com.mtb.pojo.Trip;
 import com.mtb.pojo.Trip_;
@@ -45,7 +47,7 @@ public class TripRepositoryImp implements TripRepository {
 
     /**
      * params: startLocation | endLocation | busId | fromPrice | toPrice |
-     * driverId | timeFrom | timeTo
+     * driverId | timeFrom | timeTo | id
      */
     @Override
     public List<Trip> getList(Map<String, String> params) {
@@ -86,6 +88,11 @@ public class TripRepositoryImp implements TripRepository {
 
                 predicates.add(routeId.in(routeIdToMatch));
 
+            }
+
+            String id = params.get("id");
+            if (id != null && !id.isEmpty()) {
+                predicates.add(cb.equal(trip.get("id"), Integer.parseInt(id)));
             }
 
             String busId = params.get("busId");
@@ -133,7 +140,13 @@ public class TripRepositoryImp implements TripRepository {
     @Override
     public Trip getById(int id) {
         Session session = this.factory.getObject().getCurrentSession();
-        return session.get(Trip.class, id);
+        Trip trip = session.get(Trip.class, id);
+
+        Integer busId = trip.getBusId().getId();
+        List<BusSeatTrip> listByBusAndTripId = busSeatTripService.getListByBusAndTripId(busId, id);
+        trip.getBusId().setBusSeatTripSet(new HashSet<>(listByBusAndTripId));
+
+        return trip;
     }
 
     @Override
@@ -168,7 +181,6 @@ public class TripRepositoryImp implements TripRepository {
             return false;
         }
     }
-    
 
     @Override
     public int getLowestPrice() {
