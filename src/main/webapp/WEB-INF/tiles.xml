@@ -68,10 +68,6 @@
         <put-attribute name="title" value="Tìm kiếm chuyến xe" />
         <put-attribute name="content" value="/WEB-INF/pages/trips.find.jsp" />
     </definition>
-    <definition name="trips.chart" extends="baseLayout">
-        <put-attribute name="title" value="Chart" />
-        <put-attribute name="content" value="/WEB-INF/pages/trips.chart.jsp" />
-    </definition>
 
     <definition name="tickets" extends="baseLayout">
         <put-attribute name="title" value="Các vé xe" />
@@ -93,6 +89,10 @@
     <definition name="debug" extends="baseLayout">
         <put-attribute name="title" value="Debug" />
         <put-attribute name="content" value="/WEB-INF/pages/debug.jsp" />
+    </definition>
+    <definition name="trips.chart" extends="baseLayout">
+        <put-attribute name="title" value="Thống kê" />
+        <put-attribute name="content" value="/WEB-INF/pages/trips.chart.jsp" />
     </definition>
 
 </tiles-definitions>
