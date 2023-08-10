@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -29,8 +31,6 @@ import com.mtb.pojo.Trip_;
 import com.mtb.repository.TripRepository;
 import com.mtb.service.BusSeatTripService;
 import com.mtb.service.RouteService;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 @Repository
 @Transactional

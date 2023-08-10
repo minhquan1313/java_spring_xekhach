@@ -130,7 +130,16 @@ public class RouteRepositoryImpl implements RouteRepository {
         // )
         Query query = session
                 .createQuery(
-                        "FROM Route WHERE id IN (SELECT MIN(id) as id FROM Route GROUP BY startLocation) ORDER BY startLocation ASC");
+                        String.join(" ",
+                                "",
+                                "FROM Route",
+                                "WHERE id IN",
+                                "(",
+                                "SELECT MIN(id) as id",
+                                "FROM Route",
+                                "GROUP BY startLocation",
+                                ")",
+                                "ORDER BY startLocation ASC"));
         List<Route> resultList = query.getResultList();
         return resultList;
     }

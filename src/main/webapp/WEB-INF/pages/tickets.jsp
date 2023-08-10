@@ -23,92 +23,118 @@
             </div>
         </div>
     </div>
-    <div class="table-responsive">
-        <table class="table table-hover">
-            <thead>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">Mã chuyến</th>
+                <th scope="col">Ngày đặt vé</th>
+                <th scope="col">Số ghế đặt</th>
+                <th scope="col">Điểm đi</th>
+                <th scope="col">Điểm đến</th>
+                <th scope="col">Giá</th>
+                <th scope="col">Thanh toán với</th>
+                <th scope="col">Đã thanh toán</th>
+                <th scope="col">Xuất vé</th>
+                <th scope="col">Xe</th>
+            </tr>
+        </thead>
+        <tbody class="table-group-divider">
+            <c:forEach items="${tickets}" var="item">
                 <tr>
-                    <th scope="col">id</th>
-                    <th scope="col">Mã chuyến</th>
-                    <th scope="col">Ngày đặt vé</th>
-                    <th scope="col">Điểm đi</th>
-                    <th scope="col">Điểm đến</th>
-                    <th scope="col">Giá</th>
-                    <th scope="col">Thanh toán với</th>
-                    <th scope="col">Đã thanh toán</th>
-                    <th scope="col">Xuất vé</th>
-                    <th scope="col">Xe</th>
+                    <th scope="row">${item.id}</th>
+                    <th scope="row">
+                        <c:url value="/trips?id=${item.tripId.id}" var="tripFindIdUrl" />
+                        <a
+                            href="${tripFindIdUrl}"
+                            class="link-underline link-underline-opacity-0 text-primary-emphasis"
+                        >
+                            ${item.tripId.id}</a
+                        >
+                    </th>
+                    <td>
+                        <fmt:formatDate value="${item.createdAt}" pattern="${date_pattern}" />
+                    </td>
+                    <td>${item.totalSeat}</td>
+                    <td>${item.tripId.routeId.startLocation}</td>
+                    <td>${item.tripId.routeId.endLocation}</td>
+                    <td>
+                        <fmt:formatNumber
+                            type="number"
+                            maxFractionDigits="0"
+                            value="${item.paidPrice}"
+                        />
+                        VNĐ
+                    </td>
+                    <td>${item.paidWith}</td>
+                    <td>
+                        <c:set value="" var="checked" />
+                        <c:if test="${item.isPaid == true}">
+                            <c:set value="checked" var="checked" />
+                        </c:if>
+                        <input class="form-check-input" type="checkbox" disabled ${checked} />
+                    </td>
+                    <td>
+                        <c:url value="/users?id=${item.staffId.id}" var="userFind" />
+                        <a
+                            href="${userFind}"
+                            class="link-underline link-underline-opacity-0 text-primary-emphasis"
+                            >${item.staffId}
+                        </a>
+                    </td>
+                    <td>
+                        <c:url value="/buses/${item.tripId.busId.id}" var="busDetail" />
+                        <a
+                            href="${busDetail}"
+                            class="link-underline link-underline-opacity-0 text-primary-emphasis"
+                        >
+                            ${item.tripId.busId.licensePlate}</a
+                        >
+                    </td>
+
+                    <td>
+                        <div class="btn-group">
+                            <c:url value="/tickets/${item.id}" var="detailUrl" />
+                            <a href="${detailUrl}" class="btn btn-primary">Chi tiết</a>
+
+                            <button
+                                type="button"
+                                class="btn btn-primary dropdown-toggle dropdown-toggle-split"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                            >
+                                <span class="visually-hidden">Toggle Dropdown</span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <c:url value="/" var="feedBackUrl" />
+                                    <a href="${feedBackUrl}" class="dropdown-item btn btn-primary"
+                                        >Phản hồi</a
+                                    >
+                                </li>
+                                <li>
+                                    <c:url value="/tickets/update/${item.id}" var="editUrl" />
+                                    <a href="${editUrl}" class="dropdown-item btn btn-primary"
+                                        >Sửa</a
+                                    >
+                                </li>
+                                <li>
+                                    <c:url value="/api/tickets/${item.id}" var="delUrl" />
+                                    <c:set value="onclick=(delAPI('${delUrl}'))" var="delClick" />
+                                    <button class="dropdown-item btn btn-danger" ${delClick}>
+                                        Xoá
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div style="display: grid; grid-auto-flow: column; gap: 0.5rem"></div>
+                    </td>
                 </tr>
-            </thead>
-            <tbody class="table-group-divider">
-                <c:forEach items="${tickets}" var="item">
-                    <tr>
-                        <th scope="row">${item.id}</th>
-                        <th scope="row">
-                            <c:url value="/trips?id=${item.tripId.id}" var="tripFindIdUrl" />
-                            <a
-                                href="${tripFindIdUrl}"
-                                class="link-underline link-underline-opacity-0 text-primary-emphasis"
-                            >
-                                ${item.tripId.id}</a
-                            >
-                        </th>
-                        <td>
-                            <fmt:formatDate value="${item.createdAt}" pattern="${date_pattern}" />
-                        </td>
-                        <td>${item.tripId.routeId.startLocation}</td>
-                        <td>${item.tripId.routeId.endLocation}</td>
-                        <td>
-                            <fmt:formatNumber
-                                type="number"
-                                maxFractionDigits="0"
-                                value="${item.paidPrice}"
-                            />
-                            VNĐ
-                        </td>
-                        <td>${item.paidWith}</td>
-                        <td>
-                            <c:set value="" var="checked" />
-                            <c:if test="${item.isPaid == true}">
-                                <c:set value="checked" var="checked" />
-                            </c:if>
-                            <input class="form-check-input" type="checkbox" disabled ${checked} />
-                        </td>
-                        <td>
-                            <c:url value="/users?id=${item.staffId.id}" var="userFind" />
-                            <a
-                                href="${userFind}"
-                                class="link-underline link-underline-opacity-0 text-primary-emphasis"
-                                >${item.staffId}
-                            </a>
-                        </td>
-                        <td>
-                            <c:url value="/buses/${item.tripId.busId.id}" var="busDetail" />
-                            <a
-                                href="${busDetail}"
-                                class="link-underline link-underline-opacity-0 text-primary-emphasis"
-                            >
-                                ${item.tripId.busId.licensePlate}</a
-                            >
-                        </td>
-
-                        <td>
-                            <div style="display: grid; grid-auto-flow: column; gap: 0.5rem">
-                                <c:url value="/tickets/${item.id}" var="detailUrl" />
-                                <a href="${detailUrl}" class="btn btn-primary">Chi tiết</a>
-
-                                <c:url value="/tickets/update/${item.id}" var="editUrl" />
-                                <a href="${editUrl}" class="btn btn-primary">Sửa</a>
-
-                                <c:url value="/api/tickets/${item.id}" var="delUrl" />
-                                <c:set value="onclick=(delAPI('${delUrl}'))" var="delClick" />
-                                <button class="btn btn-danger" ${delClick}>Xoá</button>
-                            </div>
-                        </td>
-                    </tr>
-                </c:forEach>
-            </tbody>
-        </table>
-    </div>
+            </c:forEach>
+        </tbody>
+    </table>
 </section>
 
 <c:url value="/js/delAPI.js" var="delAPI" />

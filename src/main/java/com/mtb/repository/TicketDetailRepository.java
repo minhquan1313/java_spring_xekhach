@@ -3,6 +3,7 @@ package com.mtb.repository;
 import java.util.List;
 import java.util.Map;
 
+import com.mtb.pojo.Ticket;
 import com.mtb.pojo.TicketDetail;
 
 public interface TicketDetailRepository {
@@ -15,4 +16,6 @@ public interface TicketDetailRepository {
     boolean addOrUpdate(TicketDetail item);
 
     boolean deleteById(int id);
+
+    int countByTicket(Ticket ticketId);
 }

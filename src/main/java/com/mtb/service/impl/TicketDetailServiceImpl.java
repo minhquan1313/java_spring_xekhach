@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mtb.pojo.BusSeatTrip;
+import com.mtb.pojo.Ticket;
 import com.mtb.pojo.TicketDetail;
 import com.mtb.repository.TicketDetailRepository;
 import com.mtb.service.BusSeatTripService;
 import com.mtb.service.TicketDetailService;
+import com.mtb.service.TicketService;
 
 @Service
 public class TicketDetailServiceImpl implements TicketDetailService {
@@ -23,6 +25,8 @@ public class TicketDetailServiceImpl implements TicketDetailService {
 
     @Autowired
     private TicketDetailService ticketDetailService;
+    @Autowired
+    private TicketService ticketService;
 
     @Override
     public List<TicketDetail> getList(Map<String, String> params) {
@@ -72,5 +76,12 @@ public class TicketDetailServiceImpl implements TicketDetailService {
         busSeatTripService.addOrUpdate(b);
 
         return repository.deleteById(id);
+    }
+
+    @Override
+    public int countByTicketId(int ticketId) {
+        Ticket t = ticketService.getById(ticketId);
+
+        return repository.countByTicket(t);
     }
 }

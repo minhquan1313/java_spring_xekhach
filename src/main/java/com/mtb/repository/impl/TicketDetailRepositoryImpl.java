@@ -19,6 +19,7 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mtb.pojo.Ticket;
 import com.mtb.pojo.TicketDetail;
 import com.mtb.repository.TicketDetailRepository;
 
@@ -102,6 +103,26 @@ public class TicketDetailRepositoryImpl implements TicketDetailRepository {
         } catch (HibernateException e) {
             return false;
         }
+    }
+
+    @Override
+    public int countByTicket(Ticket ticketId) {
+        Session session = this.factory.getObject().getCurrentSession();
+        Query query = session
+                .createQuery(String.join(" ",
+                        "",
+                        "SELECT COUNT(*)",
+                        "FROM TicketDetail",
+                        "WHERE ticketId = :tId"))
+                .setParameter("tId", ticketId);
+
+        try {
+            int parseInt = Integer.parseInt(query.getSingleResult().toString());
+            return parseInt;
+        } catch (NumberFormatException e) {
+            return 0;
+        }
+
     }
 
 }
