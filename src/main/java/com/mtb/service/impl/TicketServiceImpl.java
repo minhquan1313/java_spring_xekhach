@@ -1,5 +1,6 @@
 package com.mtb.service.impl;
 
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -10,6 +11,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lowagie.text.DocumentException;
 import com.mtb.myObject.BusSeats;
 import com.mtb.myObject.BusSeats.Pos;
 import com.mtb.pojo.BusSeatTrip;
@@ -125,6 +127,18 @@ public class TicketServiceImpl implements TicketService {
         }
 
         return repository.deleteById(id);
+    }
+
+    @Override
+    public void exportTicketToPdf(int id, OutputStream outputStream) throws DocumentException {
+        Ticket ticket = repository.getById(id);
+
+        if (ticket != null) {
+            repository.exportTicketsToPdf(ticket, outputStream);
+        } else {
+            // Xử lý trường hợp không tìm thấy người dùng
+            throw new IllegalArgumentException("Không tìm thấy");
+        }
     }
 
 }

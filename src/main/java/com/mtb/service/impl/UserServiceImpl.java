@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void exportUserToPdf(int userId, OutputStream outputStream) throws DocumentException {
-           User user = userRepo.getUserById(userId);
+        User user = userRepo.getUserById(userId);
 
         if (user != null) {
             userRepo.exportUsersToPdf(user, outputStream);
