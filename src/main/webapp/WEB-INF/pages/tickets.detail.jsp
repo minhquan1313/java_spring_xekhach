@@ -21,13 +21,52 @@
         <div class="invisible" style="flex: 1"></div>
     </div>
 
-    <!-- tripId -->
+    <!-- ticketId -->
     <div class="mb-3">
         <div class="input-group">
             <span class="input-group-text" data-bs-toggle="tooltip" data-bs-title="Mã vé">
                 <i class="bi bi-person"></i>
             </span>
             <div class="form-control">${ticket.id}</div>
+        </div>
+    </div>
+    <!-- Trip -->
+
+    <div class="mb-3">
+        <div class="input-group">
+            <span class="input-group-text" data-bs-toggle="tooltip" data-bs-title="Mã chuyến">
+                <i class="bi bi-geo-fill"></i>
+            </span>
+
+            <c:url value="/trips?id=${ticket.tripId.id}" var="tripFind" />
+            <div class="form-control align-items-center d-flex">
+                <a
+                    href="${tripFind}"
+                    class="link-underline link-underline-opacity-0 text-primary-emphasis"
+                >
+                    Mã chuyến: ${ticket.tripId.id}
+                </a>
+            </div>
+
+            <ul
+                class="list-group tripIdSelectData"
+                data-tripId="${ticket.tripId.id}"
+                style="flex: 1"
+            >
+                <li class="list-group-item">
+                    Tuyến: ${ticket.tripId.routeId.startLocation} ->
+                    ${ticket.tripId.routeId.endLocation}
+                </li>
+                <li class="list-group-item">
+                    Khởi hành:
+                    <fmt:formatDate value="${ticket.tripId.startAt}" pattern="${date_pattern}" />
+                </li>
+                <li class="list-group-item">
+                    Xe: ${ticket.tripId.busId.licensePlate} -
+                    ${fn:length(ticket.tripId.busId.busSeatTripSet)}
+                </li>
+                <li class="list-group-item">Tài xế: ${ticket.tripId.driverId}</li>
+            </ul>
         </div>
     </div>
 
@@ -58,50 +97,11 @@
         </div>
     </div>
 
-    <!-- Trip -->
-    <div class="mb-3">
-        <div class="input-group">
-            <span class="input-group-text">
-                <i class="bi bi-geo-fill"></i>
-            </span>
-
-            <c:url value="/trips?id=${ticket.tripId.id}" var="tripFind" />
-            <div class="form-control">
-                <a
-                    href="${tripFind}"
-                    class="link-underline link-underline-opacity-0 text-primary-emphasis"
-                >
-                    Mã chuyến: ${ticket.tripId.id}
-                </a>
-            </div>
-
-            <ul
-                class="list-group tripIdSelectData"
-                data-tripId="${ticket.tripId.id}"
-                style="flex: 1"
-            >
-                <li class="list-group-item">
-                    Tuyến: ${ticket.tripId.routeId.startLocation} ->
-                    ${ticket.tripId.routeId.endLocation}
-                </li>
-                <li class="list-group-item">
-                    Khởi hành:
-                    <fmt:formatDate value="${ticket.tripId.startAt}" pattern="${date_pattern}" />
-                </li>
-                <li class="list-group-item">
-                    Xe ${ticket.tripId.busId.licensePlate} -
-                    ${fn:length(ticket.tripId.busId.busSeatTripSet)}
-                </li>
-                <li class="list-group-item">Tài xế ${ticket.tripId.driverId}</li>
-            </ul>
-        </div>
-    </div>
-
     <!-- paidPrice -->
     <div class="mb-3 row g-3">
         <div class="col-12 col-lg-6">
             <div class="input-group">
-                <span class="input-group-text">
+                <span class="input-group-text" data-bs-toggle="tooltip" data-bs-title="Giá tiền">
                     <i class="bi bi-currency-dollar"></i>
                 </span>
                 <div class="form-control">
@@ -132,6 +132,24 @@
     </div>
 
     <div class="mb-3 row g-3">
+        <c:if test="${ticket.staffId != null}">
+            <!-- staffId -->
+            <div class="col">
+                <div class="input-group">
+                    <span class="input-group-text"> Nhân viên xuất vé </span>
+
+                    <c:url value="/users?id=${ticket.staffId.id}" var="userFind" />
+                    <div class="form-control">
+                        <a
+                            href="${userFind}"
+                            class="link-underline link-underline-opacity-0 text-primary-emphasis"
+                            >${ticket.staffId}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </c:if>
+
         <div class="col">
             <!-- isPaid -->
             <div class="input-group">
@@ -153,21 +171,60 @@
             </div>
         </div>
 
-        <c:if test="${ticket.staffId != null}">
-            <div class="col">
-                <div class="input-group">
-                    <span class="input-group-text"> Nhân viên xuất vé </span>
+        <!-- selectSeat -->
+        <div class="mb-3">
+            <label class="form-label">Vị trí ghế ngồi đã chọn</label>
 
-                    <c:url value="/users?id=${ticket.staffId.id}" var="userFind" />
-                    <div class="form-control">
-                        <a
-                            href="${userFind}"
-                            class="link-underline link-underline-opacity-0 text-primary-emphasis"
-                            >${ticket.staffId}
-                        </a>
-                    </div>
+            <div class="align-items-center d-flex flex-column mb-3">
+                <div
+                    id="seatArrayContainer"
+                    class="d-none"
+                    style="--col: ${seats.col}; --row: ${seats.row}"
+                >
+                    <c:forEach items="${seats.array}" var="c">
+                        <c:set value="" var="userChosen" />
+                        <c:if test="${c.userChosen == true}">
+                            <c:set value="userChosen active" var="userChosen" />
+                        </c:if>
+
+                        <c:set value="disabled" var="disabled" />
+                        <c:if test="${userChosen == '' && c.available != true}">
+                            <c:set value="disabled" var="disabled" />
+                        </c:if>
+
+                        <button
+                            type="button"
+                            data-id="${c.id}"
+                            data-pos="${c.x}_${c.y}"
+                            class="text-primary"
+                            style="--x: ${c.x}; --y: ${c.y};"
+                            ${disabled}
+                            ${userChosen}
+                        >
+                            <h3 class="m-0" withoutActive>
+                                <i class="bi bi-circle"></i>
+                            </h3>
+                            <h3 class="m-0" withActive>
+                                <i class="bi bi-circle-fill"></i>
+                            </h3>
+                        </button>
+                    </c:forEach>
                 </div>
             </div>
-        </c:if>
+
+            <div class="d-flex">
+                <span>Tổng số chỗ ngồi đã chọn: </span>
+                <span id="seatCount" class="ms-3">~</span>
+            </div>
+            <input type="hidden" name="selectedSeats" id="selectedSeats" />
+
+            <div class="d-none">
+                <c:url value="/css/busSeat.css" var="busSeat" />
+                <link rel="stylesheet" href="${busSeat}" />
+            </div>
+        </div>
     </div>
 </section>
+
+<c:url value="/js/busSeatTripTicketSelect.js" var="busSeatTripTicketSelect" />
+<script src="${busSeatTripTicketSelect}"></script>

@@ -38,6 +38,11 @@ public class BusSeatTripServiceImpl implements BusSeatTripService {
         return this.repository.getBusSeatsByBusAndTripId(busId, tripId);
     }
 
+    @Override
+    public BusSeats getBusSeats(int busId, int tripId, int ticketId) {
+        return this.repository.getBusSeats(busId, tripId, ticketId);
+    }
+
     private List<BusSeatTrip> getBusSeatTripFromBusAndTripId(int busId, int tripId, BusSeats busSeats) {
         List<BusSeatTrip> l = new ArrayList<>();
         Bus b = busService.getById(busId);

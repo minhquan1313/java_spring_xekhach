@@ -81,7 +81,7 @@
 
                 <div class="d-flex">
                     <span class="">Tổng số chỗ ngồi đã chọn: </span>
-                    <span id="seatCount" class="ms-3">1</span>
+                    <span id="seatCount" class="ms-3">~</span>
                 </div>
                 <div class="text-danger">${noSeatSelectedError}</div>
 

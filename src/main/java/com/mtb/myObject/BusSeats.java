@@ -33,6 +33,10 @@ public class BusSeats {
         this.array.add(new Pos(id, x, y, available));
     }
 
+    public void addPos(int id, int x, int y, boolean available, boolean userChosen) {
+        this.array.add(new Pos(id, x, y, available, userChosen));
+    }
+
     public void addMultiPosFromInput(String input) {
         String[] l = input.split(",");
 
@@ -68,7 +72,7 @@ public class BusSeats {
         });
     }
 
-    public void addMultiPosFromInputWithIdAndAvailable(String input, boolean available) {
+    public void addMultiPosFromInputFull(String input) {
         String[] l = input.split(",");
 
         int minX = 0, minY = 0;
@@ -81,6 +85,8 @@ public class BusSeats {
             int id = Integer.parseInt(numStr[i++]);
             int x = Integer.parseInt(numStr[i++]);
             int y = Integer.parseInt(numStr[i++]);
+            String disabled = numStr[i++];
+            String userChosen = numStr[i++];
 
             if (isFirsTime) {
                 minX = x;
@@ -93,7 +99,7 @@ public class BusSeats {
                     minY = y;
             }
 
-            this.addPos(id, x, y, available);
+            this.addPos(id, x, y, !(disabled.equals("true")), !!(userChosen.equals("true")));
         }
 
         diffX = minX - 1;
@@ -137,9 +143,17 @@ public class BusSeats {
             this.available = available;
         }
 
+        public Pos(Integer id, int x, int y, boolean available, boolean userChosen) {
+            this.id = id;
+            this.x = x;
+            this.y = y;
+            this.available = available;
+            this.userChosen = userChosen;
+        }
+
         @Override
         public String toString() {
-            return x + "_" + y;
+            return id + "_" + x + "_" + y + "_" + available + "_" + userChosen;
         }
         // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 

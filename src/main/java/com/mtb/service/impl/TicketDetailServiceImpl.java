@@ -6,8 +6,10 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mtb.pojo.BusSeatTrip;
 import com.mtb.pojo.TicketDetail;
 import com.mtb.repository.TicketDetailRepository;
+import com.mtb.service.BusSeatTripService;
 import com.mtb.service.TicketDetailService;
 
 @Service
@@ -15,6 +17,12 @@ public class TicketDetailServiceImpl implements TicketDetailService {
 
     @Autowired
     private TicketDetailRepository repository;
+
+    @Autowired
+    private BusSeatTripService busSeatTripService;
+
+    @Autowired
+    private TicketDetailService ticketDetailService;
 
     @Override
     public List<TicketDetail> getList(Map<String, String> params) {
@@ -33,12 +41,36 @@ public class TicketDetailServiceImpl implements TicketDetailService {
 
     @Override
     public boolean addOrUpdate(TicketDetail item) {
+        if (item.getId() != null) {
+            // UPDATE
+            TicketDetail original = ticketDetailService.getById(item.getId());
+
+            Integer bId = original.getBusSeatTripId().getId();
+            if (bId != item.getBusSeatTripId().getId()) {
+                BusSeatTrip b = busSeatTripService.getById(bId);
+                b.setAvailable(true);
+                busSeatTripService.addOrUpdate(b);
+            } else {
+                return true;
+            }
+        }
+
+        Integer bId = item.getBusSeatTripId().getId();
+        BusSeatTrip b = busSeatTripService.getById(bId);
+        b.setAvailable(false);
+        busSeatTripService.addOrUpdate(b);
+
         return repository.addOrUpdate(item);
     }
 
     @Override
     public boolean deleteById(int id) {
+        TicketDetail item = ticketDetailService.getById(id);
+        Integer bId = item.getBusSeatTripId().getId();
+        BusSeatTrip b = busSeatTripService.getById(bId);
+        b.setAvailable(true);
+        busSeatTripService.addOrUpdate(b);
+
         return repository.deleteById(id);
     }
-
 }

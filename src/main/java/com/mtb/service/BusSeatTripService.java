@@ -12,6 +12,8 @@ public interface BusSeatTripService {
 
     BusSeats getBusSeats(int busId, int tripId);
 
+    BusSeats getBusSeats(int busId, int tripId, int ticketId);
+
     boolean makeOrEditMultipleSeatTrip(int busId, int tripId, BusSeats busSeats);
 
     boolean addOrUpdate(BusSeatTrip item);

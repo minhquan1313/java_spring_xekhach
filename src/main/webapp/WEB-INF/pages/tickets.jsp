@@ -96,12 +96,12 @@
                                 <c:url value="/tickets/${item.id}" var="detailUrl" />
                                 <a href="${detailUrl}" class="btn btn-primary">Chi tiết</a>
 
-                                <c:url value="/tickets/edit/${item.id}" var="editUrl" />
-                                <!-- <a href="${editUrl}" class="btn btn-primary">Sửa</a> -->
+                                <c:url value="/tickets/update/${item.id}" var="editUrl" />
+                                <a href="${editUrl}" class="btn btn-primary">Sửa</a>
 
                                 <c:url value="/api/tickets/${item.id}" var="delUrl" />
                                 <c:set value="onclick=(delAPI('${delUrl}'))" var="delClick" />
-                                <!-- <button class="btn btn-danger" ${delClick}>Xoá</button> -->
+                                <button class="btn btn-danger" ${delClick}>Xoá</button>
                             </div>
                         </td>
                     </tr>

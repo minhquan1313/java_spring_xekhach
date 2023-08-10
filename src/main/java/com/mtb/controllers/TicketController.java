@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -57,6 +58,17 @@ public class TicketController {
         return "tickets";
     }
 
+    @ModelAttribute
+    public void commonAttr(Model model) {
+        List<String> paidWithTemplate = new ArrayList<>() {
+            {
+                add("Tiền mặt");
+                add("Momo");
+                add("Chuyển khoản");
+            }
+        };
+        model.addAttribute("paidWithTemplate", paidWithTemplate);
+    }
     // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
     @GetMapping("/tickets/add")
@@ -88,7 +100,8 @@ public class TicketController {
         trip.getBusId().setBusSeatTripSet(new HashSet<>(busSeatTripService.getListByBusAndTripId(bId, tId)));
         model.addAttribute("trip", trip);
 
-        model.addAttribute("seats", busSeatTripService.getBusSeats(bId, tId));
+        BusSeats busSeats = busSeatTripService.getBusSeats(bId, tId);
+        model.addAttribute("seats", busSeats);
 
         Map<String, String> userParams = new HashMap<>();
         userParams.put("roleId", "4");
@@ -107,12 +120,56 @@ public class TicketController {
         return "tickets.add";
     }
 
-    @GetMapping("/tickets/edit/{id}")
-    public String editForm(Model model, @PathVariable(value = "id") int id) {
-        // return addOrEditForm(model, id);
+    @GetMapping("/tickets/update/{id}")
+    public String editForm(Model model, @PathVariable(value = "id") int id, @RequestParam Map<String, String> params) {
+        Ticket ticket = ticketService.getById(id);
+        model.addAttribute("ticket", ticket);
 
-        return "/tickets";
-        // return "tickets.edit";
+        List<Trip> trips = tripService.getList(null);
+        trips.forEach(r -> {
+            int bId = r.getBusId().getId();
+            int tId = r.getId();
+            r.getBusId().setBusSeatTripSet(new HashSet<>(busSeatTripService.getListByBusAndTripId(bId, tId)));
+        });
+        model.addAttribute("trips", trips);
+
+        Trip trip = trips.get(0);
+        String tripId = params.get("tripId");
+        int _tId;
+        if (tripId != null && !tripId.isEmpty()) {
+            _tId = Integer.parseInt(tripId);
+        } else {
+            _tId = ticket.getTripId().getId();
+        }
+        for (Trip t : trips)
+            if (t.getId() == _tId) {
+                trip = t;
+                break;
+            }
+
+        int bId = trip.getBusId().getId();
+        int tId = trip.getId();
+        trip.getBusId().setBusSeatTripSet(new HashSet<>(busSeatTripService.getListByBusAndTripId(bId, tId)));
+        model.addAttribute("trip", trip);
+
+        BusSeats busSeats = busSeatTripService.getBusSeats(bId, tId, ticket.getId());
+        model.addAttribute("seats", busSeats);
+
+        Map<String, String> userParams = new HashMap<>();
+        userParams.put("roleId", "4");
+        List<User> bookingUsers = userService.getUsers(userParams);
+        model.addAttribute("bookingUsers", bookingUsers);
+
+        Map<String, String> staffParams = new HashMap<>();
+        staffParams.put("roleId", "2");
+        List<User> staffUsers = userService.getUsers(staffParams);
+        model.addAttribute("staffUsers", staffUsers);
+
+        int extraPrice = 10;
+        model.addAttribute("extraPriceTitle", "Phí tết");
+        model.addAttribute("extraPrice", extraPrice);
+
+        return "tickets.update";
     }
 
     @PostMapping(value = "/tickets/add")
@@ -123,12 +180,21 @@ public class TicketController {
         String selectedSeats = formData.getParameter("selectedSeats");
         BusSeats busSeats = new BusSeats();
         if (selectedSeats != null && !selectedSeats.isEmpty()) {
-            busSeats.addMultiPosFromInputWithIdAndAvailable(selectedSeats, false);
+            busSeats.addMultiPosFromInputFull(selectedSeats);
+        } else {
+            ObjectError error = new ObjectError("selectedSeats", "Select at least 1 seat");
+            rs.addError(error);
         }
 
         if (!rs.hasErrors() && !selectedSeats.isEmpty()) {
-            if (ticketService.add(item, busSeats)) {
-                return "redirect:/tickets";
+            if (item.getId() == null) {
+                if (ticketService.add(item, busSeats)) {
+                    return "redirect:/tickets";
+                }
+            } else {
+                if (ticketService.update(item, busSeats)) {
+                    return "redirect:/tickets";
+                }
             }
         }
 
@@ -150,14 +216,16 @@ public class TicketController {
             ticketsDetailSeatId.add(ticketDetail.getBusSeatTripId().getId());
         }
 
-        BusSeats seats = busSeatTripService.getBusSeats(bId, tId);
-        seats.getArray().forEach(r -> {
-            if (ticketsDetailSeatId.contains(r.getId())) {
-                r.setUserChosen(true);
-            }
-        });
-        // model.addAttribute("ticketsDetail", ticketsDetail);
-        model.addAttribute("seats", seats);
+        BusSeats busSeats = busSeatTripService.getBusSeats(bId, tId, ticket.getId());
+        model.addAttribute("seats", busSeats);
+        // BusSeats seats = busSeatTripService.getBusSeats(bId, tId);
+        // seats.getArray().forEach(r -> {
+        // if (ticketsDetailSeatId.contains(r.getId())) {
+        // r.setUserChosen(true);
+        // }
+        // });
+        // // model.addAttribute("ticketsDetail", ticketsDetail);
+        // model.addAttribute("seats", seats);
         // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         return "tickets.detail";
     }

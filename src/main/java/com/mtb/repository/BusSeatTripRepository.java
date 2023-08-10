@@ -12,6 +12,8 @@ public interface BusSeatTripRepository {
 
     BusSeats getBusSeatsByBusAndTripId(int busId, int tripId);
 
+    BusSeats getBusSeats(int busId, int tripId, int ticketId);
+
     boolean addOrUpdate(BusSeatTrip item);
 
     boolean makeMultipleSeatTrip(List<BusSeatTrip> list);

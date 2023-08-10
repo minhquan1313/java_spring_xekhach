@@ -40,18 +40,18 @@
         <!-- Trip -->
         <div class="mb-3">
             <div class="input-group">
-                <span class="input-group-text">
+                <span class="input-group-text" data-bs-toggle="tooltip" data-bs-title="Mã chuyến">
                     <i class="bi bi-geo-fill"></i>
                 </span>
 
                 <form:select class="form-select" path="tripId">
                     <c:forEach items="${trips}" var="c">
                         <c:set value="" var="selected" />
-                        <c:if test="${c.id == trip.id || c.id == ticket.tripId.id}">
+                        <c:if test="${c.id == trip.id}">
                             <c:set value="${c.price}" var="basePrice" />
                             <c:set value="selected" var="selected" />
                         </c:if>
-                        <c:url value="/tickets/add" var="reloadUrl">
+                        <c:url value="/tickets/update/${ticket.id}" var="reloadUrl">
                             <c:param name="tripId" value="${c.id}" />
                         </c:url>
                         <option
@@ -60,20 +60,25 @@
                             data-basePrice="${c.price}"
                             ${selected}
                         >
+                            <c:if test="${c.id == ticket.tripId.id}">Hiện tại: </c:if>
                             id: ${c.id}
                         </option>
                     </c:forEach>
                 </form:select>
-                <c:set value="${trip}" var="c" />
 
-                <div class="form-control tripIdSelectData" data-tripId="${c.id}">
-                    <div>${c.routeId.startLocation} -> ${c.routeId.endLocation}</div>
-                    <div>
-                        <fmt:formatDate value="${c.startAt}" pattern="${date_pattern}" />
-                    </div>
-                    <div>${c.busId.licensePlate} - ${fn:length(c.busId.busSeatTripSet)}</div>
-                    <div>${c.driverId}</div>
-                </div>
+                <ul class="list-group tripIdSelectData" data-tripId="${trip.id}" style="flex: 1">
+                    <li class="list-group-item">
+                        Tuyến: ${trip.routeId.startLocation} -> ${trip.routeId.endLocation}
+                    </li>
+                    <li class="list-group-item">
+                        Khởi hành:
+                        <fmt:formatDate value="${trip.startAt}" pattern="${date_pattern}" />
+                    </li>
+                    <li class="list-group-item">
+                        Xe: ${trip.busId.licensePlate} - ${fn:length(trip.busId.busSeatTripSet)}
+                    </li>
+                    <li class="list-group-item">Tài xế: ${trip.driverId}</li>
+                </ul>
 
                 <c:url value="/trips/add" var="createUrl" />
                 <a
@@ -82,6 +87,15 @@
                 >
                     <i class="bi bi-plus-square-dotted"></i>
                 </a>
+            </div>
+
+            <div class="d-none">
+                <script>
+                    $("#tripId").on("change", () => {
+                        const $selected = $("#tripId").find(":selected");
+                        location.replace($selected.attr("data-url"));
+                    });
+                </script>
             </div>
             <form:errors path="tripId" element="div" cssClass="text-danger" />
         </div>
@@ -120,7 +134,7 @@
         <!-- paidPrice -->
         <div class="mb-3">
             <div class="input-group">
-                <span class="input-group-text">
+                <span class="input-group-text" data-bs-toggle="tooltip" data-bs-title="Giá tiền">
                     <i class="bi bi-currency-dollar"></i>
                 </span>
                 <c:choose>
@@ -171,11 +185,6 @@
                             function setPriceOnInputs() {
                                 const $initSelected = $("#tripId").find(":selected");
 
-                                $("#tripId").on("change", () => {
-                                    const $selected = $("#tripId").find(":selected");
-                                    location.replace($selected.attr("data-url"));
-                                });
-
                                 $("#basePrice").val($initSelected.attr("data-basePrice"));
                             }
                         </script>
@@ -195,87 +204,92 @@
             <form:errors path="paidPrice" element="div" cssClass="text-danger" />
         </div>
 
-        <!-- paidWith -->
-        <div class="mb-3">
-            <div class="input-group">
-                <span class="input-group-text">
-                    <i class="bi bi-wallet2"></i>
-                </span>
+        <div class="mb-3 row g-3">
+            <!-- paidWith -->
+            <div class="col-12 col-md-6 col-xl-4">
+                <div class="input-group">
+                    <span
+                        class="input-group-text"
+                        data-bs-toggle="tooltip"
+                        data-bs-title="Phương thức thanh toán"
+                    >
+                        <i class="bi bi-wallet2"></i>
+                    </span>
 
-                <form:select class="form-select" path="paidWith">
-                    <c:forEach items="${['Tiền mặt', 'Momo', 'Chuyển khoản']}" var="c">
-                        <c:set value="" var="selected" />
-                        <c:if test="${c == ticket.paidWith}">
-                            <c:set value="selected" var="selected" />
-                        </c:if>
-                        <option value="${c}" ${selected}>${c}</option>
-                    </c:forEach>
-                </form:select>
-            </div>
-            <form:errors path="paidWith" element="div" cssClass="text-danger" />
-        </div>
-
-        <!-- staff -->
-        <div class="mb-3">
-            <div class="input-group">
-                <span
-                    class="input-group-text"
-                    data-bs-toggle="tooltip"
-                    data-bs-title="Nhân viên in vé"
-                >
-                    <i class="bi bi-person"></i>
-                </span>
-                <form:select class="form-select" path="staffId">
-                    <option value="" ${selected}>Chọn nhân viên in vé</option>
-
-                    <c:forEach items="${staffUsers}" var="c">
-                        <c:set value="" var="selected" />
-                        <c:if test="${c.id == ticket.staffId.id}">
-                            <c:set value="selected" var="selected" />
-                        </c:if>
-                        <option value="${c.id}" ${selected}>${c}</option>
-                    </c:forEach>
-                </form:select>
-
-                <c:url value="/users/add" var="createUrl" />
-                <a
-                    href="${createUrl}"
-                    class="input-group-text link-underline link-underline-opacity-0 bg-info-subtle"
-                >
-                    <i class="bi bi-plus-square-dotted"></i>
-                </a>
+                    <form:select class="form-select" path="paidWith">
+                        <c:forEach items="${paidWithTemplate}" var="c">
+                            <c:set value="" var="selected" />
+                            <c:if test="${c == ticket.paidWith}">
+                                <c:set value="selected" var="selected" />
+                            </c:if>
+                            <option value="${c}" ${selected}>${c}</option>
+                        </c:forEach>
+                    </form:select>
+                </div>
+                <form:errors path="paidWith" element="div" cssClass="text-danger" />
             </div>
 
-            <form:errors path="staffId" element="div" cssClass="text-danger" />
-        </div>
+            <!-- staffId -->
+            <div class="col-12 col-md-6 col-xl-4">
+                <div class="input-group">
+                    <span
+                        class="input-group-text"
+                        data-bs-toggle="tooltip"
+                        data-bs-title="Nhân viên in vé"
+                    >
+                        <i class="bi bi-person"></i>
+                    </span>
+                    <form:select class="form-select" path="staffId">
+                        <option value="">Chọn nhân viên in vé</option>
 
-        <!-- isPaid -->
-        <div class="mb-3">
-            <div class="form-check">
-                <form:checkbox class="form-check-input" path="isPaid" id="isPaid" />
-                <label class="form-check-label" for="isPaid" style="cursor: pointer">
-                    Đã thanh toán
-                </label>
+                        <c:forEach items="${staffUsers}" var="c">
+                            <c:set value="" var="selected" />
+                            <c:if test="${c.id == ticket.staffId.id}">
+                                <c:set value="selected" var="selected" />
+                            </c:if>
+                            <option value="${c.id}" ${selected}>${c}</option>
+                        </c:forEach>
+                    </form:select>
+
+                    <c:url value="/users/add" var="createUrl" />
+                    <a
+                        href="${createUrl}"
+                        class="input-group-text link-underline link-underline-opacity-0 bg-info-subtle"
+                    >
+                        <i class="bi bi-plus-square-dotted"></i>
+                    </a>
+                </div>
+
+                <form:errors path="staffId" element="div" cssClass="text-danger" />
             </div>
 
-            <div class="d-none">
-                <script>
-                    staffIdSelectChangeHandler();
+            <!-- isPaid -->
+            <div class="col-12 col-xl-4">
+                <div class="input-group">
+                    <label class="form-control" style="cursor: pointer">
+                        <form:checkbox class="form-check-input me-1" path="isPaid" id="isPaid" />
+                        <label> Đã thanh toán </label>
+                    </label>
+                </div>
+                <div class="d-none">
+                    <script>
+                        staffIdSelectChangeHandler();
 
-                    $("#staffId").on("change", staffIdSelectChangeHandler);
+                        $("#staffId").on("change", staffIdSelectChangeHandler);
 
-                    function staffIdSelectChangeHandler() {
-                        const $selected = $("#staffId").find(":selected");
+                        function staffIdSelectChangeHandler() {
+                            const $selected = $("#staffId").find(":selected");
 
-                        console.log(Boolean($selected.val()), { x: $selected.val() });
-
-                        if ($selected.val()) {
-                            $("#isPaid").prop("checked", true);
-                        } else {
-                            $("#isPaid").prop("checked", false);
+                            if ($selected.val()) {
+                                $("#isPaid").prop("checked", true);
+                                $("#isPaid").attr("disabled", "");
+                            } else {
+                                $("#isPaid").prop("checked", false);
+                                $("#isPaid").attr("disabled", null);
+                            }
                         }
-                    }
-                </script>
+                    </script>
+                </div>
             </div>
         </div>
 
@@ -289,9 +303,14 @@
                     class="d-none"
                     style="--col: ${seats.col}; --row: ${seats.row}"
                 >
-                    <c:forEach items="${seats.array}" var="c" varStatus="i">
+                    <c:forEach items="${seats.array}" var="c">
+                        <c:set value="" var="userChosen" />
+                        <c:if test="${c.userChosen == true}">
+                            <c:set value="userChosen active" var="userChosen" />
+                        </c:if>
+
                         <c:set value="" var="disabled" />
-                        <c:if test="${c.available != true}">
+                        <c:if test="${userChosen == '' && c.available != true}">
                             <c:set value="disabled" var="disabled" />
                         </c:if>
 
@@ -302,6 +321,9 @@
                             class="text-primary"
                             style="--x: ${c.x}; --y: ${c.y};"
                             ${disabled}
+                            ${userChosen}
+                            data-bs-toggle="tooltip"
+                            data-bs-title="${c.id} - ${c.x}_${c.y}"
                         >
                             <h3 class="m-0" withoutActive>
                                 <i class="bi bi-circle"></i>
@@ -316,7 +338,7 @@
 
             <div class="d-flex">
                 <span>Tổng số chỗ ngồi đã chọn: </span>
-                <span id="seatCount" class="ms-3">1</span>
+                <span id="seatCount" class="ms-3">~</span>
             </div>
             <input type="hidden" name="selectedSeats" id="selectedSeats" />
 

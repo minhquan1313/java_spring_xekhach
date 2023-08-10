@@ -61,6 +61,7 @@ public class Bus implements Serializable {
     @OneToMany(mappedBy = "busId")
     private Set<BusSeatTrip> busSeatTripSet;
 
+    @Transient
     private Integer seatCount;
 
     @Transient

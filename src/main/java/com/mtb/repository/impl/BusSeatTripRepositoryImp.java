@@ -19,7 +19,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.mtb.myObject.BusSeats;
 import com.mtb.pojo.BusSeatTrip;
+import com.mtb.pojo.TicketDetail;
 import com.mtb.repository.BusSeatTripRepository;
+import com.mtb.service.TicketDetailService;
 
 @Repository
 @Transactional
@@ -27,6 +29,9 @@ public class BusSeatTripRepositoryImp implements BusSeatTripRepository {
 
     @Autowired
     private LocalSessionFactoryBean factory;
+
+    @Autowired
+    private TicketDetailService ticketDetailService;
 
     @Override
     public List<BusSeatTrip> getListByBusAndTripId(int busId, int tripId) {
@@ -167,5 +172,25 @@ public class BusSeatTripRepositoryImp implements BusSeatTripRepository {
             e.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public BusSeats getBusSeats(int busId, int tripId, int ticketId) {
+        BusSeats busSeats = this.getBusSeatsByBusAndTripId(busId, tripId);
+
+        List<TicketDetail> ticketDetails = ticketDetailService.getListByTicketId(ticketId);
+        List<Integer> seatIds = new ArrayList<>();
+        for (TicketDetail ticketDetail : ticketDetails) {
+            int seatId = ticketDetail.getBusSeatTripId().getId();
+            seatIds.add(seatId);
+        }
+
+        busSeats.getArray().forEach(r -> {
+            if (seatIds.contains(r.getId())) {
+                r.setUserChosen(true);
+            }
+        });
+
+        return busSeats;
     }
 }

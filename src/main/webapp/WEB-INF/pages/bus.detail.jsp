@@ -5,7 +5,17 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <!--  -->
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<div class="container mt-4">
+<section class="container my-4">
+    <div class="d-flex align-items-center mb-3">
+        <div class="d-flex justify-content-start" style="flex: 1">
+            <c:url value="/buses" var="backUrl" />
+            <a href="${backUrl}" class="btn btn-outline-info text-nowrap">Quay lại</a>
+        </div>
+        <h3 class="text-center">Chi tiết xe</h3>
+
+        <div class="invisible" style="flex: 1"></div>
+    </div>
+
     <div class="row">
         <div class="col-12 col-md-6">
             <img src="${bus.image}" class="img-thumbnail rounded mx-auto d-block" alt="..." />
@@ -28,51 +38,45 @@
             </div>
             <section>
                 <div class="align-items-center d-flex flex-column mb-3">
-                    <div id="seatArrayContainer" style="--col: ${seats.col}; --row: ${seats.row}">
-                        <c:forEach items="${seats.array}" var="seat" varStatus="i">
-                            <c:choose>
-                                <c:when test="${seat.available == true}">
-                                    <button
-                                        type="button"
-                                        data-pos="${seat.x}_${seat.y}"
-                                        class="text-primary d-flex align-items-center justify-content-center"
-                                        style="--x: ${seat.x}; --y: ${seat.y};"
-                                    >
-                                        <h3 class="m-0" withoutActive>
-                                            <i class="bi bi-circle"></i>
-                                        </h3>
-                                        <h3 class="m-0" withActive>
-                                            <i class="bi bi-circle-fill"></i>
-                                        </h3>
-                                    </button>
-                                </c:when>
+                    <div
+                        id="seatArrayContainer"
+                        class="d-none"
+                        style="--col: ${seats.col}; --row: ${seats.row}"
+                    >
+                        <c:forEach items="${seats.array}" var="c">
+                            <c:set value="" var="userChosen" />
+                            <c:if test="${c.userChosen == true}">
+                                <c:set value="userChosen active" var="userChosen" />
+                            </c:if>
 
-                                <c:otherwise>
-                                    <button
-                                        data-pos="${seat.x}_${seat.y}"
-                                        class="text-primary d-flex align-items-center justify-content-center"
-                                        style="--x: ${seat.x}; --y: ${seat.y};"
-                                        disabled
-                                    >
-                                        <h3 class="m-0" withoutActive>
-                                            <i class="bi bi-circle"></i>
-                                        </h3>
-                                        <h3 class="m-0" withActive>
-                                            <i class="bi bi-circle-fill"></i>
-                                        </h3>
-                                    </button>
-                                </c:otherwise>
-                            </c:choose>
+                            <c:set value="" var="disabled" />
+                            <c:if test="${userChosen == '' && c.available != true}">
+                                <c:set value="disabled" var="disabled" />
+                            </c:if>
+
+                            <button
+                                type="button"
+                                data-id="${c.id}"
+                                data-pos="${c.x}_${c.y}"
+                                class="text-primary"
+                                style="--x: ${c.x}; --y: ${c.y};"
+                                ${disabled}
+                                ${userChosen}
+                            >
+                                <h3 class="m-0" withoutActive>
+                                    <i class="bi bi-circle"></i>
+                                </h3>
+                                <h3 class="m-0" withActive>
+                                    <i class="bi bi-circle-fill"></i>
+                                </h3>
+                            </button>
                         </c:forEach>
                     </div>
                 </div>
 
                 <c:url value="/css/busSeat.css" var="busSeat" />
                 <link rel="stylesheet" href="${busSeat}" />
-
-                <c:url value="/js/busDetailSeat.js" var="busDetailSeat" />
-                <script src="${busDetailSeat}"></script>
             </section>
         </div>
     </div>
-</div>
+</section>

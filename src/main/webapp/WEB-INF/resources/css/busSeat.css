@@ -16,6 +16,12 @@ button[data-pos] *.bi {
 button[data-pos]:disabled {
     filter: grayscale(1);
 }
+button[data-pos][userChosen]:not([active]) {
+    filter: brightness(0.5) hue-rotate(100deg);
+}
+button[data-pos][active][userChosen] {
+    filter: hue-rotate(100deg);
+}
 button[data-pos][active] {
     filter: hue-rotate(300deg);
 }

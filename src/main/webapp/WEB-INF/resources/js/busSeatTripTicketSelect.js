@@ -18,8 +18,17 @@ function updateSeat() {
         const $r = $(r);
         const id = $r.attr("data-id");
         const pos = $r.attr("data-pos");
+        const disabled = $r.attr("disabled");
+        const userChosen = $r.attr("userChosen");
 
-        const x = id + "_" + pos;
+        const x =
+            id +
+            "_" +
+            pos +
+            "_" +
+            (disabled != undefined ? "true" : "false") +
+            "_" +
+            (userChosen != undefined ? "true" : "false");
         return x;
     });
 
