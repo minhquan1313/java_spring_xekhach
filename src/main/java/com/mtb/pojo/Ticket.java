@@ -7,6 +7,7 @@ package com.mtb.pojo;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
+
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -22,6 +23,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -34,12 +36,12 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "ticket")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Ticket.findAll", query = "SELECT t FROM Ticket t"),
-    @NamedQuery(name = "Ticket.findById", query = "SELECT t FROM Ticket t WHERE t.id = :id"),
-    @NamedQuery(name = "Ticket.findByPaidWith", query = "SELECT t FROM Ticket t WHERE t.paidWith = :paidWith"),
-    @NamedQuery(name = "Ticket.findByPaidPrice", query = "SELECT t FROM Ticket t WHERE t.paidPrice = :paidPrice"),
-    @NamedQuery(name = "Ticket.findByIsPaid", query = "SELECT t FROM Ticket t WHERE t.isPaid = :isPaid"),
-    @NamedQuery(name = "Ticket.findByCreatedAt", query = "SELECT t FROM Ticket t WHERE t.createdAt = :createdAt")})
+        @NamedQuery(name = "Ticket.findAll", query = "SELECT t FROM Ticket t"),
+        @NamedQuery(name = "Ticket.findById", query = "SELECT t FROM Ticket t WHERE t.id = :id"),
+        @NamedQuery(name = "Ticket.findByPaidWith", query = "SELECT t FROM Ticket t WHERE t.paidWith = :paidWith"),
+        @NamedQuery(name = "Ticket.findByPaidPrice", query = "SELECT t FROM Ticket t WHERE t.paidPrice = :paidPrice"),
+        @NamedQuery(name = "Ticket.findByIsPaid", query = "SELECT t FROM Ticket t WHERE t.isPaid = :isPaid"),
+        @NamedQuery(name = "Ticket.findByCreatedAt", query = "SELECT t FROM Ticket t WHERE t.createdAt = :createdAt") })
 public class Ticket implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -71,6 +73,9 @@ public class Ticket implements Serializable {
     private User staffId;
     @OneToMany(mappedBy = "ticketId")
     private Set<TicketDetail> ticketDetailSet;
+
+    @Transient
+    private Integer totalSeat;
 
     public Ticket() {
     }
@@ -159,6 +164,14 @@ public class Ticket implements Serializable {
 
     public void setTicketDetailSet(Set<TicketDetail> ticketDetailSet) {
         this.ticketDetailSet = ticketDetailSet;
+    }
+
+    public Integer getTotalSeat() {
+        return totalSeat;
+    }
+
+    public void setTotalSeat(Integer totalSeat) {
+        this.totalSeat = totalSeat;
     }
 
     @Override

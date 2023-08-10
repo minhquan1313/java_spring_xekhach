@@ -15,4 +15,6 @@ public interface TicketDetailService {
     boolean addOrUpdate(TicketDetail item);
 
     boolean deleteById(int id);
+
+    int countByTicketId(int ticketId);
 }

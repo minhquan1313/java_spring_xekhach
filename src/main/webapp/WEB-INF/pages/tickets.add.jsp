@@ -136,70 +136,39 @@
                 <span class="input-group-text" data-bs-toggle="tooltip" data-bs-title="Giá tiền">
                     <i class="bi bi-currency-dollar"></i>
                 </span>
-                <c:choose>
-                    <c:when test="${ticket.id == null}">
-                        <input
-                            id="basePrice"
-                            type="text"
-                            class="form-control"
-                            placeholder="Giá chuyến"
-                            readonly
-                        />
-                        <c:if test="${not empty extraPriceTitle}">
-                            <span class="input-group-text"> ${extraPriceTitle} </span>
-                            <input
-                                type="text"
-                                id="extraPrice"
-                                class="form-control"
-                                placeholder="Phí phát sinh"
-                                value="${extraPrice}"
-                            />
-                        </c:if>
-                        <span class="input-group-text"> = </span>
-                        <form:input
-                            type="text"
-                            class="form-control"
-                            placeholder="Tổng thanh toán"
-                            path="paidPrice"
-                        />
-                        <script>
-                            setPriceOnInputs();
-                            priceInputHandler();
 
-                            $("#extraPrice, #basePrice").on("input", priceInputHandler);
-                            function priceInputHandler() {
-                                const baseP = $("#basePrice").val() ?? "0";
-                                const extraP = $("#extraPrice").val() ?? "0";
+                <input
+                    id="basePrice"
+                    type="text"
+                    class="form-control"
+                    placeholder="Giá chuyến"
+                    readonly
+                />
+                <c:if test="${not empty extraPriceTitle}">
+                    <span class="input-group-text"> ${extraPriceTitle} </span>
+                    <input
+                        type="text"
+                        id="extraPrice"
+                        class="form-control"
+                        placeholder="Phí phát sinh"
+                        value="${extraPrice}"
+                    />
+                </c:if>
+                <span class="input-group-text"> = </span>
+                <form:input
+                    type="text"
+                    class="form-control"
+                    placeholder="Tổng thanh toán"
+                    path="paidPrice"
+                    readonly="true"
+                />
 
-                                $("#paidPrice").val(parseInt(baseP) + parseInt(extraP));
-                            }
-
-                            $("#paidPrice").on("input", () => {
-                                const paidP = $("#paidPrice").val() ?? "0";
-                                const baseP = $("#basePrice").val() ?? "0";
-
-                                $("#extraPrice").val(parseInt(paidP) - parseInt(baseP));
-                            });
-
-                            function setPriceOnInputs() {
-                                const $initSelected = $("#tripId").find(":selected");
-
-                                $("#basePrice").val($initSelected.attr("data-basePrice"));
-                            }
-                        </script>
-                    </c:when>
-
-                    <c:otherwise>
-                        <form:input
-                            type="text"
-                            class="form-control"
-                            placeholder="Tổng thanh toán"
-                            path="paidPrice"
-                        />
-                    </c:otherwise>
-                </c:choose>
                 <span class="input-group-text"> VND </span>
             </div>
+
+            <c:url value="/js/ticketPriceInputs.js" var="ticketPriceInputs" />
+            <script src="${ticketPriceInputs}"></script>
+
             <form:errors path="paidPrice" element="div" cssClass="text-danger" />
         </div>
 

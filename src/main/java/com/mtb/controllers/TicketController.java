@@ -53,6 +53,10 @@ public class TicketController {
     @RequestMapping("/tickets")
     public String index(Model model, @RequestParam Map<String, String> params) {
         List<Ticket> list = ticketService.getList(params);
+        list.forEach(r -> {
+            int c = ticketDetailService.countByTicketId(r.getId());
+            r.setTotalSeat(c);
+        });
         model.addAttribute("tickets", list);
 
         return "tickets";
@@ -114,7 +118,7 @@ public class TicketController {
         model.addAttribute("staffUsers", staffUsers);
 
         int extraPrice = 10;
-        model.addAttribute("extraPriceTitle", "Phí tết");
+        model.addAttribute("extraPriceTitle", "Phí");
         model.addAttribute("extraPrice", extraPrice);
 
         return "tickets.add";
@@ -166,7 +170,7 @@ public class TicketController {
         model.addAttribute("staffUsers", staffUsers);
 
         int extraPrice = 10;
-        model.addAttribute("extraPriceTitle", "Phí tết");
+        model.addAttribute("extraPriceTitle", "Phí");
         model.addAttribute("extraPrice", extraPrice);
 
         return "tickets.update";
@@ -218,14 +222,6 @@ public class TicketController {
 
         BusSeats busSeats = busSeatTripService.getBusSeats(bId, tId, ticket.getId());
         model.addAttribute("seats", busSeats);
-        // BusSeats seats = busSeatTripService.getBusSeats(bId, tId);
-        // seats.getArray().forEach(r -> {
-        // if (ticketsDetailSeatId.contains(r.getId())) {
-        // r.setUserChosen(true);
-        // }
-        // });
-        // // model.addAttribute("ticketsDetail", ticketsDetail);
-        // model.addAttribute("seats", seats);
         // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         return "tickets.detail";
     }
