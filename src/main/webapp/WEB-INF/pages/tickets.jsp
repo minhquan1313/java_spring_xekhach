@@ -8,7 +8,7 @@
 <!--  -->
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!--  -->
-<section class="container my-4">
+<section class="container-xxl my-4">
     <div class="container">
         <div class="d-flex align-items-center mb-3">
             <div class="d-flex justify-content-start" style="flex: 1">
