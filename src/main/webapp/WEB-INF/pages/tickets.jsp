@@ -104,7 +104,7 @@
                                 data-bs-toggle="dropdown"
                                 aria-expanded="false"
                             >
-                                <span class="visually-hidden">Toggle Dropdown</span>
+                                <span class="visually-hidden"></span>
                             </button>
                             <ul class="dropdown-menu">
                                 <li>
@@ -128,8 +128,6 @@
                                 </li>
                             </ul>
                         </div>
-
-                        <div style="display: grid; grid-auto-flow: column; gap: 0.5rem"></div>
                     </td>
                 </tr>
             </c:forEach>
