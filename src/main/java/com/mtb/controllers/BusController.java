@@ -23,7 +23,6 @@ import com.mtb.service.BusSeatTemplateService;
 import com.mtb.service.BusService;
 
 @Controller
-// @PropertySource("classpath:configs.properties")
 public class BusController {
 
     @Autowired

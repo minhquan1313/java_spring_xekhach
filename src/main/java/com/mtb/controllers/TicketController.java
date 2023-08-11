@@ -193,11 +193,11 @@ public class TicketController {
         if (!rs.hasErrors() && !selectedSeats.isEmpty()) {
             if (item.getId() == null) {
                 if (ticketService.add(item, busSeats)) {
-                    return "redirect:/tickets";
+                    return "redirect:/tickets/";
                 }
             } else {
                 if (ticketService.update(item, busSeats)) {
-                    return "redirect:/tickets";
+                    return "redirect:/tickets/";
                 }
             }
         }

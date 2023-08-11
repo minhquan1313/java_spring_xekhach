@@ -237,27 +237,12 @@
                 <div class="input-group">
                     <label class="form-control" style="cursor: pointer">
                         <form:checkbox class="form-check-input me-1" path="isPaid" id="isPaid" />
-                        <label> Đã thanh toán </label>
+                        <span>Đã thanh toán</span>
                     </label>
                 </div>
                 <div class="d-none">
-                    <script>
-                        staffIdSelectChangeHandler();
-
-                        $("#staffId").on("change", staffIdSelectChangeHandler);
-
-                        function staffIdSelectChangeHandler() {
-                            const $selected = $("#staffId").find(":selected");
-
-                            if ($selected.val()) {
-                                $("#isPaid").prop("checked", true);
-                                $("#isPaid").attr("disabled", "");
-                            } else {
-                                $("#isPaid").prop("checked", false);
-                                $("#isPaid").attr("disabled", null);
-                            }
-                        }
-                    </script>
+                    <c:url value="/js/ticketIsPaid.js" var="ticketIsPaid" />
+                    <script src="${ticketIsPaid}"></script>
                 </div>
             </div>
         </div>

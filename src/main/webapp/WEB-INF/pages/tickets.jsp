@@ -95,8 +95,8 @@
 
                     <td>
                         <div class="btn-group">
-                            <c:url value="/tickets/${item.id}" var="detailUrl" />
-                            <a href="${detailUrl}" class="btn btn-primary">Chi tiết</a>
+                            <c:url value="/tickets/update/${item.id}" var="editUrl" />
+                            <a href="${editUrl}" class="btn btn-primary"> Sửa </a>
 
                             <button
                                 type="button"
@@ -109,15 +109,15 @@
                             <ul class="dropdown-menu">
                                 <li>
                                     <c:url value="/" var="feedBackUrl" />
-                                    <a href="${feedBackUrl}" class="dropdown-item btn btn-primary"
-                                        >Phản hồi</a
-                                    >
+                                    <a href="${feedBackUrl}" class="dropdown-item btn btn-primary">
+                                        Phản hồi
+                                    </a>
                                 </li>
                                 <li>
-                                    <c:url value="/tickets/update/${item.id}" var="editUrl" />
-                                    <a href="${editUrl}" class="dropdown-item btn btn-primary"
-                                        >Sửa</a
-                                    >
+                                    <c:url value="/tickets/${item.id}" var="detailUrl" />
+                                    <a href="${detailUrl}" class="dropdown-item btn btn-primary">
+                                        Chi tiết
+                                    </a>
                                 </li>
                                 <li>
                                     <c:url value="/api/tickets/${item.id}" var="delUrl" />
