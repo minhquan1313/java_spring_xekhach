@@ -27,7 +27,4 @@ public interface UserService {
     User getUserById(int id);
 
     boolean deleteUser(int id);
-     void exportUserToPdf(int userId, OutputStream outputStream) throws DocumentException;
-     
-    
 }

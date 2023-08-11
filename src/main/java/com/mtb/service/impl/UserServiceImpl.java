@@ -72,22 +72,4 @@ public class UserServiceImpl implements UserService {
     public List<User> searchUsers(Map<String, String> params,String id, String kw, String role) {
         return this.userRepo.searchUsers(params,id, kw, role);
     }
-
-    @Override
-    public void exportUserToPdf(int userId, OutputStream outputStream) throws DocumentException {
-        User user = userRepo.getUserById(userId);
-
-        if (user != null) {
-            userRepo.exportUsersToPdf(user, outputStream);
-        } else {
-            // Xử lý trường hợp không tìm thấy người dùng
-            throw new IllegalArgumentException("Không tìm thấy người dùng với ID: " + userId);
-        }
-    }
-
-   
-    
-  
-   
-    
 }

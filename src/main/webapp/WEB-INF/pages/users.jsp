@@ -51,8 +51,6 @@
                 <td>${u.password}</td>
                 <td>${u.roleId.title}</td>
                 <td>
-                    <c:url value="/users/export/${u.id}" var="exportUrl" />
-                    <a href="${exportUrl}" class="btn btn-primary mt-1" target="_blank">Xuất PDF</a>
                     <c:url value="/users/${u.id}" var="api" />
                     <a href="${api}" class="btn btn-success">Cập nhật</a>
 

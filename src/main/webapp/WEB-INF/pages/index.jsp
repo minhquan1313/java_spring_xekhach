@@ -35,4 +35,9 @@
         <c:url value="/tickets" var="tickets" />
         <a href="${tickets}">tickets</a>
     </div>
+    
+    <div class="h3">
+        <c:url value="/feedbacks" var="feedbacks" />
+        <a href="${feedbacks}">feedbacks</a>
+    </div>
 </section>

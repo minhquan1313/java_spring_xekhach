@@ -23,5 +23,4 @@ public interface UserRepository {
     boolean addOrUpdateUser(User u);
     User getUserById(int id);
     boolean deleteUser(int id);
-    void exportUsersToPdf(User u, java.io.OutputStream outputStream)throws DocumentException;
 }

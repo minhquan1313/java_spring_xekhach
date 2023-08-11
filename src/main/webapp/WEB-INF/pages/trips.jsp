@@ -85,6 +85,11 @@
                             <c:url value="/api/trips/${item.id}" var="delUrl" />
                             <c:set value="onclick=(delAPI('${delUrl}'))" var="delClick" />
                             <button class="btn btn-danger text-nowrap" ${delClick}>Xoá</button>
+                            
+                            <c:url value="/feedbacks" var="feedbackUrl">
+                                <c:param name="tripId" value="${item.id}" />
+                            </c:url>
+                            <a href="${feedbackUrl}" class="btn btn-primary text-nowrap">Feedback</a>
                         </div>
                     </td>
                 </tr>
