@@ -33,7 +33,7 @@
                     <td>${route.startLocation}</td>
                     <td>${route.endLocation}</td>
                     <td>
-                        <div style="display: grid; grid-auto-flow: column; gap: 0.5rem">
+                        <div class="btn-group float-end">
                             <c:url value="/routes/edit/${route.id}" var="editUrl" />
                             <a href="${editUrl}" class="btn btn-primary">Sửa</a>
 

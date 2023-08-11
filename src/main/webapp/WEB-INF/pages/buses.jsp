@@ -44,16 +44,33 @@
                     <td>${bus.licensePlate}</td>
                     <td>${fn:length(bus.busSeatTemplateSet)}</td>
                     <td>
-                        <div style="display: grid; grid-auto-flow: column; gap: 0.5rem">
-                            <c:url value="/buses/${bus.id}" var="detailUrl" />
-                            <a href="${detailUrl}" class="btn btn-primary">Xem chi tiết</a>
-
+                        <div class="btn-group float-end">
                             <c:url value="/buses/edit/${bus.id}" var="editUrl" />
-                            <a href="${editUrl}" class="btn btn-primary">Sửa</a>
+                            <a href="${editUrl}" class="btn btn-primary"> Sửa </a>
 
-                            <c:url value="/api/buses/${bus.id}" var="delUrl" />
-                            <c:set value="onclick=(delAPI('${delUrl}'))" var="delClick" />
-                            <button class="btn btn-danger" ${delClick}>Xoá</button>
+                            <button
+                                type="button"
+                                class="btn btn-primary dropdown-toggle dropdown-toggle-split"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                            >
+                                <span class="visually-hidden"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <c:url value="/buses/${bus.id}" var="detailUrl" />
+                                    <a href="${detailUrl}" class="dropdown-item btn btn-primary">
+                                        Chi tiết
+                                    </a>
+                                </li>
+                                <li>
+                                    <c:url value="/api/buses/${bus.id}" var="delUrl" />
+                                    <c:set value="onclick=(delAPI('${delUrl}'))" var="delClick" />
+                                    <button class="dropdown-item btn btn-danger" ${delClick}>
+                                        Xoá
+                                    </button>
+                                </li>
+                            </ul>
                         </div>
                     </td>
                 </tr>

@@ -91,7 +91,7 @@
                     </td>
                     <!-- here here here  -->
                     <td>
-                        <div class="btn-group">
+                        <div class="btn-group float-end">
                             <c:url value="/trips/edit/${item.id}" var="editUrl" />
                             <a href="${editUrl}" class="btn btn-primary"> Sửa </a>
 
