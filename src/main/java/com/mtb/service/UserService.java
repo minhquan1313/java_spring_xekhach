@@ -4,11 +4,10 @@
  */
 package com.mtb.service;
 
-import com.lowagie.text.DocumentException;
-import java.io.OutputStream;
-import com.mtb.pojo.User;
 import java.util.List;
 import java.util.Map;
+
+import com.mtb.pojo.User;
 
 /**
  *
@@ -18,7 +17,7 @@ public interface UserService {
 
     List<User> getUsers(Map<String, String> params);
 
-    List<User> searchUsers(Map<String, String> params,String id, String kw, String role);
+    List<User> searchUsers(Map<String, String> params, String id, String kw, String role);
 
     int countUser();
 
@@ -27,4 +26,5 @@ public interface UserService {
     User getUserById(int id);
 
     boolean deleteUser(int id);
+
 }

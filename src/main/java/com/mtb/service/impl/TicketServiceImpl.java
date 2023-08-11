@@ -136,7 +136,6 @@ public class TicketServiceImpl implements TicketService {
         if (ticket != null) {
             repository.exportTicketsToPdf(ticket, outputStream);
         } else {
-            // Xử lý trường hợp không tìm thấy người dùng
             throw new IllegalArgumentException("Không tìm thấy");
         }
     }

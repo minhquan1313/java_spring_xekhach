@@ -1,7 +1,5 @@
 package com.mtb.configs;
 
-import java.text.SimpleDateFormat;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -20,8 +18,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.cloudinary.Cloudinary;
-import com.cloudinary.utils.ObjectUtils;
 import com.mtb.formatter.BusFormatter;
 import com.mtb.formatter.RoleFormatter;
 import com.mtb.formatter.RouteFormatter;
@@ -35,13 +31,14 @@ import com.mtb.formatter.UserFormatter;
 @ComponentScan(basePackages = {
         "com.mtb.controllers",
         "com.mtb.repository",
-        "com.mtb.service", })
+        "com.mtb.service"
+})
 @PropertySource("classpath:configs.properties")
 public class WebAppContextConfig implements WebMvcConfigurer {
+
     @Autowired
     private Environment env;
 
-    // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
         configurer.enable();
@@ -59,22 +56,13 @@ public class WebAppContextConfig implements WebMvcConfigurer {
     }
 
     // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-    @Bean
-    public SimpleDateFormat simpleDateFormat() {
-        return new SimpleDateFormat("yyyy/MM/dd");
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/js/**").addResourceLocations("/WEB-INF/resources/js/");
+        registry.addResourceHandler("/css/**").addResourceLocations("/WEB-INF/resources/css/");
     }
 
     // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-    // @Bean
-    // public InternalResourceViewResolver internalResourceViewResolver(){
-    // InternalResourceViewResolver r = new InternalResourceViewResolver();
-    // r.setViewClass(JstlView.class);
-    // r.setPrefix("WEB-INF/pages/");
-    // r.setSuffix(".jsp");
-    //
-    // return r;
-    // }
-    //
     @Bean
     public CommonsMultipartResolver multipartResolver() {
         CommonsMultipartResolver resolver = new CommonsMultipartResolver();
@@ -87,7 +75,7 @@ public class WebAppContextConfig implements WebMvcConfigurer {
     public MessageSource messageSource() {
         ResourceBundleMessageSource m = new ResourceBundleMessageSource();
 
-        m.setBasename("messages");
+        m.setBasenames("messages");
 
         return m;
     }
@@ -102,22 +90,6 @@ public class WebAppContextConfig implements WebMvcConfigurer {
     @Override
     public Validator getValidator() {
         return validator();
-    }
-
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/js/**").addResourceLocations("/WEB-INF/resources/js/");
-        registry.addResourceHandler("/css/**").addResourceLocations("/WEB-INF/resources/css/");
-    }
-
-    @Bean
-    public Cloudinary cloudinary() {
-        Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
-                "cloud_name", this.env.getProperty("cloudinary.cloud_name"),
-                "api_key", this.env.getProperty("cloudinary.api_key"),
-                "api_secret", this.env.getProperty("cloudinary.api_secret"),
-                "secure", true));
-        return cloudinary;
     }
 
 }

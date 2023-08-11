@@ -4,42 +4,26 @@
  */
 package com.mtb.repository.impl;
 
-import com.lowagie.text.Chunk;
-import com.lowagie.text.Document;
-import com.lowagie.text.DocumentException;
-import com.lowagie.text.Element;
-import com.lowagie.text.Font;
-import com.lowagie.text.Paragraph;
-import com.lowagie.text.pdf.BaseFont;
-import com.lowagie.text.pdf.PdfWriter;
-import com.mtb.pojo.Role;
-import com.mtb.pojo.User;
-import com.mtb.repository.RoleRepository;
-import com.mtb.repository.UserRepository;
-import java.awt.Color;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import javax.servlet.http.HttpServletResponse;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.mtb.pojo.User;
+import com.mtb.repository.UserRepository;
 
 /**
  *
@@ -52,8 +36,8 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Autowired
     private LocalSessionFactoryBean factory;
-//    @Autowired
-//    private Environment env;
+    // @Autowired
+    // private Environment env;
 
     public List<User> getUsers(Map<String, String> params) {
         Session session = this.factory.getObject().getCurrentSession();
@@ -98,19 +82,19 @@ public class UserRepositoryImpl implements UserRepository {
             q.where(predicates.toArray(Predicate[]::new));
         }
 
-        //q.orderBy(b.desc(root.get("id")));
+        // q.orderBy(b.desc(root.get("id")));
         Query query = session.createQuery(q);
 
-//        if (params != null) {
-//            String p = params.get("page");
-//            if (p != null && !p.isEmpty()) {
-//                int pageNumber = Integer.parseInt(p);
-//                int pageSize = Integer.parseInt(this.env.getProperty("PAGE_SIZE"));
-//
-//                query.setMaxResults(pageSize);
-//                query.setFirstResult((pageNumber - 1) * pageSize);
-//            }
-//        }
+        // if (params != null) {
+        // String p = params.get("page");
+        // if (p != null && !p.isEmpty()) {
+        // int pageNumber = Integer.parseInt(p);
+        // int pageSize = Integer.parseInt(this.env.getProperty("PAGE_SIZE"));
+        //
+        // query.setMaxResults(pageSize);
+        // query.setFirstResult((pageNumber - 1) * pageSize);
+        // }
+        // }
         return query.getResultList();
     }
 
@@ -179,8 +163,7 @@ public class UserRepositoryImpl implements UserRepository {
                 predicates.add(b.or(
                         b.like(b.lower(root.get("username")), pattern),
                         b.like(b.lower(root.get("firstName")), pattern),
-                        b.like(b.lower(root.get("lastName")), pattern)
-                ));
+                        b.like(b.lower(root.get("lastName")), pattern)));
 
             }
             if (role != null && !role.isEmpty()) {
@@ -193,5 +176,14 @@ public class UserRepositoryImpl implements UserRepository {
         }
         Query query = session.createQuery(q);
         return query.getResultList();
+    }
+
+    @Override
+    public User getUserByUsername(String username) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("From User Where username=:un");
+        q.setParameter("un", username);
+
+        return (User) q.getSingleResult();
     }
 }

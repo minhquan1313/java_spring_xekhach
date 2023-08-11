@@ -178,6 +178,11 @@ public class TicketRepositoryImpl implements TicketRepository {
         txt2.setAlignment(Element.ALIGN_RIGHT);
         txt2.setIndentationRight(130f);
         document.add(txt2);
+        
+        Paragraph staff = new Paragraph(t.getStaffId().getLastName() + " " + t.getStaffId().getFirstName(), f3);
+        staff.setAlignment(Element.ALIGN_RIGHT);
+        staff.setIndentationRight(130f);
+        document.add(staff);
 
         document.close();
     }

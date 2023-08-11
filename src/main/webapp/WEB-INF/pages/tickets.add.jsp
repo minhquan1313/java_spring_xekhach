@@ -291,7 +291,7 @@
                             ${disabled}
                             ${userChosen}
                             data-bs-toggle="tooltip"
-                            data-bs-title="${c.id} - ${c.x}_${c.y}"
+                            data-bs-title="${c.id}"
                         >
                             <h3 class="m-0" withoutActive>
                                 <i class="bi bi-circle"></i>

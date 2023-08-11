@@ -18,14 +18,34 @@
 
             <h3 class="text-center">Các chuyến xe hiện có</h3>
             <div class="d-flex justify-content-end flex-wrap" style="flex: 1">
-                <c:url value="/trips/find" var="findUrl" />
-                <a href="${findUrl}" class="btn btn-outline-info text-nowrap me-2">Tìm kiếm</a>
+                <div class="btn-group">
+                    <c:url value="/trips/add" var="createUrl" />
+                    <a href="${createUrl}" class="btn btn-outline-info text-nowrap">Thêm</a>
 
-                <c:url value="/trips/chart" var="chartUrl" />
-                <a href="${chartUrl}" class="btn btn-outline-info text-nowrap me-2">Chart</a>
-
-                <c:url value="/trips/add" var="createUrl" />
-                <a href="${createUrl}" class="btn btn-outline-info text-nowrap">Thêm</a>
+                    <button
+                        type="button"
+                        class="btn btn-outline-info dropdown-toggle dropdown-toggle-split"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                    >
+                        <span class="visually-hidden"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <c:url value="/trips/find" var="findUrl" />
+                            <a href="${findUrl}" class="dropdown-item"> Tìm kiếm </a>
+                        </li>
+                        <li>
+                            <c:url value="/trips/chart" var="chartUrl" />
+                            <a href="${chartUrl}" class="dropdown-item"> Chart </a>
+                        </li>
+                        <li>
+                            <c:url value="/api/tickets/${item.id}" var="delUrl" />
+                            <c:set value="onclick=(delAPI('${delUrl}'))" var="delClick" />
+                            <button class="dropdown-item btn btn-danger" ${delClick}>Xoá</button>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
