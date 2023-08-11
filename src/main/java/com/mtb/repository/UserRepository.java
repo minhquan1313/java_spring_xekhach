@@ -7,7 +7,6 @@ package com.mtb.repository;
 import java.util.List;
 import java.util.Map;
 
-import com.lowagie.text.DocumentException;
 import com.mtb.pojo.User;
 
 /**
@@ -26,8 +25,6 @@ public interface UserRepository {
     User getUserById(int id);
 
     boolean deleteUser(int id);
-
-    void exportUsersToPdf(User u, java.io.OutputStream outputStream) throws DocumentException;
 
     User getUserByUsername(String username);
 }

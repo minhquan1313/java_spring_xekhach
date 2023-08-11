@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mtb.service.BusService;
+import com.mtb.service.FeedbackService;
 import com.mtb.service.RouteService;
 import com.mtb.service.TicketService;
 import com.mtb.service.TripService;
@@ -28,6 +29,9 @@ public class ApiController {
 
     @Autowired
     private TicketService ticketService;
+    
+    @Autowired
+    private FeedbackService feedbackService;
 
     @DeleteMapping("/routes/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -51,5 +55,11 @@ public class ApiController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteTicket(@PathVariable(value = "id") int id) {
         this.ticketService.deleteById(id);
+    }
+    
+    @DeleteMapping("/feedbacks/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteFeedback(@PathVariable(value = "id") int id) {
+        this.feedbackService.deleteFeedback(id);
     }
 }

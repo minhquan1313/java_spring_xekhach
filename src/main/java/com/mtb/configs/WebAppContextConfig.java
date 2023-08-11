@@ -21,6 +21,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import com.mtb.formatter.BusFormatter;
 import com.mtb.formatter.RoleFormatter;
 import com.mtb.formatter.RouteFormatter;
+import com.mtb.formatter.TicketFormatter;
 import com.mtb.formatter.TripFormatter;
 import com.mtb.formatter.UserFormatter;
 
@@ -51,6 +52,7 @@ public class WebAppContextConfig implements WebMvcConfigurer {
         registry.addFormatter(new RouteFormatter());
         registry.addFormatter(new UserFormatter());
         registry.addFormatter(new TripFormatter());
+        registry.addFormatter(new TicketFormatter());
     }
 
     // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

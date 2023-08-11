@@ -82,21 +82,4 @@ public class UserController {
 
         return "users.addOrUpdate";
     }
-    
-     @GetMapping("/users/export/{id}")
-    public void exportUserToPdf(@PathVariable int id, HttpServletResponse response) throws DocumentException {
-        try {
-                 
-            response.setContentType("application/pdf");
-            //response.setHeader("Content-Disposition", "attachment; filename=\"user_" + id + ".pdf\"");
-            response.setHeader("Content-Disposition", "inline; filename=\"user_"+id+".pdf\"");
-
-            
-
-            userService.exportUserToPdf(id, response.getOutputStream());
-        } catch (IOException e) {
-            e.printStackTrace();
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-        }
-    }
 }

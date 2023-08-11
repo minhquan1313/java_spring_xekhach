@@ -5,7 +5,6 @@
 package com.mtb.service.impl;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -17,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-import com.lowagie.text.DocumentException;
 import com.mtb.pojo.User;
 import com.mtb.repository.UserRepository;
 import com.mtb.service.UserService;
@@ -81,17 +79,4 @@ public class UserServiceImpl implements UserService {
     public List<User> searchUsers(Map<String, String> params, String id, String kw, String role) {
         return this.userRepo.searchUsers(params, id, kw, role);
     }
-
-    @Override
-    public void exportUserToPdf(int userId, OutputStream outputStream) throws DocumentException {
-        User user = userRepo.getUserById(userId);
-
-        if (user != null) {
-            userRepo.exportUsersToPdf(user, outputStream);
-        } else {
-            // Xử lý trường hợp không tìm thấy người dùng
-            throw new IllegalArgumentException("Không tìm thấy người dùng với ID: " + userId);
-        }
-    }
-
 }

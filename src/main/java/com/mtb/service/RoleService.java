@@ -16,6 +16,6 @@ public interface RoleService {
     List<Role> getRoles(Map<String, String> params);
 
     boolean addOrUpdateRole(Role r);
-      Role getRoleById(int id);
+    Role getRoleById(int id);
     boolean deleteRole(int id);
 }
