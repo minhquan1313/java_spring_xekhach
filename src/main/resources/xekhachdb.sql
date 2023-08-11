@@ -1,3 +1,4 @@
+DROP DATABASE IF EXISTS `xekhachdb`;
 CREATE DATABASE  IF NOT EXISTS `xekhachdb` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `xekhachdb`;
 -- MySQL dump 10.13  Distrib 8.0.33, for Win64 (x86_64)
@@ -284,7 +285,7 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int NOT NULL AUTO_INCREMENT,
   `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `password` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `password` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `first_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `last_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `avatar` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
@@ -302,7 +303,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'admin','admin','Admin',NULL,'https://res.cloudinary.com/dxxwcby8l/image/upload/v1647248652/dkeolz3ghc0eino87iec.jpg',1),(2,'staff','1','Staff','Anh','https://res.cloudinary.com/dxxwcby8l/image/upload/v1647248652/dkeolz3ghc0eino87iec.jpg',2),(3,'driver','1','Tài Xế','Chú','https://res.cloudinary.com/dxxwcby8l/image/upload/v1647248652/dkeolz3ghc0eino87iec.jpg',3),(4,'user001','1','Ba','Nguyễn Văn','https://res.cloudinary.com/dxxwcby8l/image/upload/v1647248652/dkeolz3ghc0eino87iec.jpg',4),(5,'driver2','1','Tài','Nguyễn Anh','https://res.cloudinary.com/dyc5pggxo/image/upload/v1691242179/szri6y0y0xkjqg2rgm00.png',3);
+INSERT INTO `user` VALUES (1,'admin','$2a$10$l2Rr5ZxrvnO4u8kDJt9kzuz30cubwy5qBG4OrylZNOncgYnY5BaaK','Admin',NULL,'https://res.cloudinary.com/dxxwcby8l/image/upload/v1647248652/dkeolz3ghc0eino87iec.jpg',1),(2,'staff','$2a$10$l2Rr5ZxrvnO4u8kDJt9kzuz30cubwy5qBG4OrylZNOncgYnY5BaaK','Staff','Anh','https://res.cloudinary.com/dxxwcby8l/image/upload/v1647248652/dkeolz3ghc0eino87iec.jpg',2),(3,'driver','$2a$10$l2Rr5ZxrvnO4u8kDJt9kzuz30cubwy5qBG4OrylZNOncgYnY5BaaK','Tài Xế','Chú','https://res.cloudinary.com/dxxwcby8l/image/upload/v1647248652/dkeolz3ghc0eino87iec.jpg',3),(4,'user001','$2a$10$l2Rr5ZxrvnO4u8kDJt9kzuz30cubwy5qBG4OrylZNOncgYnY5BaaK','Ba','Nguyễn Văn','https://res.cloudinary.com/dxxwcby8l/image/upload/v1647248652/dkeolz3ghc0eino87iec.jpg',4),(5,'driver2','$2a$10$l2Rr5ZxrvnO4u8kDJt9kzuz30cubwy5qBG4OrylZNOncgYnY5BaaK','Tài','Nguyễn Anh','https://res.cloudinary.com/dyc5pggxo/image/upload/v1691242179/szri6y0y0xkjqg2rgm00.png',3);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -315,4 +316,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-08-11 10:52:56
+-- Dump completed on 2023-08-11 18:00:11

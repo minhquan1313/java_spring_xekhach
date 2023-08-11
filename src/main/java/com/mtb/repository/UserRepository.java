@@ -4,13 +4,11 @@
  */
 package com.mtb.repository;
 
-import com.lowagie.text.DocumentException;
-import com.lowagie.text.pdf.codec.Base64.OutputStream;
-import com.mtb.pojo.User;
 import java.util.List;
 import java.util.Map;
-import javax.servlet.http.HttpServletResponse;
-import org.springframework.web.bind.annotation.RequestParam;
+
+import com.lowagie.text.DocumentException;
+import com.mtb.pojo.User;
 
 /**
  *
@@ -18,10 +16,18 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 public interface UserRepository {
     List<User> getUsers(Map<String, String> params);
-    List<User> searchUsers(Map<String, String> params,String id, String kw, String role);
+
+    List<User> searchUsers(Map<String, String> params, String id, String kw, String role);
+
     int countUser();
+
     boolean addOrUpdateUser(User u);
+
     User getUserById(int id);
+
     boolean deleteUser(int id);
-    void exportUsersToPdf(User u, java.io.OutputStream outputStream)throws DocumentException;
+
+    void exportUsersToPdf(User u, java.io.OutputStream outputStream) throws DocumentException;
+
+    User getUserByUsername(String username);
 }

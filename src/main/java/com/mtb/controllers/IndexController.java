@@ -12,19 +12,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.mtb.service.RoleService;
-import com.mtb.service.UserService;
-
 @Controller
 @ControllerAdvice
 @PropertySource("classpath:configs.properties")
 public class IndexController {
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private RoleService roleService;
 
     @Autowired
     private Environment env;
@@ -32,6 +23,7 @@ public class IndexController {
     @ModelAttribute
     public void commonAttr(Model model, @RequestParam Map<String, String> params) {
         model.addAttribute("date_pattern", this.env.getProperty("date_pattern"));
+        model.addAttribute("app_name", this.env.getProperty("app_name"));
     }
 
     @RequestMapping("/")

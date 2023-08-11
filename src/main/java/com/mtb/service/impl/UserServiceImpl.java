@@ -4,21 +4,23 @@
  */
 package com.mtb.service.impl;
 
-import com.cloudinary.Cloudinary;
-import com.cloudinary.utils.ObjectUtils;
-import com.lowagie.text.DocumentException;
-import com.lowagie.text.pdf.codec.Base64;
-import com.mtb.pojo.User;
-import com.mtb.repository.UserRepository;
-import com.mtb.service.UserService;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
+import com.lowagie.text.DocumentException;
+import com.mtb.pojo.User;
+import com.mtb.repository.UserRepository;
+import com.mtb.service.UserService;
 
 /**
  *
@@ -29,8 +31,12 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepo;
+
     @Autowired
     private Cloudinary cloudinary;
+
+    @Autowired
+    BCryptPasswordEncoder passwordEncoder;
 
     @Override
     public List<User> getUsers(Map<String, String> params) {
@@ -55,6 +61,9 @@ public class UserServiceImpl implements UserService {
             }
         }
 
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
+
         return this.userRepo.addOrUpdateUser(user);
     }
 
@@ -69,13 +78,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> searchUsers(Map<String, String> params,String id, String kw, String role) {
-        return this.userRepo.searchUsers(params,id, kw, role);
+    public List<User> searchUsers(Map<String, String> params, String id, String kw, String role) {
+        return this.userRepo.searchUsers(params, id, kw, role);
     }
 
     @Override
     public void exportUserToPdf(int userId, OutputStream outputStream) throws DocumentException {
-           User user = userRepo.getUserById(userId);
+        User user = userRepo.getUserById(userId);
 
         if (user != null) {
             userRepo.exportUsersToPdf(user, outputStream);
@@ -85,9 +94,4 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-   
-    
-  
-   
-    
 }
