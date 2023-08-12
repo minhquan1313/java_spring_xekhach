@@ -30,14 +30,14 @@ public class StatsRepositoryImp implements StatsRepository {
                         "SELECT SUM(paidPrice)",
                         "FROM Ticket",
                         "WHERE YEAR(createdAt) = :year AND",
-                        "WHERE MONTH(createdAt) = :month"))
+                        "MONTH(createdAt) = :month"))
                 .setParameter("year", year)
                 .setParameter("month", month);
 
         try {
             int parseInt = Integer.parseInt(query.getSingleResult().toString());
             return parseInt;
-        } catch (NumberFormatException e) {
+        } catch (Exception e) {
             return 0;
         }
     }
@@ -56,7 +56,7 @@ public class StatsRepositoryImp implements StatsRepository {
         try {
             int parseInt = Integer.parseInt(query.getSingleResult().toString());
             return parseInt;
-        } catch (NumberFormatException e) {
+        } catch (Exception e) {
             return 0;
         }
     }
@@ -91,8 +91,8 @@ public class StatsRepositoryImp implements StatsRepository {
                         "SELECT SUM(paidPrice)",
                         "FROM Ticket",
                         "WHERE YEAR(createdAt) = :year AND",
-                        "WHERE MONTH(createdAt) >= :from AND",
-                        "WHERE MONTH(createdAt) <= :to"))
+                        "MONTH(createdAt) >= :from AND",
+                        "MONTH(createdAt) <= :to"))
                 .setParameter("year", year)
                 .setParameter("from", from)
                 .setParameter("to", to);
@@ -100,7 +100,7 @@ public class StatsRepositoryImp implements StatsRepository {
         try {
             int parseInt = Integer.parseInt(query.getSingleResult().toString());
             return parseInt;
-        } catch (NumberFormatException e) {
+        } catch (Exception e) {
             return 0;
         }
     }

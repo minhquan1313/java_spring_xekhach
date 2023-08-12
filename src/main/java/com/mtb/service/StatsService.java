@@ -2,16 +2,18 @@ package com.mtb.service;
 
 import java.util.List;
 
+import com.mtb.myObject.TitleAndValue;
+
 public interface StatsService {
-    int revenueByMonth(int month, int year);
+    // int revenueByMonth(int month, int year);
 
-    List<Integer> revenueByMonthsInYear(int year);
+    List<TitleAndValue> revenueByMonthsInYear(int year);
 
-    int revenueByYear(int year);
+    // int revenueByYear(int year);
 
-    List<Integer> revenueByYears(int fromYear, int toYear, int step);
+    List<TitleAndValue> revenueByYears(int fromYear, int toYear);
 
-    int revenueByQuarter(int which, int year);
+    // int revenueByQuarter(int which, int year);
 
-    List<Integer> revenueByQuarters(int year);
+    List<TitleAndValue> revenueByQuarters(int year);
 }

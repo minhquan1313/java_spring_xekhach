@@ -1,6 +1,6 @@
 package com.mtb.controllers;
 
-import com.lowagie.text.DocumentException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.lowagie.text.DocumentException;
 import com.mtb.myObject.BusSeats;
 import com.mtb.pojo.Ticket;
 import com.mtb.pojo.TicketDetail;
@@ -32,8 +34,6 @@ import com.mtb.service.TicketDetailService;
 import com.mtb.service.TicketService;
 import com.mtb.service.TripService;
 import com.mtb.service.UserService;
-import java.io.IOException;
-import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class TicketController {
@@ -228,16 +228,12 @@ public class TicketController {
         // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         return "tickets.detail";
     }
-    
+
     @GetMapping("/tickets/export/{id}")
     public void exportTicketsToPdf(@PathVariable int id, HttpServletResponse response) throws DocumentException {
         try {
-                 
             response.setContentType("application/pdf");
-            //response.setHeader("Content-Disposition", "attachment; filename=\"user_" + id + ".pdf\"");
-            response.setHeader("Content-Disposition", "inline; filename=\"ticket_"+id+".pdf\"");
-
-            
+            response.setHeader("Content-Disposition", "inline; filename=\"ticket_" + id + ".pdf\"");
 
             ticketService.exportTicketToPdf(id, response.getOutputStream());
         } catch (IOException e) {
