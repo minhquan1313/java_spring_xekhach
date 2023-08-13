@@ -151,7 +151,8 @@ public class TicketRepositoryImpl implements TicketRepository {
         bus.setIndentationLeft(50f);
         document.add(bus);
         
-        Paragraph timeStart = new Paragraph("Giờ khởi hành: " + t.getTripId().getStartAt(), f1);
+        String formatTimeStart = format.format( t.getTripId().getStartAt());
+        Paragraph timeStart = new Paragraph("Giờ khởi hành: " + formatTimeStart, f1);
         timeStart.setAlignment(Element.ALIGN_LEFT);
         timeStart.setIndentationLeft(50f);
         document.add(timeStart  );
@@ -181,7 +182,7 @@ public class TicketRepositoryImpl implements TicketRepository {
         
         Paragraph staff = new Paragraph(t.getStaffId().getLastName() + " " + t.getStaffId().getFirstName(), f3);
         staff.setAlignment(Element.ALIGN_RIGHT);
-        staff.setIndentationRight(130f);
+        staff.setIndentationRight(140f);
         document.add(staff);
 
         document.close();

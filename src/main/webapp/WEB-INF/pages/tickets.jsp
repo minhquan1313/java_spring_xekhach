@@ -93,6 +93,17 @@
                   <a href="${detailUrl}" class="dropdown-item btn btn-primary"> Chi tiết </a>
                 </li>
                 <li>
+                  <c:url value="/tickets/export/${item.id}" var="exportPdfUrl" />
+                  <c:choose>
+                      <c:when test="${item.isPaid == true && item.staffId != null}">
+                           <a href="${exportPdfUrl}" target="_blank" class="dropdown-item btn btn-primary">In vé</a>
+                      </c:when>
+                      <c:otherwise>
+                           <a href="#" class="dropdown-item btn btn-primary disabled" onclick="return false;">In vé</a>
+                      </c:otherwise>
+                  </c:choose>
+                </li>
+                <li>
                   <c:url value="/api/tickets/${item.id}" var="delUrl" />
                   <c:set value="onclick=(delAPI('${delUrl}'))" var="delClick" />
                   <button class="dropdown-item btn btn-danger" ${delClick}>Xoá</button>

@@ -232,10 +232,15 @@ public class TicketController {
     @GetMapping("/tickets/export/{id}")
     public void exportTicketsToPdf(@PathVariable int id, HttpServletResponse response) throws DocumentException {
         try {
-            response.setContentType("application/pdf");
-            response.setHeader("Content-Disposition", "inline; filename=\"ticket_" + id + ".pdf\"");
+            Ticket t = ticketService.getById(id);
+            if (t != null && (t.getIsPaid() && t.getStaffId() != null)) {
+                response.setContentType("application/pdf");
+                response.setHeader("Content-Disposition", "inline; filename=\"ticket_" + id + ".pdf\"");
+                ticketService.exportTicketToPdf(id, response.getOutputStream());
+            } else {
+                response.getWriter().write("Error!!!");
+            }
 
-            ticketService.exportTicketToPdf(id, response.getOutputStream());
         } catch (IOException e) {
             e.printStackTrace();
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);

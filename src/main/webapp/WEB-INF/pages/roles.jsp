@@ -4,38 +4,48 @@
 <!--  -->
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!--  -->
-<h1>ROLES</h1>
+<section class="container my-4">
+    <div class="d-flex align-items-center mb-3">
+        <div class="d-flex justify-content-start" style="flex: 1">
+            <c:url value="/" var="backUrl" />
+            <a href="${backUrl}" class="btn btn-outline-info text-nowrap">Quay lại</a>
+        </div>
 
-<div>
-    <c:url value="/roles/add" var="createRole" />
-    <a href="${createRole}" class="btn btn-info mt-1">Tạo Role</a>
-</div>
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Tên</th>
-            <th></th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        <c:forEach items="${roles}" var="r">
+        <h3 class="text-center">Vai trò</h3>
+        <div class="d-flex justify-content-end" style="flex: 1">
+            <c:url value="/roles/add" var="createRole" />
+            <a href="${createRole}" class="btn btn-outline-info text-nowrap">Thêm</a>
+        </div>
+    </div>
+
+    <table class="table table-hover">
+        <thead>
             <tr>
-                <td>${r.id}</td>
-                <td>${r.title}</td>
-                <td>
-                    <c:url value="/roles/${r.id}" var="api" />
-                    <a href="${api}" class="btn btn-success">Cập nhật</a>
-
-                    <c:url value="/api/roles/${r.id}" var="delUrl" />
-                    <c:set value="onclick=(delAPI('${delUrl}'))" var="delClick" />
-                    <button class="btn btn-primary" ${delClick}>Xoá</button>
-                </td>
+                <th scope="col">id</th>
+                <th scope="col">Tên vai trò</th>
+                <th scope="col">Hành động</th>
             </tr>
-        </c:forEach>
-    </tbody>
-</table>
+        </thead>
+        <tbody class="table-group-divider">
+            <c:forEach items="${roles}" var="r">
+                <tr>
+                    <th scope="row">${r.id}</th>
+                    <td>${r.title}</td>
+                    <td>
+                        <div class="btn-group float-end">
+                            <c:url value="/roles/${r.id}" var="editUrl" />
+                            <a href="${editUrl}" class="btn btn-primary">Sửa</a>
+
+                            <c:url value="/api/roles/${r.id}" var="delUrl" />
+                            <c:set value="onclick=(delAPI('${delUrl}'))" var="delClick" />
+                            <button class="btn btn-danger" ${delClick}>Xoá</button>
+                        </div>
+                    </td>
+                </tr>
+            </c:forEach>
+        </tbody>
+    </table>
+</section>
+
 <c:url value="/js/delAPI.js" var="delAPI" />
 <script src="${delAPI}"></script>
-
