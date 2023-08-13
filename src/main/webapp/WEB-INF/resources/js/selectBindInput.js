@@ -7,9 +7,10 @@ function selectBindInput({ selectId, inputBindName, cb }) {
         return;
     }
 
-    select?.addEventListener("change", bindDataHandler);
-    bindDataHandler.call(select);
     input && (input.disabled = true);
+    bindDataHandler.call(select);
+
+    select?.addEventListener("change", bindDataHandler);
 
     function bindDataHandler() {
         const selected = this.selectedOptions?.[0];
@@ -19,6 +20,7 @@ function selectBindInput({ selectId, inputBindName, cb }) {
             if (!input) return;
             input.value = value;
             if (value != "") input.disabled = false;
+            else input.disabled = true;
         } else cb(selected, input);
     }
 }

@@ -86,6 +86,11 @@
         <put-attribute name="content" value="/WEB-INF/pages/tickets.update.jsp" />
     </definition>
 
+    <definition name="revenue" extends="baseLayout">
+        <put-attribute name="title" value="Doanh thu" />
+        <put-attribute name="content" value="/WEB-INF/pages/revenue.jsp" />
+    </definition>
+
     <definition name="debug" extends="baseLayout">
         <put-attribute name="title" value="Debug" />
         <put-attribute name="content" value="/WEB-INF/pages/debug.jsp" />

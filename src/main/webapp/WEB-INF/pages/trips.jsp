@@ -8,7 +8,7 @@
 <!--  -->
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!--  -->
-<section class="container my-4">
+<section class="container-xxl my-4">
     <div class="container">
         <div class="d-flex align-items-center mb-3">
             <div class="d-flex justify-content-start" style="flex: 1">
@@ -91,25 +91,37 @@
                     </td>
                     <!-- here here here  -->
                     <td>
-                        <div style="display: grid; grid-auto-flow: column; gap: 0.5rem">
-                            <c:url value="/tickets/add" var="ticketUrl">
-                                <c:param name="tripId" value="${item.id}" />
-                            </c:url>
-                            <a href="${ticketUrl}" class="btn btn-outline-success text-nowrap"
-                                >Đặt vé</a
-                            >
-
+                        <div class="btn-group float-end">
                             <c:url value="/trips/edit/${item.id}" var="editUrl" />
-                            <a href="${editUrl}" class="btn btn-primary text-nowrap">Sửa</a>
+                            <a href="${editUrl}" class="btn btn-primary"> Sửa </a>
 
-                            <c:url value="/api/trips/${item.id}" var="delUrl" />
-                            <c:set value="onclick=(delAPI('${delUrl}'))" var="delClick" />
-                            <button class="btn btn-danger text-nowrap" ${delClick}>Xoá</button>
-                            
-                            <c:url value="/feedbacks" var="feedbackUrl">
-                                <c:param name="tripId" value="${item.id}" />
-                            </c:url>
-                            <a href="${feedbackUrl}" class="btn btn-primary text-nowrap">Feedback</a>
+                            <button
+                                type="button"
+                                class="btn btn-primary dropdown-toggle dropdown-toggle-split"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                            >
+                                <span class="visually-hidden"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <c:url value="/tickets/add" var="ticketUrl">
+                                        <c:param name="tripId" value="${item.id}" />
+                                    </c:url>
+                                    <a href="${ticketUrl}" class="dropdown-item"> Đặt vé </a>
+                                </li>
+                                <li>
+                                    <c:url value="/feedbacks" var="feedbackUrl">
+                                        <c:param name="tripId" value="${item.id}" />
+                                    </c:url>
+                                    <a href="${feedBackUrl}" class="dropdown-item"> Phản hồi </a>
+                                </li>
+                                <li>
+                                    <c:url value="/api/trips/${item.id}" var="delUrl" />
+                                    <c:set value="onclick=(delAPI('${delUrl}'))" var="delClick" />
+                                    <button class="dropdown-item" ${delClick}>Xoá</button>
+                                </li>
+                            </ul>
                         </div>
                     </td>
                 </tr>

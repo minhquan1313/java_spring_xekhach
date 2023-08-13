@@ -83,7 +83,7 @@
                     <span class="">Tổng số chỗ ngồi đã chọn: </span>
                     <span id="seatCount" class="ms-3">~</span>
                 </div>
-                <div class="text-danger">${noSeatSelectedError}</div>
+                <!-- <div class="text-danger">${noSeatSelectedError}</div> -->
 
                 <div class="d-none">
                     <c:url value="/css/busSeat.css" var="busSeat" />

@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaBuilder.In;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
@@ -61,21 +62,22 @@ public class TripRepositoryImp implements TripRepository {
 
             String startLocation = params.get("startLocation");
             if (startLocation != null && !startLocation.isEmpty()) {
-                Expression<String> routeId = trip.get(Trip_.routeId);
+                // IN Clause 1st method
                 Map<String, String> routeParams = new HashMap<>();
                 routeParams.put("start_location", startLocation);
-
                 List<Route> routesToMatch = routeService.getList(routeParams);
-                List<Integer> routeIdToMatch = new ArrayList<>();
+
+                In<Integer> inClause = cb.in(trip.get("routeId"));
                 for (Route r : routesToMatch) {
-                    routeIdToMatch.add(r.getId());
+                    inClause.value(r.getId());
                 }
 
-                predicates.add(routeId.in(routeIdToMatch));
+                predicates.add(inClause);
             }
 
             String endLocation = params.get("endLocation");
             if (endLocation != null && !endLocation.isEmpty()) {
+                // IN Clause 2nd method
                 Expression<String> routeId = trip.get(Trip_.routeId);
                 Map<String, String> routeParams = new HashMap<>();
                 routeParams.put("end_location", endLocation);
