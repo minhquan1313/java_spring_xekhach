@@ -31,8 +31,8 @@
                 <td>${f.ticketId.tripId.routeId.startLocation} - ${f.ticketId.tripId.routeId.endLocation}</td>
                 <td>${f.ticketId.userId}</td>
                   <td>
-                    <c:url value="/feedbacks/edit?feedbackId=${f.id}&tripId=${f.ticketId.tripId.id}" var="api" />
-                    <a href="${api}" class="btn btn-success">Cập nhật</a>
+                    <c:url value="/feedbacks/edit?feedbackId=${f.id}&tripId=${f.ticketId.tripId.id}" var="update" />
+                    <a href="${update}" class="btn btn-success">Cập nhật</a>
 
                     <c:url value="/api/feedbacks/${f.id}" var="delUrl" />
                     <c:set value="onclick=(delAPI('${delUrl}'))" var="delClick" />

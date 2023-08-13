@@ -108,7 +108,7 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <c:url value="/feedbacks/add?ticketId=${item.id}&?tripId=${item.tripId.id}" var="feedBackUrl" />
+                                    <c:url value="/feedbacks/add?ticketId=${item.id}" var="feedBackUrl" />
                                     <a href="${feedBackUrl}" class="dropdown-item btn btn-primary"
                                         >Phản hồi</a
                                     >
