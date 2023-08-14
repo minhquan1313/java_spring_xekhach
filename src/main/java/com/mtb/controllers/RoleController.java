@@ -4,10 +4,10 @@
  */
 package com.mtb.controllers;
 
-import com.mtb.pojo.Role;
-import com.mtb.service.RoleService;
 import java.util.Map;
+
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.mtb.pojo.Role;
+import com.mtb.service.RoleService;
+
 /**
  *
  * @author Duc Hung
@@ -28,6 +31,11 @@ public class RoleController {
 
     @Autowired
     private RoleService roleService;
+
+    @ModelAttribute
+    public void commonAttr(Model model) {
+        model.addAttribute("route_name", "Vai trò");
+    }
 
     @RequestMapping("/roles")
     public String list(Model model, @RequestParam Map<String, String> params) {
@@ -40,8 +48,8 @@ public class RoleController {
         model.addAttribute("role", new Role());
         return "roles.addOrUpdate";
     }
-    
-      @GetMapping("/roles/{id}")
+
+    @GetMapping("/roles/{id}")
     public String update(Model model, @PathVariable(value = "id") int id) {
         model.addAttribute("role", this.roleService.getRoleById(id));
         return "roles.addOrUpdate";

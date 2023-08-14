@@ -46,6 +46,11 @@ public class TripController {
     @Autowired
     private UserService userService;
 
+    @ModelAttribute
+    public void commonAttr(Model model) {
+        model.addAttribute("route_name", "Chuyến xe");
+    }
+
     /**
      * 
      * @param model

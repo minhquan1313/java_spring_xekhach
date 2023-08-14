@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -19,6 +20,11 @@ public class RevenueController {
 
     @Autowired
     private StatsService statsService;
+
+    @ModelAttribute
+    public void commonAttr(Model model) {
+        model.addAttribute("route_name", "Doanh thu");
+    }
 
     @RequestMapping("/revenue")
     public String index(Model model, @RequestParam Map<String, String> params) {

@@ -21,9 +21,11 @@ public class IndexController {
     private Environment env;
 
     @ModelAttribute
-    public void commonAttr(Model model, @RequestParam Map<String, String> params) {
+    public void commonAttr(Model model) {
         model.addAttribute("date_pattern", this.env.getProperty("date_pattern"));
         model.addAttribute("app_name", this.env.getProperty("app_name"));
+
+        model.addAttribute("route_name", "Trang chủ");
     }
 
     @RequestMapping("/")

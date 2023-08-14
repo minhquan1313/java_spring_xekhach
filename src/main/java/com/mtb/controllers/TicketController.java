@@ -53,6 +53,20 @@ public class TicketController {
     @Autowired
     private TripService tripService;
 
+    @ModelAttribute
+    public void commonAttr(Model model) {
+        List<String> paidWithTemplate = new ArrayList<>() {
+            {
+                add("Tiền mặt");
+                add("Momo");
+                add("Chuyển khoản");
+            }
+        };
+        model.addAttribute("paidWithTemplate", paidWithTemplate);
+
+        model.addAttribute("route_name", "Vé xe");
+    }
+
     @RequestMapping("/tickets")
     public String index(Model model, @RequestParam Map<String, String> params) {
         List<Ticket> list = ticketService.getList(params);
@@ -65,17 +79,6 @@ public class TicketController {
         return "tickets";
     }
 
-    @ModelAttribute
-    public void commonAttr(Model model) {
-        List<String> paidWithTemplate = new ArrayList<>() {
-            {
-                add("Tiền mặt");
-                add("Momo");
-                add("Chuyển khoản");
-            }
-        };
-        model.addAttribute("paidWithTemplate", paidWithTemplate);
-    }
     // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
     @GetMapping("/tickets/add")

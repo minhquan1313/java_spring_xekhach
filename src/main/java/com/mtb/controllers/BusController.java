@@ -32,6 +32,11 @@ public class BusController {
     @Autowired
     private BusSeatTemplateService busSeatTemplateService;
 
+    @ModelAttribute
+    public void commonAttr(Model model) {
+        model.addAttribute("route_name", "Xe khách");
+    }
+
     @RequestMapping("/buses")
     public String index(Model model, @RequestParam Map<String, String> params) {
         Map<String, String> new_params = new HashMap<>();

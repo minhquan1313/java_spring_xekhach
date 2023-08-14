@@ -4,10 +4,6 @@
  */
 package com.mtb.controllers;
 
-import com.lowagie.text.Document;
-import com.lowagie.text.DocumentException;
-import com.lowagie.text.Paragraph;
-import com.lowagie.text.pdf.PdfWriter;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -26,10 +22,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.mtb.pojo.User;
 import com.mtb.service.RoleService;
 import com.mtb.service.UserService;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.List;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  *
@@ -40,19 +32,21 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-    
+
     @Autowired
     private RoleService roleService;
-    
+
     @ModelAttribute
-    public void commonAttr(Model model,@RequestParam Map<String, String> params) {
+    public void commonAttr(Model model, @RequestParam Map<String, String> params) {
         model.addAttribute("roles", this.roleService.getRoles(params));
+
+        model.addAttribute("route_name", "Người dùng");
     }
 
     @RequestMapping("/users")
-    public String list(Model model, @RequestParam Map<String, String> params,String id, String kw, String roleId) {
-        if ((kw != null && !kw.isEmpty()) || (roleId!=null&&!roleId.isEmpty()) || (id != null && !id.isEmpty())) {
-            model.addAttribute("users", this.userService.searchUsers(params,id, kw, roleId));
+    public String list(Model model, @RequestParam Map<String, String> params, String id, String kw, String roleId) {
+        if ((kw != null && !kw.isEmpty()) || (roleId != null && !roleId.isEmpty()) || (id != null && !id.isEmpty())) {
+            model.addAttribute("users", this.userService.searchUsers(params, id, kw, roleId));
         } else {
             model.addAttribute("users", this.userService.getUsers(params));
         }

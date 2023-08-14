@@ -3,6 +3,7 @@
 <tiles-definitions>
     <definition name="baseLayout" template="/WEB-INF/layout/base.jsp">
         <put-attribute name="title" value="" />
+        <put-attribute name="sidebar" value="/WEB-INF/layout/sidebar.jsp" />
         <put-attribute name="header" value="/WEB-INF/layout/header.jsp" />
         <put-attribute name="content" value="" />
         <put-attribute name="footer" value="/WEB-INF/layout/footer.jsp" />
@@ -103,7 +104,7 @@
         <put-attribute name="title" value="Phản hồi chuyến đi" />
         <put-attribute name="content" value="/WEB-INF/pages/feedbacks.jsp" />
     </definition>
-       <definition name="feedbacks.addOrUpdate" extends="baseLayout">
+    <definition name="feedbacks.addOrUpdate" extends="baseLayout">
         <put-attribute name="title" value="Phản hồi chuyến đi" />
         <put-attribute name="content" value="/WEB-INF/pages/feedbacks.addOrUpdate.jsp" />
     </definition>

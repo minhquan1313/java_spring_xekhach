@@ -22,7 +22,6 @@ import com.mtb.pojo.Feedback;
 import com.mtb.pojo.Ticket;
 import com.mtb.service.FeedbackService;
 import com.mtb.service.TicketService;
-import org.springframework.web.bind.annotation.PathVariable;
 
 /**
  *
@@ -40,10 +39,13 @@ public class FeedbackController {
     @ModelAttribute
     public void commonAttr(Model model, @RequestParam Map<String, String> params) {
         model.addAttribute("tickets", this.ticketService.getList(params));
+
+        model.addAttribute("route_name", "Phản hồi");
     }
 
     @RequestMapping("/feedbacks")
-    public String list(Model model, @RequestParam Map<String, String> params, @RequestParam(name = "tripId", required = false) String tripId) {
+    public String list(Model model, @RequestParam Map<String, String> params,
+            @RequestParam(name = "tripId", required = false) String tripId) {
         if (tripId != null && !tripId.isEmpty()) {
             model.addAttribute("feedbacks", this.feedbackService.getFeedbacksForTrip(params, tripId));
         } else {
