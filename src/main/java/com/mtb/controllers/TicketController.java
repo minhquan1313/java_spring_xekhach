@@ -63,8 +63,6 @@ public class TicketController {
             }
         };
         model.addAttribute("paidWithTemplate", paidWithTemplate);
-
-        model.addAttribute("route_name", "Vé xe");
     }
 
     @RequestMapping("/tickets")

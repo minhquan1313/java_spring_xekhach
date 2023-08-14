@@ -203,7 +203,11 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "" + lastName + " " + firstName;
+        String _lastName = lastName == null ? "" : lastName;
+        String _firstName = firstName == null ? "" : firstName;
+        String separate = firstName != null && lastName != null ? " " : "";
+
+        return _lastName + separate + _firstName;
         // return "com.mtb.pojo.User[ id=" + id + " ]";
     }
 

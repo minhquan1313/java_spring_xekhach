@@ -13,5 +13,3 @@ function delAPI(path) {
         }
     });
 }
-
-console.log("hello");

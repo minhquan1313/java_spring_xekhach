@@ -4,14 +4,18 @@
 <!--  -->
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html data-bs-theme="dark" class="h-100 overflow-y-scroll">
+<html data-bs-theme="dark" class="h-100">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title><tiles:insertAttribute name="title" /></title>
+
+        <!-- Bootstrap -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous" />
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+
+        <!-- Bootstrap icon -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
 
         <!-- JQuery -->
@@ -26,6 +30,9 @@
         <!-- tooltips -->
         <c:url value="/js/globalTooltips.js" var="globalTooltips" />
         <script defer src="${globalTooltips}"></script>
+
+        <!-- js-cookie -->
+        <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js" integrity="sha256-WCzAhd2P6gRJF9Hv3oOOd+hFJi/QJbv+Azn4CGB8gfY=" crossorigin="anonymous"></script>
     </head>
     <body class="h-100">
         <div class="h-100 d-flex">
@@ -36,11 +43,15 @@
             <div class="h-100 d-flex flex-column" style="flex: 1">
                 <tiles:insertAttribute name="header" />
 
-                <div class="container-fluid">
-                    <tiles:insertAttribute name="content" />
-                </div>
+                <div class="d-flex flex-column h-100 overflow-y-scroll">
+                    <div class="container-fluid" style="flex: 1">
+                        <tiles:insertAttribute name="content" />
+                    </div>
 
-                <tiles:insertAttribute name="footer" />
+                    <div class="mt-auto">
+                        <tiles:insertAttribute name="footer" />
+                    </div>
+                </div>
             </div>
         </div>
     </body>

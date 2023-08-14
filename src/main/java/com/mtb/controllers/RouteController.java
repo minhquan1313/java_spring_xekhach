@@ -25,11 +25,6 @@ public class RouteController {
     @Autowired
     private RouteService routeService;
 
-    @ModelAttribute
-    public void commonAttr(Model model) {
-        model.addAttribute("route_name", "Tuyến xe");
-    }
-
     @RequestMapping("/routes")
     public String index(Model model, @RequestParam Map<String, String> params) {
         model.addAttribute("routes", routeService.getList(null));

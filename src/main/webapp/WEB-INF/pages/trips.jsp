@@ -4,9 +4,9 @@
 <!--  -->
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!--  -->
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!--  -->
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<!--  -->
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!--  -->
 <section class="container-xxl my-4">
     <div class="container">
@@ -33,11 +33,6 @@
                         <li>
                             <c:url value="/trips/chart" var="chartUrl" />
                             <a href="${chartUrl}" class="dropdown-item"> Chart </a>
-                        </li>
-                        <li>
-                            <c:url value="/api/tickets/${item.id}" var="delUrl" />
-                            <c:set value="onclick=(delAPI('${delUrl}'))" var="delClick" />
-                            <button class="dropdown-item btn btn-danger" ${delClick}>Xoá</button>
                         </li>
                     </ul>
                 </div>

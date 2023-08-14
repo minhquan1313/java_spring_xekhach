@@ -39,8 +39,6 @@ public class FeedbackController {
     @ModelAttribute
     public void commonAttr(Model model, @RequestParam Map<String, String> params) {
         model.addAttribute("tickets", this.ticketService.getList(params));
-
-        model.addAttribute("route_name", "Phản hồi");
     }
 
     @RequestMapping("/feedbacks")

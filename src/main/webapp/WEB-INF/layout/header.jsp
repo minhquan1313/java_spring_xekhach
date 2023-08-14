@@ -1,38 +1,39 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!--  -->
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!--  -->
 
-<c:url value="/" var="action" />
 <nav class="navbar navbar-expand-lg border-bottom border-bottom-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="${action}">${route_name}</a>
-        <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto"></ul>
-            <c:choose>
-                <c:when test="${pageContext.request.userPrincipal.name != null}">
-                    <div class="d-flex">
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link" href="${action}"> ${pageContext.request.userPrincipal.name} </a>
-                            </li>
+        <div class="navbar-brand">${sideBarUIItem.title}</div>
 
-                            <li class="nav-item">
-                                <c:url value="/logout" var="logout" />
-                                <a class="btn btn-outline-warning" href="${logout}">Đăng xuất</a>
-                            </li>
-                        </ul>
+        <c:choose>
+            <c:when test="${user != null}">
+                <div class="btn-group dropstart dropdown">
+                    <div class="rounded-pill btn btn-dark d-flex border" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div class="bg-warning rounded-pill me-3 overflow-hidden" style="aspect-ratio: 1/1; width: 1.6rem">
+                            <img class="object-fit-cover w-100 h-100 d-block" src="${user.avatar}" alt="" />
+                        </div>
+                        <div>${user}</div>
                     </div>
-                </c:when>
-                <c:otherwise>
-                    <div class="d-flex">
-                        <c:url value="/login" var="login" />
-                        <a class="btn btn-info" href="${login}">Đăng nhập</a>
-                    </div>
-                </c:otherwise>
-            </c:choose>
-        </div> -->
+                    <ul class="dropdown-menu">
+                        <li>
+                            <c:url value="/users?kw=${user.username}" var="detailUrl" />
+                            <a href="${detailUrl}" class="dropdown-item"> Thông tin </a>
+                        </li>
+                        <li>
+                            <c:url value="/logout" var="logout" />
+                            <a class="dropdown-item" href="${logout}">Đăng xuất</a>
+                        </li>
+                    </ul>
+                </div>
+            </c:when>
+            <c:otherwise>
+                <div class="ms-auto">
+                    <c:url value="/login" var="login" />
+                    <a href="${login}" class="rounded-pill btn btn-primary border">Đăng nhập</a>
+                </div>
+            </c:otherwise>
+        </c:choose>
     </div>
 </nav>

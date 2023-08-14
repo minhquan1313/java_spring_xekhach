@@ -1,0 +1,56 @@
+#sidebar {
+    overflow: hidden;
+    flex-shrink: 0;
+}
+#sidebar,
+#sidebar_expand_btn,
+#sidebar_app_name,
+.sidebar_li_item_text,
+.list-group-item,
+#sidebar .list-group-item::after {
+    transition: 0.3s ease;
+}
+#sidebar .list-group-item {
+    position: relative;
+    overflow: hidden;
+    border: 0;
+}
+#sidebar .list-group-item::after {
+    content: "";
+    position: absolute;
+    right: 4px;
+    top: 4px;
+    bottom: 4px;
+    width: 4px;
+    border-radius: 999px;
+    background: inherit;
+    filter: brightness(0.5);
+    transform: translateX(200%);
+}
+#sidebar .list-group-item.active:after,
+#sidebar .list-group-item:hover:after {
+    transform: translateX(0);
+}
+#sidebar .list-group-item:not(.active):hover:after {
+    background: #ccc;
+}
+
+#sidebar.active {
+    width: 15rem;
+}
+
+#sidebar:not(.active) {
+    width: 3.7rem;
+}
+#sidebar:not(.active) #sidebar_app_name,
+#sidebar:not(.active) .sidebar_li_item_text {
+    width: 0 !important;
+    opacity: 0;
+    margin: 0 !important;
+}
+#sidebar:not(.active) #sidebar_expand_btn {
+    transform: rotate(180deg);
+}
+#sidebar:not(.active) .list-group-item {
+    padding-left: 1.2rem;
+}

@@ -39,8 +39,6 @@ public class UserController {
     @ModelAttribute
     public void commonAttr(Model model, @RequestParam Map<String, String> params) {
         model.addAttribute("roles", this.roleService.getRoles(params));
-
-        model.addAttribute("route_name", "Người dùng");
     }
 
     @RequestMapping("/users")

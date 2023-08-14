@@ -32,11 +32,6 @@ public class RoleController {
     @Autowired
     private RoleService roleService;
 
-    @ModelAttribute
-    public void commonAttr(Model model) {
-        model.addAttribute("route_name", "Vai trò");
-    }
-
     @RequestMapping("/roles")
     public String list(Model model, @RequestParam Map<String, String> params) {
         model.addAttribute("roles", this.roleService.getRoles(params));
