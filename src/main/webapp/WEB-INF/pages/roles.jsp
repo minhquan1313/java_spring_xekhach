@@ -18,33 +18,37 @@
         </div>
     </div>
 
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th scope="col">id</th>
-                <th scope="col">Tên vai trò</th>
-                <th scope="col">Hành động</th>
-            </tr>
-        </thead>
-        <tbody class="table-group-divider">
-            <c:forEach items="${roles}" var="r">
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
                 <tr>
-                    <th scope="row">${r.id}</th>
-                    <td>${r.title}</td>
-                    <td>
-                        <div class="btn-group float-end">
-                            <c:url value="/roles/${r.id}" var="editUrl" />
-                            <a href="${editUrl}" class="btn btn-primary">Sửa</a>
-
-                            <c:url value="/api/roles/${r.id}" var="delUrl" />
-                            <c:set value="onclick=(delAPI('${delUrl}'))" var="delClick" />
-                            <button class="btn btn-danger" ${delClick}>Xoá</button>
-                        </div>
-                    </td>
+                    <th scope="col">id</th>
+                    <th scope="col">Vai trò</th>
+                    <th scope="col">Tên vai trò</th>
+                    <th scope="col">Hành động</th>
                 </tr>
-            </c:forEach>
-        </tbody>
-    </table>
+            </thead>
+            <tbody class="table-group-divider">
+                <c:forEach items="${roles}" var="r">
+                    <tr>
+                        <th scope="row">${r.id}</th>
+                        <td>${r.title}</td>
+                        <td>${r.displayName}</td>
+                        <td>
+                            <div class="btn-group float-end">
+                                <c:url value="/roles/${r.id}" var="editUrl" />
+                                <a href="${editUrl}" class="btn btn-primary">Sửa</a>
+
+                                <c:url value="/api/roles/${r.id}" var="delUrl" />
+                                <c:set value="onclick=(delAPI('${delUrl}'))" var="delClick" />
+                                <button class="btn btn-danger" ${delClick}>Xoá</button>
+                            </div>
+                        </td>
+                    </tr>
+                </c:forEach>
+            </tbody>
+        </table>
+    </div>
 </section>
 
 <c:url value="/js/delAPI.js" var="delAPI" />

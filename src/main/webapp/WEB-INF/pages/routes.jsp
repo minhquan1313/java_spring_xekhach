@@ -17,35 +17,37 @@
         </div>
     </div>
 
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th scope="col">id</th>
-                <th scope="col">Khởi hành</th>
-                <th scope="col">Điểm đến</th>
-                <th scope="col">Hành động</th>
-            </tr>
-        </thead>
-        <tbody class="table-group-divider">
-            <c:forEach items="${routes}" var="route">
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
                 <tr>
-                    <th scope="row">${route.id}</th>
-                    <td>${route.startLocation}</td>
-                    <td>${route.endLocation}</td>
-                    <td>
-                        <div class="btn-group float-end">
-                            <c:url value="/routes/edit/${route.id}" var="editUrl" />
-                            <a href="${editUrl}" class="btn btn-primary">Sửa</a>
-
-                            <c:url value="/api/routes/${route.id}" var="delUrl" />
-                            <c:set value="onclick=(delAPI('${delUrl}'))" var="delClick" />
-                            <button class="btn btn-danger" ${delClick}>Xoá</button>
-                        </div>
-                    </td>
+                    <th scope="col">id</th>
+                    <th scope="col">Khởi hành</th>
+                    <th scope="col">Điểm đến</th>
+                    <th scope="col">Hành động</th>
                 </tr>
-            </c:forEach>
-        </tbody>
-    </table>
+            </thead>
+            <tbody class="table-group-divider">
+                <c:forEach items="${routes}" var="route">
+                    <tr>
+                        <th scope="row">${route.id}</th>
+                        <td>${route.startLocation}</td>
+                        <td>${route.endLocation}</td>
+                        <td>
+                            <div class="btn-group float-end">
+                                <c:url value="/routes/edit/${route.id}" var="editUrl" />
+                                <a href="${editUrl}" class="btn btn-primary">Sửa</a>
+
+                                <c:url value="/api/routes/${route.id}" var="delUrl" />
+                                <c:set value="onclick=(delAPI('${delUrl}'))" var="delClick" />
+                                <button class="btn btn-danger" ${delClick}>Xoá</button>
+                            </div>
+                        </td>
+                    </tr>
+                </c:forEach>
+            </tbody>
+        </table>
+    </div>
 </section>
 
 <c:url value="/js/delAPI.js" var="delAPI" />

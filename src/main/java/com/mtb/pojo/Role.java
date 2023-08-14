@@ -34,6 +34,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Role.findByTitle", query = "SELECT r FROM Role r WHERE r.title = :title")})
 public class Role implements Serializable {
 
+    @Size(max = 50)
+    @Column(name = "display_name")
+    private String displayName;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -108,6 +112,14 @@ public class Role implements Serializable {
     @Override
     public String toString() {
         return "com.mtb.pojo.Role[ id=" + id + " ]";
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 
 }

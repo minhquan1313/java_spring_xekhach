@@ -1,9 +1,4 @@
-<%-- 
-    Document   : roles.addOrUpdate
-    Created on : Aug 3, 2023, 3:21:04 PM
-    Author     : Duc Hung
---%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%-- Document : roles.addOrUpdate Created on : Aug 3, 2023, 3:21:04 PM Author : Duc Hung --%> <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!--  -->
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!--  -->
@@ -27,16 +22,25 @@
     </div>
 
     <c:url value="/roles/" var="action" />
-    <form:form
-        method="post"
-        action="${action}"
-        modelAttribute="role"
-        enctype="multipart/form-data"
-        >
+    <form:form method="post" action="${action}" modelAttribute="role" enctype="multipart/form-data">
         <form:hidden path="id" />
+        <c:if test="${role.id != null}">
+            <form:hidden path="title" />
+        </c:if>
 
         <div class="mb-3">
-            <form:input type="text" class="form-control" path="title" id="title" placeholder="Tên vai trò" name="title" />
+            <c:choose>
+                <c:when test="${role.id == null}">
+                    <form:input type="text" class="form-control" path="title" id="title" placeholder="Vai trò" name="title" />
+                </c:when>
+                <c:otherwise>
+                    <input disabled class="form-control" value="${role.title}" />
+                </c:otherwise>
+            </c:choose>
+        </div>
+
+        <div class="mb-3">
+            <form:input type="text" class="form-control" path="displayName" id="displayName" placeholder="Tên vai trò hiển thị" name="displayName" />
         </div>
 
         <button type="submit" class="btn btn-outline-info w-100">

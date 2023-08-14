@@ -85,10 +85,10 @@
                 <c:forEach items="${roles}" var="r">
                     <c:choose>
                         <c:when test="${r.id == user.roleId.id}">
-                            <option value="${r.id}" selected>${r.title}</option>
+                            <option value="${r.id}" selected>${r.displayName}</option>
                         </c:when>
                         <c:otherwise>
-                            <option value="${r.id}">${r.title}</option>
+                            <option value="${r.id}">${r.displayName}</option>
                         </c:otherwise>
                     </c:choose>
                 </c:forEach>
