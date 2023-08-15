@@ -18,7 +18,9 @@
                 <a href="${backUrl}" class="btn btn-outline-info text-nowrap"> <spring:message code="ui.global.back" /> </a>
             </div>
 
-            <h3 class="text-center">Các chuyến xe hiện có</h3>
+            <h3 class="text-center">
+                <spring:message code="ui.trip.header_title" />
+            </h3>
             <div class="d-flex justify-content-end flex-wrap" style="flex: 1">
                 <div class="btn-group">
                     <c:url value="/trips/add" var="createUrl" />
@@ -32,11 +34,15 @@
                     <ul class="dropdown-menu">
                         <li>
                             <c:url value="/trips/find" var="findUrl" />
-                            <a href="${findUrl}" class="dropdown-item"> Tìm kiếm </a>
+                            <a href="${findUrl}" class="dropdown-item">
+                                <spring:message code="ui.global.find" />
+                            </a>
                         </li>
                         <li>
                             <c:url value="/trips/chart" var="chartUrl" />
-                            <a href="${chartUrl}" class="dropdown-item"> Chart </a>
+                            <a href="${chartUrl}" class="dropdown-item">
+                                <spring:message code="ui.global.chart" />
+                            </a>
                         </li>
                     </ul>
                 </div>

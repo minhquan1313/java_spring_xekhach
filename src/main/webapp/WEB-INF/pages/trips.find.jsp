@@ -14,9 +14,16 @@
     <div class="d-flex align-items-center mb-3">
         <div class="d-flex justify-content-start" style="flex: 1">
             <c:url value="/trips" var="backUrl" />
-            <a href="${backUrl}" class="btn btn-outline-info text-nowrap"><spring:message code="ui.global.back" /> </a>
+            <a href="${backUrl}" class="btn btn-outline-info text-nowrap">
+                <spring:message code="ui.global.back" />
+            </a>
         </div>
-        <h3 class="text-center">Tìm chuyến xe</h3>
+        <h3 class="text-center">
+            <spring:message code="ui.global.find" />
+
+            <spring:message code="ui.trip" var="__header_title" />
+            ${fn:toLowerCase(__header_title)}
+        </h3>
 
         <div class="invisible" style="flex: 1"></div>
     </div>
@@ -27,10 +34,12 @@
         <div class="mb-3">
             <div class="input-group">
                 <span class="input-group-text">
-                    <i class="bi bi-cursor"></i>
+                    <i class="bi bi-cursor"> </i>
                 </span>
                 <select class="form-select" id="startLocation">
-                    <option value="" selected disabled>Chọn điểm đi</option>
+                    <option value="" selected disabled>
+                        <spring:message code="ui.trip.find.choose_start" />
+                    </option>
 
                     <c:forEach items="${routesStart}" var="c">
                         <option value="${c.startLocation}">${c.startLocation}</option>
@@ -42,10 +51,12 @@
         <div class="mb-3">
             <div class="input-group">
                 <span class="input-group-text">
-                    <i class="bi bi-geo-fill"></i>
+                    <i class="bi bi-geo-fill"> </i>
                 </span>
                 <select class="form-select" id="endLocation">
-                    <option value="" selected disabled>Chọn <spring:message code="ui.route.end_location" /></option>
+                    <option value="" selected disabled>
+                        <spring:message code="ui.trip.find.choose_end" />
+                    </option>
 
                     <c:forEach items="${routesEnd}" var="c">
                         <option value="${c.endLocation}">${c.endLocation}</option>
@@ -59,13 +70,18 @@
         <div class="mb-3">
             <div class="input-group">
                 <span class="input-group-text">
-                    <i class="bi bi-bus-front-fill"></i>
+                    <i class="bi bi-bus-front-fill"> </i>
                 </span>
                 <select class="form-select" id="busId">
-                    <option value="" selected disabled>Chọn xe khách</option>
+                    <option value="" selected disabled>
+                        <spring:message code="ui.trip.find.choose_bus" />
+                    </option>
 
                     <c:forEach items="${buses}" var="c">
-                        <option value="${c.id}">${c.licensePlate} - ${c.busSeatTemplateCount} chỗ</option>
+                        <option value="${c.id}">
+                            ${c.licensePlate} - ${c.busSeatTemplateCount}
+                            <spring:message code="ui.bus.seat" var="__seat" /> ${fn:toLowerCase(__seat)}
+                        </option>
                     </c:forEach>
                 </select>
             </div>
@@ -75,10 +91,12 @@
         <!-- price -->
         <div class="mb-3">
             <div class="input-group mb-3">
-                <span class="input-group-text">Khoảng giá</span>
-                <input type="text" id="fromPrice" class="form-control" placeholder="Từ" />
+                <span class="input-group-text">
+                    <spring:message code="ui.trip.find.price_range" />
+                </span>
+                <input type="text" id="fromPrice" class="form-control" placeholder='<spring:message code="ui.trip.find.from_time" />' />
                 <span class="input-group-text">-</span>
-                <input type="text" id="toPrice" class="form-control" placeholder="Đến" />
+                <input type="text" id="toPrice" class="form-control" placeholder='<spring:message code="ui.trip.find.to_time" />' />
             </div>
             <input type="hidden" name="fromPrice" />
             <input type="hidden" name="toPrice" />
@@ -86,8 +104,8 @@
             <div class="range-slide">
                 <div class="slide bg-secondary">
                     <div class="line bg-primary" id="line" style="left: 0%; right: 0%"></div>
-                    <span class="thumb border border-primary-subtle bg-primary" id="thumbMin" style="left: 0%"></span>
-                    <span class="thumb border border-primary-subtle bg-primary" id="thumbMax" style="left: 100%"></span>
+                    <span class="thumb border border-primary-subtle bg-primary" id="thumbMin" style="left: 0%"> </span>
+                    <span class="thumb border border-primary-subtle bg-primary" id="thumbMax" style="left: 100%"> </span>
                 </div>
                 <input id="rangeMin" type="range" max="${toPrice}" min="${fromPrice}" step="1000" value="${fromPrice}" />
                 <input id="rangeMax" type="range" max="${toPrice}" min="${fromPrice}" step="1000" value="${toPrice}" />
@@ -169,11 +187,13 @@
         <div class="mb-3">
             <div class="input-group">
                 <span class="input-group-text">
-                    <i class="bi bi-person-rolodex"></i>
+                    <i class="bi bi-person-rolodex"> </i>
                 </span>
 
                 <select class="form-select" id="driverId">
-                    <option value="" selected disabled>Chọn tài xế</option>
+                    <option value="" selected disabled>
+                        <spring:message code="ui.trip.find.choose_driver" />
+                    </option>
 
                     <c:forEach items="${drivers}" var="c">
                         <option value="${c.id}">${c}</option>
@@ -187,14 +207,18 @@
         <div class="mb-3 row">
             <div class="col col-md-6">
                 <div id="dateTimePickerFrom" class="input-group">
-                    <span class="input-group-text"> Từ </span>
+                    <span class="input-group-text">
+                        <spring:message code="ui.trip.find.from_time" />
+                    </span>
                     <input type="text" class="form-control" readonly />
                 </div>
             </div>
 
             <div class="col col-md-6">
                 <div id="dateTimePickerTo" class="input-group">
-                    <span class="input-group-text"> Đến </span>
+                    <span class="input-group-text">
+                        <spring:message code="ui.trip.find.to_time" />
+                    </span>
                     <input type="text" class="form-control" readonly />
                 </div>
             </div>
