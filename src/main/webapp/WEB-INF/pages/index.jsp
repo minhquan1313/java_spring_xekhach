@@ -3,7 +3,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <!--  -->
 
-<section class="d-flex flex-column pt-3 h-100">
+<section class="container-fluid d-flex flex-column pt-3 h-100">
     <h2 class="text-center text-light-emphasis mb-3">${app_name} - Trang quản trị</h2>
     <div class="position-relative w-100" style="flex: 1">
         <div class="position-absolute top-0 start-0 end-0 bottom-0">
