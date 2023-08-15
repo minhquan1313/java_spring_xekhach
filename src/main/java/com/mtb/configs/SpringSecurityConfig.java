@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.mtb.myObject.AllLanguages;
 import com.mtb.myObject.SideBarUI;
 import com.mtb.myObject.SideBarUIItem;
 
@@ -99,4 +100,16 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         x.register(new SideBarUIItem(8, "bi bi-chat-heart fs-5", "Phản hồi", "/feedbacks"));
         return x;
     }
+
+    // -=-=-=-=-=-=-=-=-=-=-=-=-=:START Multi languages part
+    @Bean
+    public AllLanguages allLanguages() {
+        AllLanguages x = new AllLanguages();
+
+        x.getList().add("vi");
+        x.getList().add("en");
+
+        return x;
+    }
+    // -=-=-=-=-=-=-=-=-=-=-=-=-=:END Multi languages part
 }

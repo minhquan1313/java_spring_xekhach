@@ -1,10 +1,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!--  -->
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<!--  -->
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <!--  -->
 
 <section class="container-fluid d-flex flex-column py-3 h-100">
-    <h3 class="text-center text-light-emphasis p-3 pb-lg-5">${app_name} - Trang quản trị</h3>
+    <h3 class="text-center text-light-emphasis p-3 pb-lg-5">
+        ${app_name} - <spring:message code="ui.index.dashboard_text" />
+        <!-- Trang quản trị -->
+    </h3>
     <div class="position-relative w-100" style="flex: 1">
         <div class="position-absolute top-0 start-0 end-0 bottom-0">
             <svg class="w-100 h-100" width="639" height="461" viewBox="0 0 639 461" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -7,6 +7,7 @@ package com.mtb.controllers;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -42,7 +43,11 @@ public class ChartController {
             String routeId = String.valueOf(tripData[0]);
             Integer tripCount = Integer.parseInt(String.valueOf(tripData[1]));
 
-            Route r = listRoute.stream().filter(x -> x.getId() == Integer.parseInt(routeId)).toList().get(0);
+            Route r = listRoute
+                    .stream()
+                    .filter(x -> x.getId() == Integer.parseInt(routeId))
+                    .collect(Collectors.toList())
+                    .get(0);
 
             routeData.add(new TitleAndValue(r.getStartLocation() + " - " + r.getEndLocation(), tripCount));
         }

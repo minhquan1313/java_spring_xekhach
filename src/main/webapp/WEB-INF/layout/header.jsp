@@ -2,6 +2,8 @@
 <!--  -->
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!--  -->
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<!--  -->
 
 <nav class="navbar navbar-expand-lg border-bottom border-bottom-dark">
     <div class="container-fluid">
@@ -35,5 +37,24 @@
                 </div>
             </c:otherwise>
         </c:choose>
+
+        <!-- Language -->
+        <div class="ms-2" style="width: 5rem">
+            <div class="input-group">
+                <select id="languageSelect" class="form-select rounded-pill">
+                    <c:forEach items="${allLanguages}" var="c">
+                        <c:set value="" var="selected" />
+                        <c:if test="${c == language}">
+                            <c:set value="selected" var="selected" />
+                        </c:if>
+
+                        <option value="${c}" data-cookie-name="${LANG}" ${selected}>${c}</option>
+                    </c:forEach>
+                </select>
+            </div>
+
+            <c:url value="/js/languageChange.js" var="languageChange" />
+            <script src="${languageChange}"></script>
+        </div>
     </div>
 </nav>
