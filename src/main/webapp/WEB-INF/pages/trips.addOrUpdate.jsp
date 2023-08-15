@@ -45,17 +45,12 @@
                         <c:if test="${c.id == trip.routeId.id}">
                             <c:set value="selected" var="selected" />
                         </c:if>
-                        <option value="${c.id}" ${selected}>
-                            ${c.startLocation} - ${c.endLocation}
-                        </option>
+                        <option value="${c.id}" ${selected}>${c.startLocation} - ${c.endLocation}</option>
                     </c:forEach>
                 </form:select>
 
                 <c:url value="/routes/add" var="createUrl" />
-                <a
-                    href="${createUrl}"
-                    class="input-group-text link-underline link-underline-opacity-0 bg-info-subtle"
-                >
+                <a href="${createUrl}" class="input-group-text link-underline link-underline-opacity-0 bg-info-subtle">
                     <i class="bi bi-plus-square-dotted"></i>
                 </a>
             </div>
@@ -80,35 +75,22 @@
                         <c:set value="" var="selected" />
                         <c:if test="${c.id == trip.busId.id}">
                             <c:set value="selected" var="selected" />
-                            <option value="${c.id}" data-image="${c.image}" ${selected}>
-                                ${c.licensePlate} - ${fn:length(c.busSeatTemplateSet)} chỗ
-                            </option>
+                            <option value="${c.id}" data-image="${c.image}" ${selected}>${c.licensePlate} - ${c.busSeatTemplateCount} chỗ</option>
                         </c:if>
 
                         <c:if test="${trip.id == null}">
-                            <option value="${c.id}" data-image="${c.image}" ${selected}>
-                                ${c.licensePlate} - ${fn:length(c.busSeatTemplateSet)} chỗ
-                            </option>
+                            <option value="${c.id}" data-image="${c.image}" ${selected}>${c.licensePlate} - ${c.busSeatTemplateCount} chỗ</option>
                         </c:if>
                     </c:forEach>
                 </form:select>
                 <c:url value="/buses/add" var="createUrl" />
-                <a
-                    href="${createUrl}"
-                    class="input-group-text link-underline link-underline-opacity-0 bg-info-subtle"
-                >
+                <a href="${createUrl}" class="input-group-text link-underline link-underline-opacity-0 bg-info-subtle">
                     <i class="bi bi-plus-square-dotted"></i>
                 </a>
             </div>
             <div class="col col-md-6 mx-auto">
                 <div>
-                    <img
-                        id="busImage"
-                        src="?"
-                        class="img-thumbnail rounded d-block object-fit-contain mx-auto"
-                        alt="..."
-                        style="max-height: 60vh"
-                    />
+                    <img id="busImage" src="?" class="img-thumbnail rounded d-block object-fit-contain mx-auto" alt="..." style="max-height: 60vh" />
                 </div>
             </div>
             <form:errors path="busId" element="div" cssClass="text-danger" />
@@ -130,10 +112,7 @@
                 </form:select>
 
                 <c:url value="/users/add" var="createUrl" />
-                <a
-                    href="${createUrl}"
-                    class="input-group-text link-underline link-underline-opacity-0 bg-info-subtle"
-                >
+                <a href="${createUrl}" class="input-group-text link-underline link-underline-opacity-0 bg-info-subtle">
                     <i class="bi bi-plus-square-dotted"></i>
                 </a>
             </div>
@@ -147,11 +126,7 @@
                     <i class="bi bi-calendar-event"></i>
                 </span>
                 <input id="datetimepicker1Input" type="text" class="form-control" readonly />
-                <span
-                    class="input-group-text"
-                    data-td-toggle="datetimepicker"
-                    style="cursor: pointer"
-                >
+                <span class="input-group-text" data-td-toggle="datetimepicker" style="cursor: pointer">
                     <i class="bi bi-calendar-plus"></i>
                 </span>
             </div>

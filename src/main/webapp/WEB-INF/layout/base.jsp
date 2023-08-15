@@ -40,17 +40,18 @@
             <tiles:insertAttribute name="sidebar" />
 
             <!-- Main body -->
-            <div class="h-100 d-flex flex-column" style="flex: 1">
+            <div class="h-100 d-flex flex-column overflow-x-hidden" style="flex: 1">
+                <!-- Header -->
                 <tiles:insertAttribute name="header" />
 
                 <div class="d-flex flex-column h-100 overflow-y-scroll">
-                    <div class="container-fluid" style="flex: 1">
+                    <!-- Body -->
+                    <div style="flex: 1">
                         <tiles:insertAttribute name="content" />
                     </div>
 
-                    <div class="mt-auto">
-                        <tiles:insertAttribute name="footer" />
-                    </div>
+                    <!-- Footer -->
+                    <div class="mt-auto"></div>
                 </div>
             </div>
         </div>

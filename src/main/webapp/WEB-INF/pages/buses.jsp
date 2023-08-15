@@ -39,7 +39,7 @@
                             <img src="${bus.image}" class="img-thumbnail rounded mx-auto d-block" alt="..." />
                         </td>
                         <td>${bus.licensePlate}</td>
-                        <td>${fn:length(bus.busSeatTemplateSet)}</td>
+                        <td>${bus.busSeatTemplateCount}</td>
                         <td>
                             <div class="btn-group float-end">
                                 <c:url value="/buses/edit/${bus.id}" var="editUrl" />

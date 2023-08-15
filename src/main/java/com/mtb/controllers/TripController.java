@@ -81,7 +81,7 @@ public class TripController {
         model.addAttribute("routes", routes);
 
         Map<String, String> busParams = new HashMap<>();
-        busParams.put("getSeats", "");
+        busParams.put("busSeatTemplateCount", "");
         List<Bus> busList = busService.getList(busParams);
         model.addAttribute("buses", busList);
 
@@ -137,7 +137,7 @@ public class TripController {
         model.addAttribute("routesEnd", routesEnd);
 
         Map<String, String> busParams = new HashMap<>();
-        busParams.put("getSeats", "");
+        busParams.put("busSeatTemplateCount", "");
         List<Bus> busList = busService.getList(busParams);
         model.addAttribute("buses", busList);
 

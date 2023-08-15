@@ -23,11 +23,10 @@
         </a>
     </div>
 
-    <div class="my-3 overflow-y-auto overflow-x-hidden" style="flex: 1">
+    <div id="sidebar_items" class="my-3 overflow-y-auto overflow-x-hidden" style="flex: 1">
         <div class="list-group list-group-flush">
             <!-- Get current url in the url bar -->
             <c:set value="${requestScope['javax.servlet.forward.request_uri']}" var="currentUrl" />
-            <c:set value="${null}" scope="application" var="sideBarUIItem" />
             <!-- Get selected route -->
             <c:forEach items="${sideBarUI}" var="c">
                 <c:url value="${c.url}" var="url" />

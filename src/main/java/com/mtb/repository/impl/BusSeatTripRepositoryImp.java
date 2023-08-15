@@ -132,21 +132,22 @@ public class BusSeatTripRepositoryImp implements BusSeatTripRepository {
     @Override
     public int countSeatByBusAndTripId(int busId, int tripId) {
         Session session = this.factory.getObject().getCurrentSession();
+        Query query = session
+                .createQuery(String.join(" ",
+                        "",
+                        "SELECT COUNT(*)",
+                        "FROM BusSeatTrip",
+                        "WHERE busId.id=:busId AND",
+                        "tripId.id=:tripId"))
+                .setParameter("busId", busId)
+                .setParameter("tripId", tripId);
 
-        CriteriaBuilder cb = session.getCriteriaBuilder();
-        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
-        Root root = cq.from(BusSeatTrip.class);
-
-        List<Predicate> predicates = new ArrayList<>();
-
-        predicates.add(cb.equal(root.get("busId"), busId));
-        predicates.add(cb.equal(root.get("tripId"), tripId));
-
-        cq.where(predicates.toArray(Predicate[]::new));
-        cq.select(cb.count(root));
-        Query query = session.createQuery(cq);
-
-        return Integer.parseInt(query.getSingleResult().toString());
+        try {
+            int parseInt = Integer.parseInt(query.getSingleResult().toString());
+            return parseInt;
+        } catch (NumberFormatException e) {
+            return 0;
+        }
     }
 
     @Override

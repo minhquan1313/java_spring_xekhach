@@ -8,7 +8,7 @@
         <div class="navbar-brand">${sideBarUIItem.title}</div>
 
         <c:choose>
-            <c:when test="${user != null}">
+            <c:when test="${authenticated_user != null}">
                 <div class="btn-group dropstart dropdown">
                     <div class="rounded-pill btn btn-dark d-flex border" data-bs-toggle="dropdown" aria-expanded="false">
                         <div class="bg-warning rounded-pill me-3 overflow-hidden" style="aspect-ratio: 1/1; width: 1.6rem">
@@ -31,7 +31,7 @@
             <c:otherwise>
                 <div class="ms-auto">
                     <c:url value="/login" var="login" />
-                    <a href="${login}" class="rounded-pill btn btn-primary border">Đăng nhập</a>
+                    <a href="${login}" class="rounded-pill btn btn-primary">Đăng nhập</a>
                 </div>
             </c:otherwise>
         </c:choose>

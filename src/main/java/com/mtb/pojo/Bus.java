@@ -62,7 +62,9 @@ public class Bus implements Serializable {
     private Set<BusSeatTrip> busSeatTripSet;
 
     @Transient
-    private Integer seatCount;
+    private Integer busSeatTemplateCount;
+    @Transient
+    private Integer busSeatTripCount;
 
     @Transient
     private MultipartFile file;
@@ -163,11 +165,20 @@ public class Bus implements Serializable {
         return "com.mtb.pojo.Bus[ id=" + id + " ]";
     }
 
-    public Integer getSeatCount() {
-        return seatCount;
+    public Integer getBusSeatTemplateCount() {
+        return busSeatTemplateCount;
     }
 
-    public void setSeatCount(Integer seatCount) {
-        this.seatCount = seatCount;
+    public void setBusSeatTemplateCount(Integer busSeatTemplateCount) {
+        this.busSeatTemplateCount = busSeatTemplateCount;
     }
+
+    public Integer getBusSeatTripCount() {
+        return busSeatTripCount;
+    }
+
+    public void setBusSeatTripCount(Integer busSeatTripCount) {
+        this.busSeatTripCount = busSeatTripCount;
+    }
+
 }

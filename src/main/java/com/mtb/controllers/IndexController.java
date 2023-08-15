@@ -32,7 +32,7 @@ public class IndexController {
         model.addAttribute("date_pattern", this.env.getProperty("date_pattern"));
         model.addAttribute("app_name", this.env.getProperty("app_name"));
 
-        model.addAttribute("sidebarExpanded", sidebarExpanded.equals("true") ? true : false);
+        model.addAttribute("sidebarExpanded", sidebarExpanded.equals("false") ? false : true);
         model.addAttribute("sideBarUI", sideBarUI.getList());
     }
 
