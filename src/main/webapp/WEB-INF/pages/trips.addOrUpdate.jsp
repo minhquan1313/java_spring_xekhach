@@ -8,18 +8,27 @@
 <!--  -->
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!--  -->
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<!--  -->
 <section class="container my-4">
     <div class="d-flex align-items-center mb-3">
         <div class="d-flex justify-content-start" style="flex: 1">
             <c:url value="/trips" var="backUrl" />
-            <a href="${backUrl}" class="btn btn-outline-info text-nowrap">Quay lại</a>
+            <a href="${backUrl}" class="btn btn-outline-info text-nowrap">
+                <spring:message code="ui.global.back" />
+            </a>
         </div>
         <h3 class="text-center">
             <c:choose>
-                <c:when test="${trip.id == null}"> Thêm </c:when>
-                <c:otherwise> Cập nhật </c:otherwise>
+                <c:when test="${trip.id == null}">
+                    <spring:message code="ui.global.add" />
+                </c:when>
+                <c:otherwise>
+                    <spring:message code="ui.global.update" />
+                </c:otherwise>
             </c:choose>
-            chuyến xe
+            <spring:message code="ui.trip" var="__header_title" />
+            ${fn:toLowerCase(__header_title)}
         </h3>
 
         <div class="invisible" style="flex: 1"></div>
@@ -34,10 +43,10 @@
         <div class="mb-3">
             <div class="input-group">
                 <span class="input-group-text">
-                    <i class="bi bi-cursor"></i>
+                    <i class="bi bi-cursor"> </i>
                 </span>
                 <span class="input-group-text">
-                    <i class="bi bi-geo-fill"></i>
+                    <i class="bi bi-geo-fill"> </i>
                 </span>
                 <form:select class="form-select" path="routeId">
                     <c:forEach items="${routes}" var="c">
@@ -51,7 +60,7 @@
 
                 <c:url value="/routes/add" var="createUrl" />
                 <a href="${createUrl}" class="input-group-text link-underline link-underline-opacity-0 bg-info-subtle">
-                    <i class="bi bi-plus-square-dotted"></i>
+                    <i class="bi bi-plus-square-dotted"> </i>
                 </a>
             </div>
             <form:errors path="routeId" element="div" cssClass="text-danger" />
@@ -62,7 +71,7 @@
         <div class="mb-3">
             <div class="input-group mb-2">
                 <span class="input-group-text">
-                    <i class="bi bi-bus-front-fill"></i>
+                    <i class="bi bi-bus-front-fill"> </i>
                 </span>
 
                 <c:set value="" var="disabled" />
@@ -75,17 +84,27 @@
                         <c:set value="" var="selected" />
                         <c:if test="${c.id == trip.busId.id}">
                             <c:set value="selected" var="selected" />
-                            <option value="${c.id}" data-image="${c.image}" ${selected}>${c.licensePlate} - ${c.busSeatTemplateCount} chỗ</option>
+                            <option value="${c.id}" data-image="${c.image}" ${selected}>
+                                ${c.licensePlate} - ${c.busSeatTemplateCount}
+
+                                <spring:message code="ui.bus.seat" var="__seat" />
+                                ${fn:toLowerCase(__seat)}
+                            </option>
                         </c:if>
 
                         <c:if test="${trip.id == null}">
-                            <option value="${c.id}" data-image="${c.image}" ${selected}>${c.licensePlate} - ${c.busSeatTemplateCount} chỗ</option>
+                            <option value="${c.id}" data-image="${c.image}" ${selected}>
+                                ${c.licensePlate} - ${c.busSeatTemplateCount}
+
+                                <spring:message code="ui.bus.seat" var="__seat" />
+                                ${fn:toLowerCase(__seat)}
+                            </option>
                         </c:if>
                     </c:forEach>
                 </form:select>
                 <c:url value="/buses/add" var="createUrl" />
                 <a href="${createUrl}" class="input-group-text link-underline link-underline-opacity-0 bg-info-subtle">
-                    <i class="bi bi-plus-square-dotted"></i>
+                    <i class="bi bi-plus-square-dotted"> </i>
                 </a>
             </div>
             <div class="col col-md-6 mx-auto">
@@ -99,7 +118,7 @@
         <div class="mb-3">
             <div class="input-group">
                 <span class="input-group-text">
-                    <i class="bi bi-person-rolodex"></i>
+                    <i class="bi bi-person-rolodex"> </i>
                 </span>
                 <form:select class="form-select" path="driverId">
                     <c:forEach items="${drivers}" var="c">
@@ -113,7 +132,7 @@
 
                 <c:url value="/users/add" var="createUrl" />
                 <a href="${createUrl}" class="input-group-text link-underline link-underline-opacity-0 bg-info-subtle">
-                    <i class="bi bi-plus-square-dotted"></i>
+                    <i class="bi bi-plus-square-dotted"> </i>
                 </a>
             </div>
 
@@ -123,11 +142,11 @@
         <div class="mb-3">
             <div class="input-group" id="datetimepicker1">
                 <span class="input-group-text">
-                    <i class="bi bi-calendar-event"></i>
+                    <i class="bi bi-calendar-event"> </i>
                 </span>
                 <input id="datetimepicker1Input" type="text" class="form-control" readonly />
                 <span class="input-group-text" data-td-toggle="datetimepicker" style="cursor: pointer">
-                    <i class="bi bi-calendar-plus"></i>
+                    <i class="bi bi-calendar-plus"> </i>
                 </span>
             </div>
             <form:hidden path="startAt" />
@@ -138,9 +157,11 @@
         <div class="mb-3">
             <div class="input-group">
                 <span class="input-group-text">
-                    <i class="bi bi-currency-dollar"></i>
+                    <i class="bi bi-currency-dollar"> </i>
                 </span>
-                <form:input type="text" class="form-control" placeholder="Giá tiền" path="price" />
+
+                <spring:message code="ui.trip.price" var="__price" />
+                <form:input type="text" class="form-control" placeholder="${__price}" path="price" />
                 <span class="input-group-text"> VND </span>
             </div>
             <form:errors path="price" element="div" cssClass="text-danger" />
@@ -148,8 +169,12 @@
 
         <button type="submit" class="btn btn-outline-info w-100">
             <c:choose>
-                <c:when test="${trip.id == null}"> Thêm </c:when>
-                <c:otherwise> Cập nhật </c:otherwise>
+                <c:when test="${trip.id == null}">
+                    <spring:message code="ui.global.add" />
+                </c:when>
+                <c:otherwise>
+                    <spring:message code="ui.global.update" />
+                </c:otherwise>
             </c:choose>
         </button>
     </form:form>

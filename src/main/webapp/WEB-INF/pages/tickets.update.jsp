@@ -10,16 +10,22 @@
 <!--  -->
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!--  -->
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<!--  -->
 <section class="container my-4">
     <div class="d-flex align-items-center mb-3">
         <div class="d-flex justify-content-start" style="flex: 1">
             <c:url value="/tickets" var="backUrl" />
-            <a href="${backUrl}" class="btn btn-outline-info text-nowrap">Quay lại</a>
+            <a href="${backUrl}" class="btn btn-outline-info text-nowrap"> <spring:message code="ui.global.back" /> </a>
         </div>
         <h3 class="text-center">
             <c:choose>
-                <c:when test="${ticket.id == null}"> Thêm </c:when>
-                <c:otherwise> Cập nhật </c:otherwise>
+                <c:when test="${ticket.id == null}">
+                    <spring:message code="ui.global.add" />
+                </c:when>
+                <c:otherwise>
+                    <spring:message code="ui.global.update" />
+                </c:otherwise>
             </c:choose>
             vé xe
         </h3>
@@ -35,8 +41,8 @@
         <!-- Trip -->
         <div class="mb-3">
             <div class="input-group">
-                <span class="input-group-text" data-bs-toggle="tooltip" data-bs-title="Mã chuyến">
-                    <i class="bi bi-geo-fill"></i>
+                <span class="input-group-text" data-bs-toggle="tooltip" data-bs-title='<spring:message code="ui.ticket.tooltip.choose_trip" />'>
+                    <i class="bi bi-geo-fill"> </i>
                 </span>
 
                 <form:select class="form-select" path="tripId">
@@ -50,25 +56,25 @@
                             <c:param name="tripId" value="${c.id}" />
                         </c:url>
                         <option value="${c.id}" data-url="${reloadUrl}" data-basePrice="${c.price}" ${selected}>
-                            <c:if test="${c.id == ticket.tripId.id}">Hiện tại: </c:if>
-                            id: ${c.id}
+                            <c:if test="${c.id == ticket.tripId.id}"> <spring:message code="ui.global.current" /> | </c:if>
+                            <spring:message code="ui.trip.id" />: ${c.id}
                         </option>
                     </c:forEach>
                 </form:select>
 
                 <ul class="list-group tripIdSelectData" data-tripId="${trip.id}" style="flex: 1">
-                    <li class="list-group-item">Tuyến: ${trip.routeId.startLocation} -> ${trip.routeId.endLocation}</li>
+                    <li class="list-group-item"><spring:message code="ui.route" />: ${trip.routeId.startLocation} -> ${trip.routeId.endLocation}</li>
                     <li class="list-group-item">
-                        Khởi hành:
+                        <spring:message code="ui.trip.start_at" />:
                         <fmt:formatDate value="${trip.startAt}" pattern="${date_pattern}" />
                     </li>
-                    <li class="list-group-item">Xe: ${trip.busId.licensePlate} - ${trip.busId.busSeatTripCount}</li>
-                    <li class="list-group-item">Tài xế: ${trip.driverId}</li>
+                    <li class="list-group-item"><spring:message code="ui.bus.license_plate" />: ${trip.busId.licensePlate} - ${trip.busId.busSeatTripCount}</li>
+                    <li class="list-group-item"><spring:message code="ui.bus.driver_name" />: ${trip.driverId}</li>
                 </ul>
 
                 <c:url value="/trips/add" var="createUrl" />
                 <a href="${createUrl}" class="input-group-text link-underline link-underline-opacity-0 bg-info-subtle">
-                    <i class="bi bi-plus-square-dotted"></i>
+                    <i class="bi bi-plus-square-dotted"> </i>
                 </a>
             </div>
 
@@ -86,8 +92,8 @@
         <!-- bookingUsers -->
         <div class="mb-3">
             <div class="input-group">
-                <span class="input-group-text" data-bs-toggle="tooltip" data-bs-title="User nào đặt vé">
-                    <i class="bi bi-person"></i>
+                <span class="input-group-text" data-bs-toggle="tooltip" data-bs-title='<spring:message code="ui.ticket.tooltip.choose_user_booking" />'>
+                    <i class="bi bi-person"> </i>
                 </span>
                 <form:select class="form-select" path="userId">
                     <c:forEach items="${bookingUsers}" var="c">
@@ -101,7 +107,7 @@
 
                 <c:url value="/users/add" var="createUrl" />
                 <a href="${createUrl}" class="input-group-text link-underline link-underline-opacity-0 bg-info-subtle">
-                    <i class="bi bi-plus-square-dotted"></i>
+                    <i class="bi bi-plus-square-dotted"> </i>
                 </a>
             </div>
             <form:errors path="userId" element="div" cssClass="text-danger" />
@@ -110,17 +116,19 @@
         <!-- paidPrice -->
         <div class="mb-3">
             <div class="input-group">
-                <span class="input-group-text" data-bs-toggle="tooltip" data-bs-title="Giá tiền">
-                    <i class="bi bi-currency-dollar"></i>
+                <span class="input-group-text" data-bs-toggle="tooltip" data-bs-title='<spring:message code="ui.trip.price" />'>
+                    <i class="bi bi-currency-dollar"> </i>
                 </span>
 
-                <input id="basePrice" type="text" class="form-control" placeholder="Giá chuyến" readonly />
+                <input id="basePrice" type="text" class="form-control" placeholder='<spring:message code="ui.trip.price" />' readonly />
                 <c:if test="${not empty extraPriceTitle}">
                     <span class="input-group-text"> ${extraPriceTitle} </span>
-                    <input type="text" id="extraPrice" class="form-control" placeholder="Phí phát sinh" value="${extraPrice}" />
+                    <input type="text" id="extraPrice" class="form-control" placeholder='<spring:message code="ui.ticket.extra_charge" />' value="${extraPrice}" />
                 </c:if>
                 <span class="input-group-text"> = </span>
-                <form:input type="text" class="form-control" placeholder="Tổng thanh toán" path="paidPrice" readonly="true" />
+
+                <spring:message code="ui.ticket.paid_price" var="__paid_price" />
+                <form:input type="text" class="form-control" placeholder="${__paid_price}" path="paidPrice" readonly="true" />
 
                 <span class="input-group-text"> VND </span>
             </div>
@@ -135,8 +143,8 @@
             <!-- paidWith -->
             <div class="col-12 col-md-6 col-xl-4">
                 <div class="input-group">
-                    <span class="input-group-text" data-bs-toggle="tooltip" data-bs-title="Phương thức thanh toán">
-                        <i class="bi bi-wallet2"></i>
+                    <span class="input-group-text" data-bs-toggle="tooltip" data-bs-title='<spring:message code="ui.ticket.paid_with" />'>
+                        <i class="bi bi-wallet2"> </i>
                     </span>
 
                     <form:select class="form-select" path="paidWith">
@@ -155,11 +163,13 @@
             <!-- staffId -->
             <div class="col-12 col-md-6 col-xl-4">
                 <div class="input-group">
-                    <span class="input-group-text" data-bs-toggle="tooltip" data-bs-title="Nhân viên in vé">
-                        <i class="bi bi-person"></i>
+                    <span class="input-group-text" data-bs-toggle="tooltip" data-bs-title='<spring:message code="ui.ticket.choose_printing_staff" />'>
+                        <i class="bi bi-person"> </i>
                     </span>
                     <form:select class="form-select" path="staffId">
-                        <option value="">Chọn nhân viên in vé</option>
+                        <option value="">
+                            <spring:message code="ui.ticket.printing_staff" />
+                        </option>
 
                         <c:forEach items="${staffUsers}" var="c">
                             <c:set value="" var="selected" />
@@ -172,7 +182,7 @@
 
                     <c:url value="/users/add" var="createUrl" />
                     <a href="${createUrl}" class="input-group-text link-underline link-underline-opacity-0 bg-info-subtle">
-                        <i class="bi bi-plus-square-dotted"></i>
+                        <i class="bi bi-plus-square-dotted"> </i>
                     </a>
                 </div>
 
@@ -181,12 +191,16 @@
 
             <!-- isPaid -->
             <div class="col-12 col-xl-4">
-                <div class="input-group">
-                    <label class="form-control" style="cursor: pointer">
-                        <form:checkbox class="form-check-input me-1" path="isPaid" id="isPaid" />
-                        <span>Đã thanh toán</span>
-                    </label>
-                </div>
+                <label class="input-group mb-3" style="cursor: pointer">
+                    <div class="input-group-text">
+                        <form:checkbox class="form-check-input mt-0" path="isPaid" id="isPaid" />
+                    </div>
+
+                    <div class="form-control">
+                        <spring:message code="ui.ticket.is_paid_status.paid" />
+                    </div>
+                </label>
+
                 <div class="d-none">
                     <c:url value="/js/ticketIsPaid.js" var="ticketIsPaid" />
                     <script src="${ticketIsPaid}"></script>
@@ -196,7 +210,9 @@
 
         <!-- selectSeat -->
         <div class="mb-3">
-            <label class="form-label">Chọn ghế ngồi</label>
+            <label class="form-label">
+                <spring:message code="ui.ticket.choose_seat" />
+            </label>
 
             <div class="align-items-center d-flex flex-column mb-3">
                 <div id="seatArrayContainer" class="d-none" style="--col: ${seats.col}; --row: ${seats.row}">
@@ -213,10 +229,10 @@
 
                         <button type="button" data-id="${c.id}" data-pos="${c.x}_${c.y}" class="text-primary" style="--x: ${c.x}; --y: ${c.y};" ${disabled} ${userChosen} data-bs-toggle="tooltip" data-bs-title="${c.id}">
                             <h3 class="m-0" withoutActive>
-                                <i class="bi bi-circle"></i>
+                                <i class="bi bi-circle"> </i>
                             </h3>
                             <h3 class="m-0" withActive>
-                                <i class="bi bi-circle-fill"></i>
+                                <i class="bi bi-circle-fill"> </i>
                             </h3>
                         </button>
                     </c:forEach>
@@ -224,7 +240,7 @@
             </div>
 
             <div class="d-flex">
-                <span>Tổng số chỗ ngồi đã chọn: </span>
+                <span> <spring:message code="ui.ticket.total_bus_seat_selected" />: </span>
                 <span id="seatCount" class="ms-3">~</span>
             </div>
             <input type="hidden" name="selectedSeats" id="selectedSeats" />
@@ -239,10 +255,10 @@
         <c:if test="${ticket.id != null}">
             <div class="mb-3">
                 <div class="input-group" id="datetimepicker1">
-                    <span class="input-group-text"> Tạo lúc </span>
+                    <span class="input-group-text"> <spring:message code="ui.ticket.created_at" /> </span>
                     <input id="datetimepicker1Input" type="text" class="form-control" readonly />
                     <span class="input-group-text" data-td-toggle="datetimepicker" style="cursor: pointer">
-                        <i class="bi bi-calendar-plus"></i>
+                        <i class="bi bi-calendar-plus"> </i>
                     </span>
                 </div>
                 <form:hidden path="createdAt" />
@@ -252,8 +268,12 @@
 
         <button type="submit" class="btn btn-outline-info w-100">
             <c:choose>
-                <c:when test="${ticket.id == null}"> Thêm </c:when>
-                <c:otherwise> Cập nhật </c:otherwise>
+                <c:when test="${ticket.id == null}">
+                    <spring:message code="ui.global.add" />
+                </c:when>
+                <c:otherwise>
+                    <spring:message code="ui.global.update" />
+                </c:otherwise>
             </c:choose>
         </button>
     </form:form>
@@ -270,6 +290,7 @@
         dateTimePicker({
             dateTimePickerId: "datetimepicker1",
             inputNameBind: "createdAt",
+            locale: Cookies.get("${LANG}"),
         });
     </script>
 </c:if>

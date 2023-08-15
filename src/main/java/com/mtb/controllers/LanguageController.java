@@ -30,7 +30,8 @@ public class LanguageController {
     @ModelAttribute
     public void commonAttr(Model model, HttpServletRequest request, HttpServletResponse response, Locale locale) {
         // Get text from multi language
-        // String x = messageResource.getMessage("ui.index.dashboard_text", null, loc);
+        // String x = messageResource.getMessage("ui.index.dashboard_text", null,
+        // locale);
 
         String languageFromCookies = MyCookies.getCookies(request, LANG);
         if (languageFromCookies == null) {

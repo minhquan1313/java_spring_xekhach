@@ -8,11 +8,13 @@
 <!--  -->
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!--  -->
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<!--  -->
 <section class="container my-4">
     <div class="d-flex align-items-center mb-3">
         <div class="d-flex justify-content-start" style="flex: 1">
             <c:url value="/trips" var="backUrl" />
-            <a href="${backUrl}" class="btn btn-outline-info text-nowrap">Quay lại</a>
+            <a href="${backUrl}" class="btn btn-outline-info text-nowrap"><spring:message code="ui.global.back" /> </a>
         </div>
         <h3 class="text-center">Tìm chuyến xe</h3>
 
@@ -43,7 +45,7 @@
                     <i class="bi bi-geo-fill"></i>
                 </span>
                 <select class="form-select" id="endLocation">
-                    <option value="" selected disabled>Chọn điểm đến</option>
+                    <option value="" selected disabled>Chọn <spring:message code="ui.route.end_location" /></option>
 
                     <c:forEach items="${routesEnd}" var="c">
                         <option value="${c.endLocation}">${c.endLocation}</option>
@@ -283,7 +285,10 @@
         initTime: "",
     });
 
-    selectBindInput({ selectId: "startLocation", inputBindName: "startLocation" });
+    selectBindInput({
+        selectId: "startLocation",
+        inputBindName: "startLocation",
+    });
     selectBindInput({ selectId: "endLocation", inputBindName: "endLocation" });
     selectBindInput({ selectId: "busId", inputBindName: "busId" });
     selectBindInput({ selectId: "driverId", inputBindName: "driverId" });

@@ -89,15 +89,24 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public SideBarUI sideBarUi() {
         SideBarUI x = new SideBarUI();
-        x.register(new SideBarUIItem(0, "bi bi-house fs-5", "Trang chủ", "/"));
-        x.register(new SideBarUIItem(6, "bi bi-graph-up-arrow fs-5", "Doanh thu", "/revenue"));
-        x.register(new SideBarUIItem(1, "bi bi-people-fill fs-5", "Người dùng", "/users"));
-        x.register(new SideBarUIItem(5, "bi bi-key fs-5", "Vai trò", "/roles"));
-        x.register(new SideBarUIItem(2, "bi bi-signpost-2 fs-5", "Tuyến xe", "/routes"));
-        x.register(new SideBarUIItem(4, "bi bi-pin-map fs-5", "Chuyến xe", "/trips"));
-        x.register(new SideBarUIItem(3, "bi bi-tags fs-5", "Vé xe", "/tickets"));
-        x.register(new SideBarUIItem(7, "bi bi-truck-front fs-5", "Xe khách", "/buses"));
-        x.register(new SideBarUIItem(8, "bi bi-chat-heart fs-5", "Phản hồi", "/feedbacks"));
+        // Trang chủ
+        // Doanh thu
+        // Người dùng
+        // Vai trò
+        // Tuyến xe
+        // Chuyến xe
+        // Vé xe
+        // Xe khách
+        // Phản hồi
+        x.register(new SideBarUIItem(0, "bi bi-house fs-5", "ui.sidebar.home", "/"));
+        x.register(new SideBarUIItem(6, "bi bi-graph-up-arrow fs-5", "ui.sidebar.revenue", "/revenue"));
+        x.register(new SideBarUIItem(1, "bi bi-people-fill fs-5", "ui.sidebar.user", "/users"));
+        x.register(new SideBarUIItem(5, "bi bi-key fs-5", "ui.sidebar.role", "/roles"));
+        x.register(new SideBarUIItem(2, "bi bi-signpost-2 fs-5", "ui.sidebar.route", "/routes"));
+        x.register(new SideBarUIItem(4, "bi bi-pin-map fs-5", "ui.sidebar.trip", "/trips"));
+        x.register(new SideBarUIItem(3, "bi bi-tags fs-5", "ui.sidebar.ticket", "/tickets"));
+        x.register(new SideBarUIItem(7, "bi bi-truck-front fs-5", "ui.sidebar.buse", "/buses"));
+        x.register(new SideBarUIItem(8, "bi bi-chat-heart fs-5", "ui.sidebar.feedback", "/feedbacks"));
         return x;
     }
 

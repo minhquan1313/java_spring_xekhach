@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -52,6 +54,9 @@ public class TicketController {
     @Autowired
     private TripService tripService;
 
+    @Autowired
+    private MessageSource messageResource;
+
     @ModelAttribute
     public void commonAttr(Model model) {
         List<String> paidWithTemplate = new ArrayList<>() {
@@ -79,7 +84,7 @@ public class TicketController {
     // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
     @GetMapping("/tickets/add")
-    public String addForm(Model model, @RequestParam Map<String, String> params) {
+    public String addForm(Model model, @RequestParam Map<String, String> params, Locale locale) {
         Ticket ticket = new Ticket();
         model.addAttribute("ticket", ticket);
 
@@ -116,14 +121,16 @@ public class TicketController {
         model.addAttribute("staffUsers", staffUsers);
 
         int extraPrice = 10;
-        model.addAttribute("extraPriceTitle", "Phí");
+        String multiLangExtraCharge = messageResource.getMessage("ui.ticket.extra_charge", null, locale);
+        model.addAttribute("extraPriceTitle", multiLangExtraCharge);
         model.addAttribute("extraPrice", extraPrice);
 
         return "tickets.add";
     }
 
     @GetMapping("/tickets/update/{id}")
-    public String editForm(Model model, @PathVariable(value = "id") int id, @RequestParam Map<String, String> params) {
+    public String editForm(Model model, @PathVariable(value = "id") int id, @RequestParam Map<String, String> params,
+            Locale locale) {
         Ticket ticket = ticketService.getById(id);
         model.addAttribute("ticket", ticket);
 
@@ -163,7 +170,8 @@ public class TicketController {
         model.addAttribute("staffUsers", staffUsers);
 
         int extraPrice = 10;
-        model.addAttribute("extraPriceTitle", "Phí");
+        String multiLangExtraCharge = messageResource.getMessage("ui.ticket.extra_charge", null, locale);
+        model.addAttribute("extraPriceTitle", multiLangExtraCharge);
         model.addAttribute("extraPrice", extraPrice);
 
         return "tickets.update";

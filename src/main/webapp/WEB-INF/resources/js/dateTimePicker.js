@@ -1,15 +1,13 @@
 "use strict";
-function dateTimePicker({ dateTimePickerId, inputNameBind, initTime, minDate }) {
+function dateTimePicker({ dateTimePickerId, inputNameBind, initTime, minDate, locale }) {
     const input = document.querySelector(`input[name=${inputNameBind}]`);
     if (!input) {
         console.error("No input");
         return;
     }
+    console.log({ locale });
     const initDate = input.value ? new Date(input.value) : initTime ?? new Date();
-    const userLocale =
-        navigator.languages && navigator.languages.length
-            ? navigator.languages[0]
-            : navigator.language;
+    const userLocale = locale;
     //
     const picker = new tempusDominus.TempusDominus(document.getElementById(dateTimePickerId), {
         restrictions: {
@@ -79,7 +77,7 @@ function dateTimePicker({ dateTimePickerId, inputNameBind, initTime, minDate }) 
             selectTime: "Chọn giờ",
             selectDate: "Chọn ngày",
             dayViewHeaderFormat: { month: "long", year: "2-digit" },
-            locale: "vi-VN" || userLocale,
+            locale: userLocale || "vi-VN",
             startOfTheWeek: 1,
             hourCycle: "h12",
             dateFormats: {

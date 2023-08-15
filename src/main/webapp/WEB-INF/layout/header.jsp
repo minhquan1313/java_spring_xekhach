@@ -7,25 +7,31 @@
 
 <nav class="navbar navbar-expand-lg border-bottom border-bottom-dark">
     <div class="container-fluid">
-        <div class="navbar-brand">${sideBarUIItem.title}</div>
+        <div class="navbar-brand">
+            <spring:message code="${sideBarUIItem.title}" />
+        </div>
 
         <c:choose>
             <c:when test="${authenticated_user != null}">
-                <div class="btn-group dropstart dropdown">
+                <div class="ms-auto btn-group dropstart dropdown">
                     <div class="rounded-pill btn btn-dark d-flex border" data-bs-toggle="dropdown" aria-expanded="false">
                         <div class="bg-warning rounded-pill me-3 overflow-hidden" style="aspect-ratio: 1/1; width: 1.6rem">
-                            <img class="object-fit-cover w-100 h-100 d-block" src="${user.avatar}" alt="" />
+                            <img class="object-fit-cover w-100 h-100 d-block" src="${authenticated_user.avatar}" alt="" />
                         </div>
-                        <div>${user}</div>
+                        <div>${authenticated_user}</div>
                     </div>
                     <ul class="dropdown-menu">
                         <li>
-                            <c:url value="/users?kw=${user.username}" var="detailUrl" />
-                            <a href="${detailUrl}" class="dropdown-item"> Thông tin </a>
+                            <c:url value="/users?kw=${authenticated_user.username}" var="detailUrl" />
+                            <a href="${detailUrl}" class="dropdown-item">
+                                <spring:message code="ui.header.user.detail" />
+                            </a>
                         </li>
                         <li>
                             <c:url value="/logout" var="logout" />
-                            <a class="dropdown-item" href="${logout}">Đăng xuất</a>
+                            <a class="dropdown-item" href="${logout}">
+                                <spring:message code="ui.header.user.logout" />
+                            </a>
                         </li>
                     </ul>
                 </div>
@@ -33,7 +39,9 @@
             <c:otherwise>
                 <div class="ms-auto">
                     <c:url value="/login" var="login" />
-                    <a href="${login}" class="rounded-pill btn btn-primary">Đăng nhập</a>
+                    <a href="${login}" class="rounded-pill btn btn-primary">
+                        <spring:message code="ui.header.user.login" />
+                    </a>
                 </div>
             </c:otherwise>
         </c:choose>

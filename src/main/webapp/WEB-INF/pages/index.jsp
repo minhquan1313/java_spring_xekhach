@@ -7,7 +7,7 @@
 
 <section class="container-fluid d-flex flex-column py-3 h-100">
     <h3 class="text-center text-light-emphasis p-3 pb-lg-5">
-        ${app_name} - <spring:message code="ui.index.dashboard_text" />
+        ${app_name} - <spring:message code="ui.index.dashboard" />
         <!-- Trang quản trị -->
     </h3>
     <div class="position-relative w-100" style="flex: 1">

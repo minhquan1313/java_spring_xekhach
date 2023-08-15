@@ -5,19 +5,30 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!--  -->
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
+<!--  -->
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<!--  -->
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<!--  -->
 <section class="container my-4">
     <div class="d-flex align-items-center mb-3">
         <div class="d-flex justify-content-start" style="flex: 1">
             <c:url value="/buses" var="backUrl" />
-            <a href="${backUrl}" class="btn btn-outline-info text-nowrap">Quay lại</a>
+            <a href="${backUrl}" class="btn btn-outline-info text-nowrap">
+                <spring:message code="ui.global.back" />
+            </a>
         </div>
         <h3 class="text-center">
             <c:choose>
-                <c:when test="${bus.id == null}"> Thêm </c:when>
-                <c:otherwise> Cập nhật </c:otherwise>
+                <c:when test="${bus.id == null}">
+                    <spring:message code="ui.global.add" />
+                </c:when>
+                <c:otherwise>
+                    <spring:message code="ui.global.update" />
+                </c:otherwise>
             </c:choose>
-            xe khách
+            <spring:message code="ui.bus" var="__header_title" />
+            ${fn:toLowerCase(__header_title)}
         </h3>
 
         <div class="invisible" style="flex: 1"></div>
@@ -34,34 +45,30 @@
         <div class="mb-3">
             <div class="input-group">
                 <span class="input-group-text">
-                    <i class="bi bi-dash-square-fill"></i>
+                    <i class="bi bi-dash-square-fill"> </i>
                 </span>
-                <form:input
-                    type="text"
-                    class="form-control"
-                    placeholder="Biển số xe"
-                    path="licensePlate"
-                />
+
+                <spring:message code="ui.bus.license_plate" var="__license_plate" />
+                <form:input type="text" class="form-control" placeholder="${__license_plate}" path="licensePlate" />
             </div>
             <form:errors path="licensePlate" element="div" cssClass="text-danger" />
         </div>
 
         <c:if test="${bus.id != null}">
             <div class="mb-3">
-                <img
-                    src="${bus.image}"
-                    width="300"
-                    class="img-thumbnail rounded mx-auto d-block"
-                    alt="..."
-                />
+                <img src="${bus.image}" width="300" class="img-thumbnail rounded mx-auto d-block" alt="..." />
             </div>
         </c:if>
 
         <div class="mb-3">
             <label for="formFile" class="form-label">
                 <c:choose>
-                    <c:when test="${bus.id == null}"> Chọn ảnh </c:when>
-                    <c:otherwise> Chọn ảnh mới </c:otherwise>
+                    <c:when test="${bus.id == null}">
+                        <spring:message code="ui.bus.select_image" />
+                    </c:when>
+                    <c:otherwise>
+                        <spring:message code="ui.bus.select_new_image" />
+                    </c:otherwise>
                 </c:choose>
             </label>
             <form:input class="form-control" type="file" id="formFile" path="file" />
@@ -69,7 +76,9 @@
 
         <c:if test="${bus.id == null}">
             <section class="mb-3">
-                <label for="seatSelect" class="form-label"> Chọn kích cỡ mẫu </label>
+                <label for="seatSelect" class="form-label">
+                    <spring:message code="ui.bus.select_bus_seat_template" />
+                </label>
                 <select id="seatSelect" class="form-select mb-3">
                     <option selected value="5x10">5x10</option>
                     <option value="10x20">10x20</option>
@@ -80,7 +89,11 @@
                 </div>
 
                 <div class="d-flex">
+                    <<<<<<< HEAD
                     <span class="">Tổng số chỗ ngồi đã chọn: </span>
+                    =======
+                    <span class=""> <spring:message code="ui.ticket.total_bus_seat_selected" /> : </span>
+                    >>>>>>> 62b76fd7a45eb87203f9d5f5b2b4144bd787a0f1
                     <span id="seatCount" class="ms-3">~</span>
                 </div>
                 <!-- <div class="text-danger">${noSeatSelectedError}</div> -->
@@ -97,8 +110,17 @@
 
         <button type="submit" class="btn btn-outline-info w-100">
             <c:choose>
+                <<<<<<< HEAD
                 <c:when test="${bus.id == null}"> Thêm </c:when>
                 <c:otherwise> Cập nhật </c:otherwise>
+                =======
+                <c:when test="${bus.id == null}">
+                    <spring:message code="ui.global.add" />
+                </c:when>
+                <c:otherwise>
+                    <spring:message code="ui.global.update" />
+                </c:otherwise>
+                >>>>>>> 62b76fd7a45eb87203f9d5f5b2b4144bd787a0f1
             </c:choose>
         </button>
     </form:form>

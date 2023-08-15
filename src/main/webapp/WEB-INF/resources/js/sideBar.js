@@ -34,7 +34,6 @@
     }
 
     $(window).on("resize", resizeHandler);
-    if (window.innerWidth < 1000) collapse();
     function resizeHandler() {
         if (isBtnClicked) return;
 
