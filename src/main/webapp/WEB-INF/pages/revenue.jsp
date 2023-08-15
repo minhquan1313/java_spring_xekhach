@@ -3,6 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!--  -->
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <c:url value="/revenue" var="currentUrl" />
 <section class="my-4">
     <div class="container">
@@ -29,11 +31,11 @@
         <div class="container-xxl mb-3">
             <div class="row g-3">
                 <div class="col-12 col-lg-8">
-                    <canvas data-label-chart="${revenueByMonthsCurrentYChartJs.dataOf}" data-labels-chart="${revenueByMonthsCurrentYChartJs.label}" data-data-chart="${revenueByMonthsCurrentYChartJs.data}" data-table-name-chart="${revenueByMonthsCurrentYChartJs.tableName}" data-type-chart="${revenueByMonthsCurrentYChartJs.chartType}"></canvas>
+                    <canvas data-label-chart="${revenueByMonthsCurrentYChartJs.dataOf}" data-labels-chart="${revenueByMonthsCurrentYChartJs.label}" data-data-chart="${revenueByMonthsCurrentYChartJs.data}" data-table-name-chart="${revenueByMonthsCurrentYChartJs.tableName}" data-type-chart="${revenueByMonthsCurrentYChartJs.chartType}" data-postfix-chart="${revenueByMonthsCurrentYChartJs.dataPostfix}"></canvas>
                 </div>
 
                 <div class="col-12 col-lg-4">
-                    <canvas data-label-chart="${revenueByQuartersChartJs.dataOf}" data-labels-chart="${revenueByQuartersChartJs.label}" data-data-chart="${revenueByQuartersChartJs.data}" data-table-name-chart="${revenueByQuartersChartJs.tableName}" data-type-chart="${revenueByQuartersChartJs.chartType}"></canvas>
+                    <canvas data-label-chart="${revenueByQuartersChartJs.dataOf}" data-labels-chart="${revenueByQuartersChartJs.label}" data-data-chart="${revenueByQuartersChartJs.data}" data-table-name-chart="${revenueByQuartersChartJs.tableName}" data-type-chart="${revenueByQuartersChartJs.chartType}" data-postfix-chart="${revenueByQuartersChartJs.dataPostfix}"></canvas>
                 </div>
             </div>
         </div>
@@ -60,12 +62,10 @@
             </div>
         </div>
         <div class="container-xxl">
-            <canvas data-label-chart="${revenueByMonthsIn5YearsChartJs.dataOf}" data-labels-chart="${revenueByMonthsIn5YearsChartJs.label}" data-data-chart="${revenueByMonthsIn5YearsChartJs.data}" data-table-name-chart="${revenueByMonthsIn5YearsChartJs.tableName}" data-type-chart="${revenueByMonthsIn5YearsChartJs.chartType}"></canvas>
+            <canvas data-label-chart="${revenueByMonthsIn5YearsChartJs.dataOf}" data-labels-chart="${revenueByMonthsIn5YearsChartJs.label}" data-data-chart="${revenueByMonthsIn5YearsChartJs.data}" data-table-name-chart="${revenueByMonthsIn5YearsChartJs.tableName}" data-type-chart="${revenueByMonthsIn5YearsChartJs.chartType}" data-postfix-chart="${revenueByMonthsIn5YearsChartJs.dataPostfix}"></canvas>
         </div>
     </form>
 </section>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <c:url value="/js/chartJsCreate.js" var="chartJsCreate" />
 <script src="${chartJsCreate}"></script>

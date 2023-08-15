@@ -10,6 +10,7 @@
         const typeAttr = $canvas.attr("data-type-chart") || "line";
         const tableName = $canvas.attr("data-table-name-chart");
         const dataOf = $canvas.attr("data-label-chart");
+        const dataPostfix = $canvas.attr("data-postfix-chart");
 
         const data = parseData(dataAttr);
         const columnTitles = parseData(columnTitlesAttr);
@@ -18,8 +19,10 @@
         let color;
         let legend;
         let scales;
+        let interaction;
         switch (typeAttr) {
             case "line":
+            case "bar":
                 const contextGradient = context.createLinearGradient(0, 0, 0, 400);
                 contextGradient.addColorStop(0, colors.get());
                 contextGradient.addColorStop(1, colors.get());
@@ -28,7 +31,7 @@
                 scales = {
                     y: {
                         ticks: {
-                            callback: (v) => parseInt(v).toLocaleString() + " VND",
+                            callback: (v) => parseInt(v).toLocaleString() + (dataPostfix ? " " + dataPostfix : ""),
                         },
                     },
                     x: {
@@ -43,6 +46,11 @@
                 legend = {
                     onHover: handleHover,
                     onLeave: handleLeave,
+                };
+
+                interaction = {
+                    intersect: false,
+                    mode: "index",
                 };
                 break;
             case "doughnut":
@@ -87,10 +95,7 @@
                 hitRadius: 50,
                 hoverRadius: 8,
 
-                interaction: {
-                    intersect: typeAttr != "line",
-                    mode: "index",
-                },
+                interaction,
 
                 responsive: true,
                 scales,
@@ -120,18 +125,7 @@
     }
 
     function myColors() {
-        const color = [
-            "#c44569",
-            "#cf6a87",
-            "#e15f41",
-            "#e77f67",
-            "#546de5",
-            "#778beb",
-            "#f5cd79",
-            "#f7d794",
-            "#f19066",
-            "#f3a683",
-        ];
+        const color = ["#c44569", "#cf6a87", "#e15f41", "#e77f67", "#546de5", "#778beb", "#f5cd79", "#f7d794", "#f19066", "#f3a683"];
         let i = 0;
 
         return {
