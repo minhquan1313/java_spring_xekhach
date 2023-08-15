@@ -47,14 +47,66 @@
                     <c:set value="active" var="active" />
                 </c:if>
 
-                <a href="${url}" type="button" class="d-flex align-items-center list-group-item list-group-item-action ${active}">
-                    <i class="${c.icon}"></i>
-                    <span class="sidebar_li_item_text ms-3 d-inline-block text-nowrap">
-                        <span class="d-inline-block">
-                            <spring:message code="${c.title}" />
-                        </span>
-                    </span>
-                </a>
+                <c:choose>
+                    <c:when test="${authenticated_user.roleId.id ==1}">
+                        <a href="${url}" type="button" class="d-flex align-items-center list-group-item list-group-item-action ${active}">
+                            <i class="${c.icon}"></i>
+                            <span class="sidebar_li_item_text ms-3 d-inline-block text-nowrap">
+                                <span class="d-inline-block">
+                                    <spring:message code="${c.title}" />
+                                </span>
+                            </span>
+                        </a>
+                    </c:when>
+                    <c:when test="${authenticated_user.roleId.id ==4}">
+                        <c:if test="${c.code == 0 || c.code == 3 || c.code == 4 || c.code == 2 || c.code ==8}">
+                            <a href="${url}" type="button" class="d-flex align-items-center list-group-item list-group-item-action ${active}">
+                                <i class="${c.icon}"></i>
+                                <span class="sidebar_li_item_text ms-3 d-inline-block text-nowrap">
+                                    <span class="d-inline-block">
+                                        <spring:message code="${c.title}" />
+                                    </span>
+                                </span>
+                            </a>
+                        </c:if>
+                    </c:when>
+                    <c:when test="${authenticated_user.roleId.id ==2}">
+                        <c:if test="${c.code == 0 || c.code == 3 || c.code == 4 || c.code == 2 || c.code ==8}">
+                            <a href="${url}" type="button" class="d-flex align-items-center list-group-item list-group-item-action ${active}">
+                                <i class="${c.icon}"></i>
+                                <span class="sidebar_li_item_text ms-3 d-inline-block text-nowrap">
+                                    <span class="d-inline-block">
+                                        <spring:message code="${c.title}" />
+                                    </span>
+                                </span>
+                            </a>
+                        </c:if>
+                    </c:when>
+                    <c:when test="${authenticated_user.roleId.id ==3}">
+                        <c:if test="${ c.code == 0 || c.code == 3 || c.code == 4 || c.code == 7 || c.code == 2 || c.code == 8}">
+                            <a href="${url}" type="button" class="d-flex align-items-center list-group-item list-group-item-action ${active}">
+                                <i class="${c.icon}"></i>
+                                <span class="sidebar_li_item_text ms-3 d-inline-block text-nowrap">
+                                    <span class="d-inline-block">
+                                        <spring:message code="${c.title}" />
+                                    </span>
+                                </span>
+                            </a>
+                        </c:if>
+                    </c:when>
+                    <c:otherwise>
+                        <c:if test="${c.code == 0}">
+                            <a href="${url}" type="button" class="d-flex align-items-center list-group-item list-group-item-action ${active}">
+                                <i class="${c.icon}"></i>
+                                <span class="sidebar_li_item_text ms-3 d-inline-block text-nowrap">
+                                    <span class="d-inline-block">
+                                        <spring:message code="${c.title}" />
+                                    </span>
+                                </span>
+                            </a>
+                        </c:if>
+                    </c:otherwise>
+                </c:choose>
             </c:forEach>
         </div>
     </div>

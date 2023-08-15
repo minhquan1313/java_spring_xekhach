@@ -10,9 +10,7 @@
         <div class="d-flex align-items-center mb-3">
             <div class="d-flex justify-content-start" style="flex: 1">
                 <c:url value="/trips" var="backUrl" />
-                <a href="${backUrl}" class="btn btn-outline-info text-nowrap"
-                    ><spring:message code="ui.global.back" />
-                </a>
+                <a href="${backUrl}" class="btn btn-outline-info text-nowrap"><spring:message code="ui.global.back" /> </a>
             </div>
 
             <h3 class="text-center">Thông tin mật độ chuyến xe</h3>
@@ -22,13 +20,7 @@
 
     <div class="mb-3">
         <div class="container-xxl mb-3">
-            <canvas
-                data-label-chart="${routeChartJs.dataOf}"
-                data-labels-chart="${routeChartJs.label}"
-                data-data-chart="${routeChartJs.data}"
-                data-table-name-chart="${routeChartJs.tableName}"
-                data-type-chart="${routeChartJs.chartType}"
-            ></canvas>
+            <canvas data-label-chart="${routeChartJs.dataOf}" data-labels-chart="${routeChartJs.label}" data-data-chart="${routeChartJs.data}" data-table-name-chart="${routeChartJs.tableName}" data-type-chart="${routeChartJs.chartType}"></canvas>
         </div>
     </div>
 </section>

@@ -3,6 +3,7 @@ package com.mtb.repository.impl;
 import java.awt.Color;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -113,10 +114,11 @@ public class TicketRepositoryImpl implements TicketRepository {
         PdfWriter.getInstance(document, outputStream);
         document.open();
 
+        URL fontUrl = getClass().getClassLoader().getResource("vuArial.ttf");
+        String fontPath = fontUrl.getPath();
         BaseFont bf = null;
         try {
-            bf = BaseFont.createFont("D:\\java_spring_xekhach\\java_spring_xekhach\\src\\main\\resources\\vuArial.ttf",
-                    BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+            bf = BaseFont.createFont(fontPath, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
         } catch (IOException ex) {
             Logger.getLogger(UserRepositoryImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
