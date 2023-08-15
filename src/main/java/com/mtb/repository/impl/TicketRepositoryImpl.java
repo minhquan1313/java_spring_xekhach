@@ -1,16 +1,15 @@
 package com.mtb.repository.impl;
 
-import com.lowagie.text.Chunk;
-import com.lowagie.text.Document;
-import com.lowagie.text.DocumentException;
-import com.lowagie.text.Element;
-import com.lowagie.text.Font;
-import com.lowagie.text.Paragraph;
-import com.lowagie.text.pdf.BaseFont;
-import com.lowagie.text.pdf.PdfWriter;
+import java.awt.Color;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -26,15 +25,16 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.lowagie.text.Chunk;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Element;
+import com.lowagie.text.Font;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.pdf.BaseFont;
+import com.lowagie.text.pdf.PdfWriter;
 import com.mtb.pojo.Ticket;
 import com.mtb.repository.TicketRepository;
-import java.awt.Color;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @Repository
 @Transactional
@@ -53,6 +53,11 @@ public class TicketRepositoryImpl implements TicketRepository {
 
         if (params != null) {
             List<Predicate> predicates = new ArrayList<>();
+
+            String id = params.get("id");
+            if (id != null && !id.isEmpty()) {
+                predicates.add(cb.equal(ticket.get("id"), Integer.parseInt(id)));
+            }
 
             cq.where(predicates.toArray(Predicate[]::new));
         }
@@ -110,7 +115,8 @@ public class TicketRepositoryImpl implements TicketRepository {
 
         BaseFont bf = null;
         try {
-            bf = BaseFont.createFont("D:\\java_spring_xekhach\\java_spring_xekhach\\src\\main\\resources\\vuArial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+            bf = BaseFont.createFont("D:\\java_spring_xekhach\\java_spring_xekhach\\src\\main\\resources\\vuArial.ttf",
+                    BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
         } catch (IOException ex) {
             Logger.getLogger(UserRepositoryImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -136,12 +142,14 @@ public class TicketRepositoryImpl implements TicketRepository {
         id.setIndentationLeft(50f);
         document.add(id);
 
-        Paragraph fullName = new Paragraph("Họ tên hành khách: " + t.getUserId().getLastName() + " " + t.getUserId().getFirstName(), f1);
+        Paragraph fullName = new Paragraph(
+                "Họ tên hành khách: " + t.getUserId().getLastName() + " " + t.getUserId().getFirstName(), f1);
         fullName.setAlignment(Element.ALIGN_LEFT);
         fullName.setIndentationLeft(50f);
         document.add(fullName);
 
-        Paragraph routeTitle = new Paragraph("Tuyến: " + t.getTripId().getRouteId().getStartLocation()   + " - " + t.getTripId().getRouteId().getEndLocation(), f1);
+        Paragraph routeTitle = new Paragraph("Tuyến: " + t.getTripId().getRouteId().getStartLocation() + " - "
+                + t.getTripId().getRouteId().getEndLocation(), f1);
         routeTitle.setAlignment(Element.ALIGN_LEFT);
         routeTitle.setIndentationLeft(50f);
         document.add(routeTitle);
@@ -150,12 +158,12 @@ public class TicketRepositoryImpl implements TicketRepository {
         bus.setAlignment(Element.ALIGN_LEFT);
         bus.setIndentationLeft(50f);
         document.add(bus);
-        
-        String formatTimeStart = format.format( t.getTripId().getStartAt());
+
+        String formatTimeStart = format.format(t.getTripId().getStartAt());
         Paragraph timeStart = new Paragraph("Giờ khởi hành: " + formatTimeStart, f1);
         timeStart.setAlignment(Element.ALIGN_LEFT);
         timeStart.setIndentationLeft(50f);
-        document.add(timeStart  );
+        document.add(timeStart);
 
         Paragraph paidPrice = new Paragraph("Giá tiền: " + t.getPaidPrice() + " VNĐ", f1);
         paidPrice.setAlignment(Element.ALIGN_LEFT);
@@ -163,11 +171,11 @@ public class TicketRepositoryImpl implements TicketRepository {
         paidPrice.add(" ");
         paidPrice.add(txt1);
         document.add(paidPrice);
-        
+
         Paragraph paidWith = new Paragraph("Phương thức thanh toán: " + t.getPaidWith(), f1);
         paidWith.setAlignment(Element.ALIGN_LEFT);
         paidWith.setIndentationLeft(50f);
-        paidWith.setSpacingAfter(20f);  
+        paidWith.setSpacingAfter(20f);
         document.add(paidWith);
 
         Paragraph time = new Paragraph("Thời gian in vé: " + formatTime, f3);
@@ -179,7 +187,7 @@ public class TicketRepositoryImpl implements TicketRepository {
         txt2.setAlignment(Element.ALIGN_RIGHT);
         txt2.setIndentationRight(130f);
         document.add(txt2);
-        
+
         Paragraph staff = new Paragraph(t.getStaffId().getLastName() + " " + t.getStaffId().getFirstName(), f3);
         staff.setAlignment(Element.ALIGN_RIGHT);
         staff.setIndentationRight(140f);

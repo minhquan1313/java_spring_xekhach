@@ -5,13 +5,23 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <!--  -->
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!--  -->
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<!--  -->
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<!--  -->
 <section class="container my-4">
     <div class="d-flex align-items-center mb-3">
         <div class="d-flex justify-content-start" style="flex: 1">
             <c:url value="/buses" var="backUrl" />
-            <a href="${backUrl}" class="btn btn-outline-info text-nowrap">Quay lại</a>
+            <a href="${backUrl}" class="btn btn-outline-info text-nowrap"> <spring:message code="ui.global.back" /> </a>
         </div>
-        <h3 class="text-center">Chi tiết xe</h3>
+        <h3 class="text-center">
+            <spring:message code="ui.global.detail" />
+
+            <spring:message code="ui.bus" var="__header_title" />
+            ${fn:toLowerCase(__header_title)}
+        </h3>
 
         <div class="invisible" style="flex: 1"></div>
     </div>
@@ -22,19 +32,19 @@
         </div>
         <div class="col-12 col-lg-6">
             <div>
-                <span>Id: </span>
+                <span> <spring:message code="ui.global.id" />: </span>
                 <span class="h6">${bus.id}</span>
             </div>
             <div>
-                <span>Biển số xe: </span>
+                <span> <spring:message code="ui.bus.license_plate" /> : </span>
                 <span class="h6">${bus.licensePlate}</span>
             </div>
             <div>
-                <span>Tổng số chỗ ngồi: </span>
+                <span> <spring:message code="ui.bus.seat.count" />: </span>
                 <span class="h6">${seatCount}</span>
             </div>
             <div>
-                <span>Chỗ ngồi trên xe: </span>
+                <span><spring:message code="ui.bus.seat" />: </span>
             </div>
             <section>
                 <div class="align-items-center d-flex flex-column mb-3">
@@ -52,10 +62,10 @@
 
                             <button type="button" data-id="${c.id}" data-pos="${c.x}_${c.y}" class="text-primary" style="--x: ${c.x}; --y: ${c.y};" ${disabled} ${userChosen}>
                                 <h3 class="m-0" withoutActive>
-                                    <i class="bi bi-circle"></i>
+                                    <i class="bi bi-circle"> </i>
                                 </h3>
                                 <h3 class="m-0" withActive>
-                                    <i class="bi bi-circle-fill"></i>
+                                    <i class="bi bi-circle-fill"> </i>
                                 </h3>
                             </button>
                         </c:forEach>

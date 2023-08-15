@@ -8,18 +8,26 @@
 <!--  -->
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!--  -->
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<!--  -->
 <section class="my-4">
     <div class="container">
         <div class="d-flex align-items-center mb-3">
             <div class="d-flex justify-content-start" style="flex: 1">
                 <c:url value="/" var="backUrl" />
-                <a href="${backUrl}" class="btn btn-outline-info text-nowrap">Quay lại</a>
+                <a href="${backUrl}" class="btn btn-outline-info text-nowrap">
+                    <spring:message code="ui.global.back" />
+                </a>
             </div>
 
-            <h3 class="text-center">Các vé xe hiện có</h3>
+            <h3 class="text-center">
+                <spring:message code="ui.ticket.header_title" />
+            </h3>
             <div class="d-flex justify-content-end" style="flex: 1">
                 <c:url value="/tickets/add" var="createUrl" />
-                <a href="${createUrl}" class="btn btn-outline-info text-nowrap">Thêm</a>
+                <a href="${createUrl}" class="btn btn-outline-info text-nowrap">
+                    <spring:message code="ui.global.add" />
+                </a>
             </div>
         </div>
     </div>
@@ -28,17 +36,39 @@
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th scope="col">id</th>
-                    <th scope="col">Mã chuyến</th>
-                    <th scope="col">Ngày đặt vé</th>
-                    <th scope="col">Số ghế đặt</th>
-                    <th scope="col">Điểm đi</th>
-                    <th scope="col">Điểm đến</th>
-                    <th scope="col">Giá</th>
-                    <th scope="col">Thanh toán với</th>
-                    <th scope="col">Đã thanh toán</th>
-                    <th scope="col">Xuất vé</th>
-                    <th scope="col">Xe</th>
+                    <th scope="col">
+                        <spring:message code="ui.global.id" />
+                    </th>
+                    <th scope="col">
+                        <spring:message code="ui.trip.id" />
+                    </th>
+                    <th scope="col">
+                        <spring:message code="ui.ticket.created_at" />
+                    </th>
+                    <th scope="col">
+                        <spring:message code="ui.ticket.seat_booked_count" />
+                    </th>
+                    <th scope="col">
+                        <spring:message code="ui.route.start_location" />
+                    </th>
+                    <th scope="col">
+                        <spring:message code="ui.route.end_location" />
+                    </th>
+                    <th scope="col">
+                        <spring:message code="ui.ticket.paid_price" />
+                    </th>
+                    <th scope="col">
+                        <spring:message code="ui.ticket.paid_with" />
+                    </th>
+                    <th scope="col">
+                        <spring:message code="ui.ticket.is_paid_status" />
+                    </th>
+                    <th scope="col">
+                        <spring:message code="ui.ticket.printing_staff" />
+                    </th>
+                    <th scope="col">
+                        <spring:message code="ui.bus.license_plate" />
+                    </th>
                 </tr>
             </thead>
             <tbody class="table-group-divider">
@@ -79,35 +109,47 @@
                         <td>
                             <div class="btn-group float-end">
                                 <c:url value="/tickets/update/${item.id}" var="editUrl" />
-                                <a href="${editUrl}" class="btn btn-primary"> Sửa </a>
+                                <a href="${editUrl}" class="btn btn-primary">
+                                    <spring:message code="ui.global.edit" />
+                                </a>
 
                                 <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <span class="visually-hidden"></span>
+                                    <span class="visually-hidden"> </span>
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li>
                                         <c:url value="/feedbacks/add?ticketId=${item.id}" var="feedBackUrl" />
-                                        <a href="${feedBackUrl}" class="dropdown-item btn btn-primary">Phản hồi</a>
+                                        <a href="${feedBackUrl}" class="dropdown-item btn btn-primary">
+                                            <spring:message code="ui.feedback" />
+                                        </a>
                                     </li>
                                     <li>
                                         <c:url value="/tickets/${item.id}" var="detailUrl" />
-                                        <a href="${detailUrl}" class="dropdown-item btn btn-primary"> Chi tiết </a>
+                                        <a href="${detailUrl}" class="dropdown-item btn btn-primary">
+                                            <spring:message code="ui.global.detail" />
+                                        </a>
                                     </li>
                                     <li>
                                         <c:url value="/tickets/export/${item.id}" var="exportPdfUrl" />
                                         <c:choose>
                                             <c:when test="${item.isPaid == true && item.staffId != null}">
-                                                <a href="${exportPdfUrl}" target="_blank" class="dropdown-item btn btn-primary">In vé</a>
+                                                <a href="${exportPdfUrl}" target="_blank" class="dropdown-item btn btn-primary">
+                                                    <spring:message code="ui.ticket.print_ticket" />
+                                                </a>
                                             </c:when>
                                             <c:otherwise>
-                                                <a href="#" class="dropdown-item btn btn-primary disabled" onclick="return false;">In vé</a>
+                                                <a href="#" class="dropdown-item btn btn-primary disabled" onclick="return false;">
+                                                    <spring:message code="ui.ticket.print_ticket" />
+                                                </a>
                                             </c:otherwise>
                                         </c:choose>
                                     </li>
                                     <li>
                                         <c:url value="/api/tickets/${item.id}" var="delUrl" />
                                         <c:set value="onclick=(delAPI('${delUrl}'))" var="delClick" />
-                                        <button class="dropdown-item btn btn-danger" ${delClick}>Xoá</button>
+                                        <button class="dropdown-item btn btn-danger" ${delClick}>
+                                            <spring:message code="ui.global.delete" />
+                                        </button>
                                     </li>
                                 </ul>
                             </div>

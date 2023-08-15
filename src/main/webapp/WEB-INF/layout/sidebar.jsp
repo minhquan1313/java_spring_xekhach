@@ -4,6 +4,8 @@
 <!--  -->
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!--  -->
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<!--  -->
 <c:url value="/css/sideBar.css" var="sideBar" />
 <link rel="stylesheet" href="${sideBar}" />
 
@@ -48,7 +50,9 @@
                 <a href="${url}" type="button" class="d-flex align-items-center list-group-item list-group-item-action ${active}">
                     <i class="${c.icon}"></i>
                     <span class="sidebar_li_item_text ms-3 d-inline-block text-nowrap">
-                        <span class="d-inline-block">${c.title}</span>
+                        <span class="d-inline-block">
+                            <spring:message code="${c.title}" />
+                        </span>
                     </span>
                 </a>
             </c:forEach>

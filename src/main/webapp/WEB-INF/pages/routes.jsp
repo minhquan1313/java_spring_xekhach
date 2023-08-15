@@ -3,17 +3,26 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!--  -->
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!--  -->
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<!--  -->
 <section class="container my-4">
     <div class="d-flex align-items-center mb-3">
         <div class="d-flex justify-content-start" style="flex: 1">
             <c:url value="/" var="backUrl" />
-            <a href="${backUrl}" class="btn btn-outline-info text-nowrap">Quay lại</a>
+            <a href="${backUrl}" class="btn btn-outline-info text-nowrap">
+                <spring:message code="ui.global.back" />
+            </a>
         </div>
 
-        <h3 class="text-center">Các tuyến xe hiện có</h3>
+        <h3 class="text-center">
+            <spring:message code="ui.route.header_title" />
+        </h3>
         <div class="d-flex justify-content-end" style="flex: 1">
             <c:url value="/routes/add" var="createUrl" />
-            <a href="${createUrl}" class="btn btn-outline-info text-nowrap">Thêm</a>
+            <a href="${createUrl}" class="btn btn-outline-info text-nowrap">
+                <spring:message code="ui.global.add" />
+            </a>
         </div>
     </div>
 
@@ -21,10 +30,18 @@
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th scope="col">id</th>
-                    <th scope="col">Khởi hành</th>
-                    <th scope="col">Điểm đến</th>
-                    <th scope="col">Hành động</th>
+                    <th scope="col">
+                        <spring:message code="ui.global.id" />
+                    </th>
+                    <th scope="col">
+                        <spring:message code="ui.route.start_location" />
+                    </th>
+                    <th scope="col">
+                        <spring:message code="ui.route.end_location" />
+                    </th>
+                    <th scope="col">
+                        <spring:message code="ui.global.action" />
+                    </th>
                 </tr>
             </thead>
             <tbody class="table-group-divider">
@@ -36,11 +53,15 @@
                         <td>
                             <div class="btn-group float-end">
                                 <c:url value="/routes/edit/${route.id}" var="editUrl" />
-                                <a href="${editUrl}" class="btn btn-primary">Sửa</a>
+                                <a href="${editUrl}" class="btn btn-primary">
+                                    <spring:message code="ui.global.edit" />
+                                </a>
 
                                 <c:url value="/api/routes/${route.id}" var="delUrl" />
                                 <c:set value="onclick=(delAPI('${delUrl}'))" var="delClick" />
-                                <button class="btn btn-danger" ${delClick}>Xoá</button>
+                                <button class="btn btn-danger" ${delClick}>
+                                    <spring:message code="ui.global.delete" />
+                                </button>
                             </div>
                         </td>
                     </tr>

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mtb.myObject.TitleAndValue;
+import com.mtb.myObject.Utils;
 import com.mtb.repository.StatsRepository;
 import com.mtb.service.StatsService;
 
@@ -61,6 +62,44 @@ public class StatsServiceImpl implements StatsService {
 
         for (int i = 1; i <= 4; i++) {
             TitleAndValue t = new TitleAndValue("Quý " + i + " năm " + year, repository.revenueByQuarter(i, year));
+            list.add(t);
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<TitleAndValue> revenueByMonthsInYear(int year, String msgBean) {
+        List<TitleAndValue> list = new ArrayList<>();
+
+        for (int i = 1; i <= 12; i++) {
+            String title = Utils.replaceFromMessageBean(msgBean, String.valueOf(i), String.valueOf(year));
+            TitleAndValue t = new TitleAndValue(title, repository.revenueByMonth(i, year));
+            list.add(t);
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<TitleAndValue> revenueByYears(int fromYear, int toYear, String msgBean) {
+        List<TitleAndValue> list = new ArrayList<>();
+
+        for (int i = fromYear; i <= toYear; i++) {
+            List<TitleAndValue> t = this.revenueByMonthsInYear(i, msgBean);
+            list.addAll(t);
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<TitleAndValue> revenueByQuarters(int year, String msgBean) {
+        List<TitleAndValue> list = new ArrayList<>();
+
+        for (int i = 1; i <= 4; i++) {
+            String title = Utils.replaceFromMessageBean(msgBean, String.valueOf(i), String.valueOf(year));
+            TitleAndValue t = new TitleAndValue(title, repository.revenueByQuarter(i, year));
             list.add(t);
         }
 

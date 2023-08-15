@@ -1,4 +1,5 @@
-<%-- Document : trips.detail Created on : Aug 4, 2023, 12:52:13 PM Author : Binh --%>
+<%-- Document : trips.detail Created on : Aug 4, 2023, 12:52:13 PM Author : Binh
+--%>
 <!--  -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!--  -->
@@ -8,11 +9,15 @@
 <!--  -->
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!--  -->
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<!--  -->
 <section class="container my-4">
     <div class="d-flex align-items-center mb-3">
         <div class="d-flex justify-content-start" style="flex: 1">
             <c:url value="/trips" var="backUrl" />
-            <a href="${backUrl}" class="btn btn-outline-info text-nowrap">Quay lại</a>
+            <a href="${backUrl}" class="btn btn-outline-info text-nowrap"
+                ><spring:message code="ui.global.back" />
+            </a>
         </div>
         <h3 class="text-center">Tìm chuyến xe</h3>
 
@@ -31,7 +36,9 @@
                     <option value="" selected disabled>Chọn điểm đi</option>
 
                     <c:forEach items="${routesStart}" var="c">
-                        <option value="${c.startLocation}">${c.startLocation}</option>
+                        <option value="${c.startLocation}">
+                            ${c.startLocation}
+                        </option>
                     </c:forEach>
                 </select>
             </div>
@@ -43,10 +50,14 @@
                     <i class="bi bi-geo-fill"></i>
                 </span>
                 <select class="form-select" id="endLocation">
-                    <option value="" selected disabled>Chọn điểm đến</option>
+                    <option value="" selected disabled>
+                        Chọn <spring:message code="ui.route.end_location" />
+                    </option>
 
                     <c:forEach items="${routesEnd}" var="c">
-                        <option value="${c.endLocation}">${c.endLocation}</option>
+                        <option value="${c.endLocation}">
+                            ${c.endLocation}
+                        </option>
                     </c:forEach>
                 </select>
             </div>
@@ -63,7 +74,9 @@
                     <option value="" selected disabled>Chọn xe khách</option>
 
                     <c:forEach items="${buses}" var="c">
-                        <option value="${c.id}">${c.licensePlate} - ${c.busSeatTemplateCount} chỗ</option>
+                        <option value="${c.id}">
+                            ${c.licensePlate} - ${c.busSeatTemplateCount} chỗ
+                        </option>
                     </c:forEach>
                 </select>
             </div>
@@ -74,21 +87,57 @@
         <div class="mb-3">
             <div class="input-group mb-3">
                 <span class="input-group-text">Khoảng giá</span>
-                <input type="text" id="fromPrice" class="form-control" placeholder="Từ" />
+                <input
+                    type="text"
+                    id="fromPrice"
+                    class="form-control"
+                    placeholder="Từ"
+                />
                 <span class="input-group-text">-</span>
-                <input type="text" id="toPrice" class="form-control" placeholder="Đến" />
+                <input
+                    type="text"
+                    id="toPrice"
+                    class="form-control"
+                    placeholder="Đến"
+                />
             </div>
             <input type="hidden" name="fromPrice" />
             <input type="hidden" name="toPrice" />
 
             <div class="range-slide">
                 <div class="slide bg-secondary">
-                    <div class="line bg-primary" id="line" style="left: 0%; right: 0%"></div>
-                    <span class="thumb border border-primary-subtle bg-primary" id="thumbMin" style="left: 0%"></span>
-                    <span class="thumb border border-primary-subtle bg-primary" id="thumbMax" style="left: 100%"></span>
+                    <div
+                        class="line bg-primary"
+                        id="line"
+                        style="left: 0%; right: 0%"
+                    ></div>
+                    <span
+                        class="thumb border border-primary-subtle bg-primary"
+                        id="thumbMin"
+                        style="left: 0%"
+                    ></span>
+                    <span
+                        class="thumb border border-primary-subtle bg-primary"
+                        id="thumbMax"
+                        style="left: 100%"
+                    ></span>
                 </div>
-                <input id="rangeMin" type="range" max="${toPrice}" min="${fromPrice}" step="1000" value="${fromPrice}" />
-                <input id="rangeMax" type="range" max="${toPrice}" min="${fromPrice}" step="1000" value="${toPrice}" />
+                <input
+                    id="rangeMin"
+                    type="range"
+                    max="${toPrice}"
+                    min="${fromPrice}"
+                    step="1000"
+                    value="${fromPrice}"
+                />
+                <input
+                    id="rangeMax"
+                    type="range"
+                    max="${toPrice}"
+                    min="${fromPrice}"
+                    step="1000"
+                    value="${toPrice}"
+                />
                 <div>
                     <style>
                         :root {
@@ -283,7 +332,10 @@
         initTime: "",
     });
 
-    selectBindInput({ selectId: "startLocation", inputBindName: "startLocation" });
+    selectBindInput({
+        selectId: "startLocation",
+        inputBindName: "startLocation",
+    });
     selectBindInput({ selectId: "endLocation", inputBindName: "endLocation" });
     selectBindInput({ selectId: "busId", inputBindName: "busId" });
     selectBindInput({ selectId: "driverId", inputBindName: "driverId" });

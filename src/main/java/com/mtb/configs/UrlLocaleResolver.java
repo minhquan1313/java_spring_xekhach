@@ -30,10 +30,11 @@ public class UrlLocaleResolver implements LocaleResolver {
 
     public Locale customGetLocale(String language) {
         if (language != null) {
-            if (language.equals("vi"))
-                return new Locale.Builder().setLanguage(language).setRegion("VN").build();
+            if (language.equals("en"))
+                return Locale.US;
         }
 
-        return Locale.US;
+        return new Locale.Builder().setLanguage("vi").setRegion("VN").build();
+        // return new Locale.Builder().setLanguage(language).setRegion("VN").build();
     }
 }
