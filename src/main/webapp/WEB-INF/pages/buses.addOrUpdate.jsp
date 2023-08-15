@@ -89,11 +89,7 @@
                 </div>
 
                 <div class="d-flex">
-                    <<<<<<< HEAD
-                    <span class="">Tổng số chỗ ngồi đã chọn: </span>
-                    =======
                     <span class=""> <spring:message code="ui.ticket.total_bus_seat_selected" /> : </span>
-                    >>>>>>> 62b76fd7a45eb87203f9d5f5b2b4144bd787a0f1
                     <span id="seatCount" class="ms-3">~</span>
                 </div>
                 <!-- <div class="text-danger">${noSeatSelectedError}</div> -->
@@ -110,17 +106,12 @@
 
         <button type="submit" class="btn btn-outline-info w-100">
             <c:choose>
-                <<<<<<< HEAD
-                <c:when test="${bus.id == null}"> Thêm </c:when>
-                <c:otherwise> Cập nhật </c:otherwise>
-                =======
                 <c:when test="${bus.id == null}">
                     <spring:message code="ui.global.add" />
                 </c:when>
                 <c:otherwise>
                     <spring:message code="ui.global.update" />
                 </c:otherwise>
-                >>>>>>> 62b76fd7a45eb87203f9d5f5b2b4144bd787a0f1
             </c:choose>
         </button>
     </form:form>
