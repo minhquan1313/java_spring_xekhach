@@ -10,6 +10,14 @@
 <section class="container my-4">
     <div class="d-flex align-items-center mb-3">
         <div class="d-flex justify-content-start" style="flex: 1">
+            <c:choose>
+                <c:when test="${not empty param.id or not empty param.kw or not empty param.roleId}">
+                    <c:url value="/users" var="backUrl" />
+                </c:when>
+                <c:otherwise>
+                    <c:url value="/" var="backUrl" />
+                </c:otherwise>
+            </c:choose>
             <c:url value="/" var="backUrl" />
             <a href="${backUrl}" class="btn btn-outline-info text-nowrap">
                 <spring:message code="ui.global.back" />
@@ -26,17 +34,26 @@
         </div>
     </div>
     <c:url value="/users" var="action" />
-    <div>
-        <form class="d-flex mt-1" action="${action}">
-            <input class="me-2" type="text" name="kw" placeholder="<spring:message code="ui.user.type_keyword" />" />
-            <select name="roleId">
-                <option value="">
-                    <spring:message code="ui.user.role" />
-                </option>
-                <c:forEach items="${roles}" var="r">
-                    <option value="${r.id}">${r.displayName}</option>
-                </c:forEach>
-            </select>
+    <div class="d-flex align-items-end">
+        <form class="d-flex w-100" action="${action}">
+            <div class="flex-grow-1 me-2"><input type="text" class="form-control w-100" name="kw" placeholder="<spring:message code="ui.user.type_keyword" />" value="${param.kw}"/></div>
+            <div class="me-2">
+                <select class="form-select" name="roleId">
+                    <option value="">
+                        <spring:message code="ui.user.role" />
+                    </option>
+                    <c:forEach items="${roles}" var="r">
+                        <c:choose>
+                            <c:when test="${r.id eq param.roleId}">
+                                <option value="${r.id}" selected>${r.displayName}</option>
+                            </c:when>
+                            <c:otherwise>
+                                <option value="${r.id}">${r.displayName}</option>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+                </select>
+            </div>
             <button class="btn btn-primary mx-1" type="submit">
                 <spring:message code="ui.global.find" />
             </button>
