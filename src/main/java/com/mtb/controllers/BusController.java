@@ -1,6 +1,6 @@
 package com.mtb.controllers;
 
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,9 +34,9 @@ public class BusController {
 
     @RequestMapping("/buses")
     public String index(Model model, @RequestParam Map<String, String> params) {
-        Map<String, String> new_params = new HashMap<>();
-        new_params.put("getSeats", "");
-        model.addAttribute("buses", busService.getList(new_params));
+        params.put("busSeatTemplateCount", "");
+        List<Bus> buses = busService.getList(params);
+        model.addAttribute("buses", buses);
 
         return "buses";
     }

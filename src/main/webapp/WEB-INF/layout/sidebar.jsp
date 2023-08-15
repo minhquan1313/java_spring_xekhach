@@ -23,11 +23,10 @@
     </a>
   </div>
 
-  <div class="my-3 overflow-y-auto overflow-x-hidden" style="flex: 1">
+  <div id="sidebar_items" class="my-3 overflow-y-auto overflow-x-hidden" style="flex: 1">
     <div class="list-group list-group-flush">
       <!-- Get current url in the url bar -->
       <c:set value="${requestScope['javax.servlet.forward.request_uri']}" var="currentUrl" />
-      <c:set value="${null}" scope="application" var="sideBarUIItem" />
       <!-- Get selected route -->
       <c:forEach items="${sideBarUI}" var="c">
         <c:url value="${c.url}" var="url" />
@@ -45,38 +44,57 @@
         <c:if test="${sideBarUIItem.url == c.url}">
           <c:set value="active" var="active" />
         </c:if>
-         
+
         <c:choose>
-               <c:when test="${user.roleId.id ==1}">
-              
-                    <a href="${url}" type="button" class="d-flex align-items-center list-group-item list-group-item-action ${active}">
-                        <i class="${c.icon}"></i>
-                        <span class="sidebar_li_item_text ms-3 d-inline-block text-nowrap">
-                            <span class="d-inline-block">${c.title}</span>
-                        </span>
-                    </a>
-           
-            </c:when>
-            <c:when test="${user.roleId.id ==4}">
-                <c:if test="${c.code == 3}">
-                    <a href="${url}" type="button" class="d-flex align-items-center list-group-item list-group-item-action ${active}">
-                        <i class="${c.icon}"></i>
-                        <span class="sidebar_li_item_text ms-3 d-inline-block text-nowrap">
-                            <span class="d-inline-block">${c.title}</span>
-                        </span>
-                    </a>
-                </c:if>
-            </c:when>
-            <c:otherwise>
-                <a href="${url}" type="button" class="d-flex align-items-center list-group-item list-group-item-action ${active}">
-                    <i class="${c.icon}"></i>
-                    <span class="sidebar_li_item_text ms-3 d-inline-block text-nowrap">
-                        <span class="d-inline-block">${c.title}</span>
-                    </span>
-                </a>
-            </c:otherwise>
+          <c:when test="${authenticated_user.roleId.id ==1}">
+            <a href="${url}" type="button" class="d-flex align-items-center list-group-item list-group-item-action ${active}">
+              <i class="${c.icon}"></i>
+              <span class="sidebar_li_item_text ms-3 d-inline-block text-nowrap">
+                <span class="d-inline-block">${c.title}</span>
+              </span>
+            </a>
+          </c:when>
+          <c:when test="${authenticated_user.roleId.id ==4}">
+            <c:if test="${c.code == 0 || c.code == 3 || c.code == 4 || c.code == 2 || c.code ==8}">
+              <a href="${url}" type="button" class="d-flex align-items-center list-group-item list-group-item-action ${active}">
+                <i class="${c.icon}"></i>
+                <span class="sidebar_li_item_text ms-3 d-inline-block text-nowrap">
+                  <span class="d-inline-block">${c.title}</span>
+                </span>
+              </a>
+            </c:if>
+          </c:when>
+            <c:when test="${authenticated_user.roleId.id ==2}">
+            <c:if test="${c.code == 0 || c.code == 3 || c.code == 4 || c.code == 2 || c.code ==8}">
+              <a href="${url}" type="button" class="d-flex align-items-center list-group-item list-group-item-action ${active}">
+                <i class="${c.icon}"></i>
+                <span class="sidebar_li_item_text ms-3 d-inline-block text-nowrap">
+                  <span class="d-inline-block">${c.title}</span>
+                </span>
+              </a>
+            </c:if>
+          </c:when>
+            <c:when test="${authenticated_user.roleId.id ==3}">
+            <c:if test="${ c.code == 0 || c.code == 3 || c.code == 4 || c.code == 7 || c.code == 2 || c.code == 8}">
+              <a href="${url}" type="button" class="d-flex align-items-center list-group-item list-group-item-action ${active}">
+                <i class="${c.icon}"></i>
+                <span class="sidebar_li_item_text ms-3 d-inline-block text-nowrap">
+                  <span class="d-inline-block">${c.title}</span>
+                </span>
+              </a>
+            </c:if>
+          </c:when>
+          <c:otherwise>
+              <c:if test="${c.code == 0}">
+            <a href="${url}" type="button" class="d-flex align-items-center list-group-item list-group-item-action ${active}">
+              <i class="${c.icon}"></i>
+              <span class="sidebar_li_item_text ms-3 d-inline-block text-nowrap">
+                <span class="d-inline-block">${c.title}</span>
+              </span>
+            </a>
+              </c:if>
+          </c:otherwise>
         </c:choose>
-      
       </c:forEach>
     </div>
   </div>

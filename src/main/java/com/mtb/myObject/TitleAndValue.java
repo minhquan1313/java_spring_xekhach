@@ -31,6 +31,7 @@ public class TitleAndValue {
         private String tableName;
         private List<String> label;
         private List<String> data;
+        private String dataPostfix;
         private String dataOf;
         private String chartType;
 

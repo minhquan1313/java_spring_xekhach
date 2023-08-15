@@ -40,31 +40,16 @@
 
             <c:url value="/trips?id=${ticket.tripId.id}" var="tripFind" />
             <div class="form-control align-items-center d-flex">
-                <a
-                    href="${tripFind}"
-                    class="link-underline link-underline-opacity-0 text-primary-emphasis"
-                >
-                    Mã chuyến: ${ticket.tripId.id}
-                </a>
+                <a href="${tripFind}" class="link-underline link-underline-opacity-0 text-primary-emphasis"> Mã chuyến: ${ticket.tripId.id} </a>
             </div>
 
-            <ul
-                class="list-group tripIdSelectData"
-                data-tripId="${ticket.tripId.id}"
-                style="flex: 1"
-            >
-                <li class="list-group-item">
-                    Tuyến: ${ticket.tripId.routeId.startLocation} ->
-                    ${ticket.tripId.routeId.endLocation}
-                </li>
+            <ul class="list-group tripIdSelectData" data-tripId="${ticket.tripId.id}" style="flex: 1">
+                <li class="list-group-item">Tuyến: ${ticket.tripId.routeId.startLocation} -> ${ticket.tripId.routeId.endLocation}</li>
                 <li class="list-group-item">
                     Khởi hành:
                     <fmt:formatDate value="${ticket.tripId.startAt}" pattern="${date_pattern}" />
                 </li>
-                <li class="list-group-item">
-                    Xe: ${ticket.tripId.busId.licensePlate} -
-                    ${fn:length(ticket.tripId.busId.busSeatTripSet)}
-                </li>
+                <li class="list-group-item">Xe: ${ticket.tripId.busId.licensePlate} - ${trip.busId.busSeatTripCount}</li>
                 <li class="list-group-item">Tài xế: ${ticket.tripId.driverId}</li>
             </ul>
         </div>
@@ -83,11 +68,7 @@
     <!-- createdAt -->
     <div class="mb-3">
         <div class="input-group">
-            <span
-                class="input-group-text"
-                data-bs-toggle="tooltip"
-                data-bs-title="Thời gian đặt vé"
-            >
+            <span class="input-group-text" data-bs-toggle="tooltip" data-bs-title="Thời gian đặt vé">
                 <i class="bi bi-wallet2"></i>
             </span>
 
@@ -105,11 +86,7 @@
                     <i class="bi bi-currency-dollar"></i>
                 </span>
                 <div class="form-control">
-                    <fmt:formatNumber
-                        type="number"
-                        maxFractionDigits="0"
-                        value="${ticket.paidPrice}"
-                    />
+                    <fmt:formatNumber type="number" maxFractionDigits="0" value="${ticket.paidPrice}" />
                 </div>
                 <span class="input-group-text"> VND </span>
             </div>
@@ -118,12 +95,7 @@
         <!-- paidWith -->
         <div class="col-12 col-lg-6">
             <div class="input-group">
-                <span
-                    class="input-group-text"
-                    class="input-group-text"
-                    data-bs-toggle="tooltip"
-                    data-bs-title="Phương thức thanh toán"
-                >
+                <span class="input-group-text" class="input-group-text" data-bs-toggle="tooltip" data-bs-title="Phương thức thanh toán">
                     <i class="bi bi-wallet2"></i>
                 </span>
                 <div class="form-control">${ticket.paidWith}</div>
@@ -140,11 +112,7 @@
 
                     <c:url value="/users?id=${ticket.staffId.id}" var="userFind" />
                     <div class="form-control">
-                        <a
-                            href="${userFind}"
-                            class="link-underline link-underline-opacity-0 text-primary-emphasis"
-                            >${ticket.staffId}
-                        </a>
+                        <a href="${userFind}" class="link-underline link-underline-opacity-0 text-primary-emphasis">${ticket.staffId} </a>
                     </div>
                 </div>
             </div>
@@ -176,11 +144,7 @@
             <label class="form-label">Vị trí ghế ngồi đã chọn</label>
 
             <div class="align-items-center d-flex flex-column mb-3">
-                <div
-                    id="seatArrayContainer"
-                    class="d-none"
-                    style="--col: ${seats.col}; --row: ${seats.row}"
-                >
+                <div id="seatArrayContainer" class="d-none" style="--col: ${seats.col}; --row: ${seats.row}">
                     <c:forEach items="${seats.array}" var="c">
                         <c:set value="" var="userChosen" />
                         <c:if test="${c.userChosen == true}">
@@ -192,15 +156,7 @@
                             <c:set value="disabled" var="disabled" />
                         </c:if>
 
-                        <button
-                            type="button"
-                            data-id="${c.id}"
-                            data-pos="${c.x}_${c.y}"
-                            class="text-primary"
-                            style="--x: ${c.x}; --y: ${c.y};"
-                            ${disabled}
-                            ${userChosen}
-                        >
+                        <button type="button" data-id="${c.id}" data-pos="${c.x}_${c.y}" class="text-primary" style="--x: ${c.x}; --y: ${c.y};" ${disabled} ${userChosen}>
                             <h3 class="m-0" withoutActive>
                                 <i class="bi bi-circle"></i>
                             </h3>

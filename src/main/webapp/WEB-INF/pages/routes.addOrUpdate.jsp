@@ -24,54 +24,35 @@
     </div>
 
     <c:url value="/routes/add" var="action" />
-    <form:form
-        method="post"
-        action="${action}"
-        modelAttribute="route"
-        enctype="multipart/form-data"
-    >
+    <form:form method="post" action="${action}" modelAttribute="route" enctype="multipart/form-data">
         <form:errors path="*" element="div" cssClass="alert alert-danger" />
         <form:hidden path="id" />
 
-        <div class="mb-3">
-            <div class="input-group">
-                <span class="input-group-text">
-                    <i class="bi bi-cursor"></i>
-                </span>
-                <form:input
-                    type="text"
-                    class="form-control"
-                    placeholder="Nơi xuất phát"
-                    path="startLocation"
-                />
+        <div class="row g-3 mb-3">
+            <div class="col-12 col-lg">
+                <div class="input-group">
+                    <span class="input-group-text">
+                        <i class="bi bi-cursor"></i>
+                    </span>
+                    <form:input type="text" class="form-control" placeholder="Nơi xuất phát" path="startLocation" />
+                </div>
             </div>
+
+            <div class="col-12 col-lg">
+                <div class="input-group">
+                    <span class="input-group-text">
+                        <i class="bi bi-geo-fill"></i>
+                    </span>
+                    <form:input type="text" class="form-control" placeholder="Điểm đến" path="endLocation" />
+                </div>
+            </div>
+            <form:errors path="endLocation" element="div" cssClass="text-danger" />
             <form:errors path="startLocation" element="div" cssClass="text-danger" />
         </div>
 
         <div class="mb-3">
-            <div class="input-group">
-                <span class="input-group-text">
-                    <i class="bi bi-geo-fill"></i>
-                </span>
-                <form:input
-                    type="text"
-                    class="form-control"
-                    placeholder="Điểm đến"
-                    path="endLocation"
-                />
-            </div>
-            <form:errors path="endLocation" element="div" cssClass="text-danger" />
-        </div>
-
-        <div class="mb-3">
             <div class="form-check">
-                <input
-                    class="form-check-input"
-                    type="checkbox"
-                    id="round_trip"
-                    name="round_trip"
-                    checked
-                />
+                <input class="form-check-input" type="checkbox" id="round_trip" name="round_trip" checked />
                 <label class="form-check-label" for="round_trip"> 2 chiều </label>
             </div>
         </div>

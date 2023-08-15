@@ -16,33 +16,29 @@
         <div class="invisible" style="flex: 1"></div>
     </div>
 
-    <div class="row">
-        <div class="col-12 col-md-6">
+    <div class="row g-3 table-responsive">
+        <div class="col-12 col-lg-6">
             <img src="${bus.image}" class="img-thumbnail rounded mx-auto d-block" alt="..." />
         </div>
-        <div class="col-12 col-md-6">
-            <div class="">
+        <div class="col-12 col-lg-6">
+            <div>
                 <span>Id: </span>
                 <span class="h6">${bus.id}</span>
             </div>
-            <div class="">
+            <div>
                 <span>Biển số xe: </span>
                 <span class="h6">${bus.licensePlate}</span>
             </div>
-            <div class="">
+            <div>
                 <span>Tổng số chỗ ngồi: </span>
                 <span class="h6">${seatCount}</span>
             </div>
-            <div class="">
+            <div>
                 <span>Chỗ ngồi trên xe: </span>
             </div>
             <section>
                 <div class="align-items-center d-flex flex-column mb-3">
-                    <div
-                        id="seatArrayContainer"
-                        class="d-none"
-                        style="--col: ${seats.col}; --row: ${seats.row}"
-                    >
+                    <div id="seatArrayContainer" class="d-none" style="--col: ${seats.col}; --row: ${seats.row}">
                         <c:forEach items="${seats.array}" var="c">
                             <c:set value="" var="userChosen" />
                             <c:if test="${c.userChosen == true}">
@@ -54,15 +50,7 @@
                                 <c:set value="disabled" var="disabled" />
                             </c:if>
 
-                            <button
-                                type="button"
-                                data-id="${c.id}"
-                                data-pos="${c.x}_${c.y}"
-                                class="text-primary"
-                                style="--x: ${c.x}; --y: ${c.y};"
-                                ${disabled}
-                                ${userChosen}
-                            >
+                            <button type="button" data-id="${c.id}" data-pos="${c.x}_${c.y}" class="text-primary" style="--x: ${c.x}; --y: ${c.y};" ${disabled} ${userChosen}>
                                 <h3 class="m-0" withoutActive>
                                     <i class="bi bi-circle"></i>
                                 </h3>

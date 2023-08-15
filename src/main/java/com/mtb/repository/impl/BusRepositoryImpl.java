@@ -24,6 +24,7 @@ import com.mtb.pojo.Bus;
 import com.mtb.pojo.BusSeatTemplate;
 import com.mtb.repository.BusRepository;
 import com.mtb.service.BusSeatTemplateService;
+import com.mtb.service.BusSeatTripService;
 
 @Repository
 @Transactional
@@ -34,6 +35,9 @@ public class BusRepositoryImpl implements BusRepository {
 
     @Autowired
     BusSeatTemplateService busSeatTemplateService;
+
+    @Autowired
+    BusSeatTripService busSeatTripService;
 
     @Override
     public List<Bus> getList(Map<String, String> params) {
@@ -67,6 +71,11 @@ public class BusRepositoryImpl implements BusRepository {
                     Set<BusSeatTemplate> targetSet = new HashSet<>(seatTemplates);
                     r.setBusSeatTemplateSet(targetSet);
                 });
+            }
+
+            String busSeatTemplateCount = params.get("busSeatTemplateCount");
+            if (busSeatTemplateCount != null) {
+                list.forEach(r -> r.setBusSeatTemplateCount(busSeatTemplateService.countSeatByBusId(r.getId())));
             }
         }
 
@@ -112,5 +121,4 @@ public class BusRepositoryImpl implements BusRepository {
             return false;
         }
     }
-
 }

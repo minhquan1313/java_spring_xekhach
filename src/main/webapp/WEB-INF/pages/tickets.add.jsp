@@ -4,8 +4,6 @@
 <!--  -->
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!--  -->
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<!--  -->
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!--  -->
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -28,12 +26,7 @@
     </div>
 
     <c:url value="/tickets/add" var="action" />
-    <form:form
-        modelAttribute="ticket"
-        method="post"
-        action="${action}"
-        enctype="multipart/form-data"
-    >
+    <form:form modelAttribute="ticket" method="post" action="${action}" enctype="multipart/form-data">
         <form:errors path="*" element="div" cssClass="alert alert-danger" />
         <form:hidden path="id" />
 
@@ -54,36 +47,22 @@
                         <c:url value="/tickets/add" var="reloadUrl">
                             <c:param name="tripId" value="${c.id}" />
                         </c:url>
-                        <option
-                            value="${c.id}"
-                            data-url="${reloadUrl}"
-                            data-basePrice="${c.price}"
-                            ${selected}
-                        >
-                            id: ${c.id}
-                        </option>
+                        <option value="${c.id}" data-url="${reloadUrl}" data-basePrice="${c.price}" ${selected}>id: ${c.id}</option>
                     </c:forEach>
                 </form:select>
 
                 <ul class="list-group tripIdSelectData" data-tripId="${trip.id}" style="flex: 1">
-                    <li class="list-group-item">
-                        Tuyến: ${trip.routeId.startLocation} -> ${trip.routeId.endLocation}
-                    </li>
+                    <li class="list-group-item">Tuyến: ${trip.routeId.startLocation} -> ${trip.routeId.endLocation}</li>
                     <li class="list-group-item">
                         Khởi hành:
                         <fmt:formatDate value="${trip.startAt}" pattern="${date_pattern}" />
                     </li>
-                    <li class="list-group-item">
-                        Xe: ${trip.busId.licensePlate} - ${fn:length(trip.busId.busSeatTripSet)}
-                    </li>
+                    <li class="list-group-item">Xe: ${trip.busId.licensePlate} - ${trip.busId.busSeatTripCount}</li>
                     <li class="list-group-item">Tài xế: ${trip.driverId}</li>
                 </ul>
 
                 <c:url value="/trips/add" var="createUrl" />
-                <a
-                    href="${createUrl}"
-                    class="input-group-text link-underline link-underline-opacity-0 bg-info-subtle"
-                >
+                <a href="${createUrl}" class="input-group-text link-underline link-underline-opacity-0 bg-info-subtle">
                     <i class="bi bi-plus-square-dotted"></i>
                 </a>
             </div>
@@ -102,11 +81,7 @@
         <!-- bookingUsers -->
         <div class="mb-3">
             <div class="input-group">
-                <span
-                    class="input-group-text"
-                    data-bs-toggle="tooltip"
-                    data-bs-title="Chọn người dùng đặt vé"
-                >
+                <span class="input-group-text" data-bs-toggle="tooltip" data-bs-title="Chọn người dùng đặt vé">
                     <i class="bi bi-person"></i>
                 </span>
                 <form:select class="form-select" path="userId">
@@ -120,10 +95,7 @@
                 </form:select>
 
                 <c:url value="/users/add" var="createUrl" />
-                <a
-                    href="${createUrl}"
-                    class="input-group-text link-underline link-underline-opacity-0 bg-info-subtle"
-                >
+                <a href="${createUrl}" class="input-group-text link-underline link-underline-opacity-0 bg-info-subtle">
                     <i class="bi bi-plus-square-dotted"></i>
                 </a>
             </div>
@@ -137,31 +109,13 @@
                     <i class="bi bi-currency-dollar"></i>
                 </span>
 
-                <input
-                    id="basePrice"
-                    type="text"
-                    class="form-control"
-                    placeholder="Giá chuyến"
-                    readonly
-                />
+                <input id="basePrice" type="text" class="form-control" placeholder="Giá chuyến" readonly />
                 <c:if test="${not empty extraPriceTitle}">
                     <span class="input-group-text"> ${extraPriceTitle} </span>
-                    <input
-                        type="text"
-                        id="extraPrice"
-                        class="form-control"
-                        placeholder="Phí phát sinh"
-                        value="${extraPrice}"
-                    />
+                    <input type="text" id="extraPrice" class="form-control" placeholder="Phí phát sinh" value="${extraPrice}" />
                 </c:if>
                 <span class="input-group-text"> = </span>
-                <form:input
-                    type="text"
-                    class="form-control"
-                    placeholder="Tổng thanh toán"
-                    path="paidPrice"
-                    readonly="true"
-                />
+                <form:input type="text" class="form-control" placeholder="Tổng thanh toán" path="paidPrice" readonly="true" />
 
                 <span class="input-group-text"> VND </span>
             </div>
@@ -176,11 +130,7 @@
             <!-- paidWith -->
             <div class="col-12 col-md-6 col-xl-4">
                 <div class="input-group">
-                    <span
-                        class="input-group-text"
-                        data-bs-toggle="tooltip"
-                        data-bs-title="Phương thức thanh toán"
-                    >
+                    <span class="input-group-text" data-bs-toggle="tooltip" data-bs-title="Phương thức thanh toán">
                         <i class="bi bi-wallet2"></i>
                     </span>
 
@@ -200,11 +150,7 @@
             <!-- staffId -->
             <div class="col-12 col-md-6 col-xl-4">
                 <div class="input-group">
-                    <span
-                        class="input-group-text"
-                        data-bs-toggle="tooltip"
-                        data-bs-title="Nhân viên in vé"
-                    >
+                    <span class="input-group-text" data-bs-toggle="tooltip" data-bs-title="Nhân viên in vé">
                         <i class="bi bi-person"></i>
                     </span>
                     <form:select class="form-select" path="staffId">
@@ -220,10 +166,7 @@
                     </form:select>
 
                     <c:url value="/users/add" var="createUrl" />
-                    <a
-                        href="${createUrl}"
-                        class="input-group-text link-underline link-underline-opacity-0 bg-info-subtle"
-                    >
+                    <a href="${createUrl}" class="input-group-text link-underline link-underline-opacity-0 bg-info-subtle">
                         <i class="bi bi-plus-square-dotted"></i>
                     </a>
                 </div>
@@ -251,11 +194,7 @@
             <label class="form-label">Chọn ghế ngồi</label>
 
             <div class="align-items-center d-flex flex-column mb-3">
-                <div
-                    id="seatArrayContainer"
-                    class="d-none"
-                    style="--col: ${seats.col}; --row: ${seats.row}"
-                >
+                <div id="seatArrayContainer" class="d-none" style="--col: ${seats.col}; --row: ${seats.row}">
                     <c:forEach items="${seats.array}" var="c">
                         <c:set value="" var="userChosen" />
                         <c:if test="${c.userChosen == true}">
@@ -267,17 +206,7 @@
                             <c:set value="disabled" var="disabled" />
                         </c:if>
 
-                        <button
-                            type="button"
-                            data-id="${c.id}"
-                            data-pos="${c.x}_${c.y}"
-                            class="text-primary"
-                            style="--x: ${c.x}; --y: ${c.y};"
-                            ${disabled}
-                            ${userChosen}
-                            data-bs-toggle="tooltip"
-                            data-bs-title="${c.id}"
-                        >
+                        <button type="button" data-id="${c.id}" data-pos="${c.x}_${c.y}" class="text-primary" style="--x: ${c.x}; --y: ${c.y};" ${disabled} ${userChosen} data-bs-toggle="tooltip" data-bs-title="${c.id}">
                             <h3 class="m-0" withoutActive>
                                 <i class="bi bi-circle"></i>
                             </h3>
@@ -307,11 +236,7 @@
                 <div class="input-group" id="datetimepicker1">
                     <span class="input-group-text"> Tạo lúc </span>
                     <input id="datetimepicker1Input" type="text" class="form-control" readonly />
-                    <span
-                        class="input-group-text"
-                        data-td-toggle="datetimepicker"
-                        style="cursor: pointer"
-                    >
+                    <span class="input-group-text" data-td-toggle="datetimepicker" style="cursor: pointer">
                         <i class="bi bi-calendar-plus"></i>
                     </span>
                 </div>

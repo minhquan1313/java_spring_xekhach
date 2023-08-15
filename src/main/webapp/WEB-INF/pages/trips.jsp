@@ -8,7 +8,7 @@
 <!--  -->
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!--  -->
-<section class="container-xxl my-4">
+<section class="my-4">
     <div class="container">
         <div class="d-flex align-items-center mb-3">
             <div class="d-flex justify-content-start" style="flex: 1">
@@ -40,7 +40,7 @@
         </div>
     </div>
 
-    <div class="table-responsive">
+    <div class="container-xxl table-responsive">
         <table class="table table-hover">
             <thead>
                 <tr>

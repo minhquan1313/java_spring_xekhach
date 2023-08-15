@@ -76,20 +76,20 @@ public class BusSeatTemplateRepositoryImpl implements BusSeatTemplateRepository 
     @Override
     public int countSeatByBusId(int id) {
         Session session = this.factory.getObject().getCurrentSession();
+        Query query = session
+                .createQuery(String.join(" ",
+                        "",
+                        "SELECT COUNT(*)",
+                        "FROM BusSeatTemplate",
+                        "WHERE busId.id=:busId"))
+                .setParameter("busId", id);
 
-        CriteriaBuilder cb = session.getCriteriaBuilder();
-        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
-        Root root = cq.from(BusSeatTemplate.class);
-
-        List<Predicate> predicates = new ArrayList<>();
-
-        predicates.add(cb.equal(root.get("busId"), id));
-
-        cq.where(predicates.toArray(Predicate[]::new));
-        cq.select(cb.count(root));
-        Query query = session.createQuery(cq);
-
-        return Integer.parseInt(query.getSingleResult().toString());
+        try {
+            int parseInt = Integer.parseInt(query.getSingleResult().toString());
+            return parseInt;
+        } catch (NumberFormatException e) {
+            return 0;
+        }
     }
 
     @Override

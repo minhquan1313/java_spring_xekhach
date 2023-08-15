@@ -32,6 +32,6 @@ public class SecurityController {
         userParams.put("username", principal.getName());
         User user = userService.getUsers(userParams).get(0);
 
-        model.addAttribute("user", user);
+        model.addAttribute("authenticated_user", user);
     }
 }

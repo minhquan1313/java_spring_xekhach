@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.mtb.myObject.AllLanguages;
 import com.mtb.myObject.SideBarUI;
 import com.mtb.myObject.SideBarUIItem;
 
@@ -95,8 +96,20 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         x.register(new SideBarUIItem(2, "bi bi-signpost-2 fs-5", "Tuyến xe", "/routes"));
         x.register(new SideBarUIItem(4, "bi bi-pin-map fs-5", "Chuyến xe", "/trips"));
         x.register(new SideBarUIItem(3, "bi bi-tags fs-5", "Vé xe", "/tickets"));
-        x.register(new SideBarUIItem(7, "bi bi-graph-up-arrow fs-5", "Xe khách", "/buses"));
+        x.register(new SideBarUIItem(7, "bi bi-truck-front fs-5", "Xe khách", "/buses"));
         x.register(new SideBarUIItem(8, "bi bi-chat-heart fs-5", "Phản hồi", "/feedbacks"));
         return x;
     }
+
+    // -=-=-=-=-=-=-=-=-=-=-=-=-=:START Multi languages part
+    @Bean
+    public AllLanguages allLanguages() {
+        AllLanguages x = new AllLanguages();
+
+        x.getList().add("vi");
+        x.getList().add("en");
+
+        return x;
+    }
+    // -=-=-=-=-=-=-=-=-=-=-=-=-=:END Multi languages part
 }

@@ -35,6 +35,10 @@
     background: #ccc;
 }
 
+#sidebar_items::-webkit-scrollbar {
+    display: none;
+}
+
 #sidebar.active {
     width: 15rem;
 }

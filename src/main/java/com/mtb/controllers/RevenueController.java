@@ -58,6 +58,7 @@ public class RevenueController {
         TitleAndValueChartJs revenueByMonthsCurrentYChartJs = TitleAndValue.parseToChartJsData(revenueByMonthsCurrentY);
         revenueByMonthsCurrentYChartJs.setDataOf("Doanh thu");
         revenueByMonthsCurrentYChartJs.setTableName("Doanh thu năm " + _year);
+        revenueByMonthsCurrentYChartJs.setDataPostfix("VND");
         model.addAttribute("revenueByMonthsCurrentYChartJs", revenueByMonthsCurrentYChartJs);
 
         List<TitleAndValue> revenueByMonthsIn5Years = statsService.revenueByYears(_yearStart, _yearEnd);
@@ -66,6 +67,7 @@ public class RevenueController {
         revenueByMonthsIn5YearsChartJs
                 .setTableName("Doanh thu trong " + (_yearEnd - _yearStart) + " năm từ " + (_yearStart) + " đến "
                         + (_yearEnd == yearNow ? "nay" : _yearEnd));
+        revenueByMonthsIn5YearsChartJs.setDataPostfix("VND");
         model.addAttribute("revenueByMonthsIn5YearsChartJs", revenueByMonthsIn5YearsChartJs);
 
         List<TitleAndValue> revenueByQuarters = statsService.revenueByQuarters(_year);
@@ -73,6 +75,7 @@ public class RevenueController {
         revenueByQuartersChartJs.setDataOf("Doanh thu");
         revenueByQuartersChartJs.setTableName("Doanh thu trong các quý của năm " + _year);
         revenueByQuartersChartJs.setChartType("pie");
+        revenueByQuartersChartJs.setDataPostfix("VND");
         model.addAttribute("revenueByQuartersChartJs", revenueByQuartersChartJs);
 
         return "revenue";

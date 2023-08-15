@@ -3,7 +3,6 @@ package com.mtb.controllers;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -85,11 +84,6 @@ public class TicketController {
         model.addAttribute("ticket", ticket);
 
         List<Trip> trips = tripService.getList(null);
-        trips.forEach(r -> {
-            int bId = r.getBusId().getId();
-            int tId = r.getId();
-            r.getBusId().setBusSeatTripSet(new HashSet<>(busSeatTripService.getListByBusAndTripId(bId, tId)));
-        });
         model.addAttribute("trips", trips);
 
         Trip trip = trips.get(0);
@@ -105,7 +99,7 @@ public class TicketController {
         }
         int bId = trip.getBusId().getId();
         int tId = trip.getId();
-        trip.getBusId().setBusSeatTripSet(new HashSet<>(busSeatTripService.getListByBusAndTripId(bId, tId)));
+        trip.getBusId().setBusSeatTripCount(busSeatTripService.countSeatById(bId, tId));
         model.addAttribute("trip", trip);
 
         BusSeats busSeats = busSeatTripService.getBusSeats(bId, tId);
@@ -134,11 +128,6 @@ public class TicketController {
         model.addAttribute("ticket", ticket);
 
         List<Trip> trips = tripService.getList(null);
-        trips.forEach(r -> {
-            int bId = r.getBusId().getId();
-            int tId = r.getId();
-            r.getBusId().setBusSeatTripSet(new HashSet<>(busSeatTripService.getListByBusAndTripId(bId, tId)));
-        });
         model.addAttribute("trips", trips);
 
         Trip trip = trips.get(0);
@@ -157,7 +146,7 @@ public class TicketController {
 
         int bId = trip.getBusId().getId();
         int tId = trip.getId();
-        trip.getBusId().setBusSeatTripSet(new HashSet<>(busSeatTripService.getListByBusAndTripId(bId, tId)));
+        trip.getBusId().setBusSeatTripCount(busSeatTripService.countSeatById(bId, tId));
         model.addAttribute("trip", trip);
 
         BusSeats busSeats = busSeatTripService.getBusSeats(bId, tId, ticket.getId());
@@ -215,7 +204,8 @@ public class TicketController {
         Trip trip = ticket.getTripId();
         int bId = trip.getBusId().getId();
         int tId = trip.getId();
-        trip.getBusId().setBusSeatTripSet(new HashSet<>(busSeatTripService.getListByBusAndTripId(bId, tId)));
+
+        trip.getBusId().setBusSeatTripCount(busSeatTripService.countSeatById(bId, tId));
         model.addAttribute("ticket", ticket);
         // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         List<TicketDetail> ticketsDetail = ticketDetailService.getListByTicketId(tId);

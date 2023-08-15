@@ -63,9 +63,7 @@
                     <option value="" selected disabled>Chọn xe khách</option>
 
                     <c:forEach items="${buses}" var="c">
-                        <option value="${c.id}">
-                            ${c.licensePlate} - ${fn:length(c.busSeatTemplateSet)} chỗ
-                        </option>
+                        <option value="${c.id}">${c.licensePlate} - ${c.busSeatTemplateCount} chỗ</option>
                     </c:forEach>
                 </select>
             </div>
@@ -86,33 +84,11 @@
             <div class="range-slide">
                 <div class="slide bg-secondary">
                     <div class="line bg-primary" id="line" style="left: 0%; right: 0%"></div>
-                    <span
-                        class="thumb border border-primary-subtle bg-primary"
-                        id="thumbMin"
-                        style="left: 0%"
-                    ></span>
-                    <span
-                        class="thumb border border-primary-subtle bg-primary"
-                        id="thumbMax"
-                        style="left: 100%"
-                    ></span>
+                    <span class="thumb border border-primary-subtle bg-primary" id="thumbMin" style="left: 0%"></span>
+                    <span class="thumb border border-primary-subtle bg-primary" id="thumbMax" style="left: 100%"></span>
                 </div>
-                <input
-                    id="rangeMin"
-                    type="range"
-                    max="${toPrice}"
-                    min="${fromPrice}"
-                    step="1000"
-                    value="${fromPrice}"
-                />
-                <input
-                    id="rangeMax"
-                    type="range"
-                    max="${toPrice}"
-                    min="${fromPrice}"
-                    step="1000"
-                    value="${toPrice}"
-                />
+                <input id="rangeMin" type="range" max="${toPrice}" min="${fromPrice}" step="1000" value="${fromPrice}" />
+                <input id="rangeMax" type="range" max="${toPrice}" min="${fromPrice}" step="1000" value="${toPrice}" />
                 <div>
                     <style>
                         :root {

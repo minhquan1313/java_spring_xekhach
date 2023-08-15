@@ -2,13 +2,15 @@
 <!--  -->
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!--  -->
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<!--  -->
 
 <nav class="navbar navbar-expand-lg border-bottom border-bottom-dark">
     <div class="container-fluid">
         <div class="navbar-brand">${sideBarUIItem.title}</div>
 
         <c:choose>
-            <c:when test="${user != null}">
+            <c:when test="${authenticated_user != null}">
                 <div class="btn-group dropstart dropdown">
                     <div class="rounded-pill btn btn-dark d-flex border" data-bs-toggle="dropdown" aria-expanded="false">
                         <div class="bg-warning rounded-pill me-3 overflow-hidden" style="aspect-ratio: 1/1; width: 1.6rem">
@@ -31,9 +33,28 @@
             <c:otherwise>
                 <div class="ms-auto">
                     <c:url value="/login" var="login" />
-                    <a href="${login}" class="rounded-pill btn btn-primary border">Đăng nhập</a>
+                    <a href="${login}" class="rounded-pill btn btn-primary">Đăng nhập</a>
                 </div>
             </c:otherwise>
         </c:choose>
+
+        <!-- Language -->
+        <div class="ms-2" style="width: 5rem">
+            <div class="input-group">
+                <select id="languageSelect" class="form-select rounded-pill">
+                    <c:forEach items="${allLanguages}" var="c">
+                        <c:set value="" var="selected" />
+                        <c:if test="${c == language}">
+                            <c:set value="selected" var="selected" />
+                        </c:if>
+
+                        <option value="${c}" data-cookie-name="${LANG}" ${selected}>${c}</option>
+                    </c:forEach>
+                </select>
+            </div>
+
+            <c:url value="/js/languageChange.js" var="languageChange" />
+            <script src="${languageChange}"></script>
+        </div>
     </div>
 </nav>

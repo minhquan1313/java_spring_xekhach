@@ -8,7 +8,14 @@
 <section class="container my-4">
     <div class="d-flex align-items-center mb-3">
         <div class="d-flex justify-content-start" style="flex: 1">
-            <c:url value="/" var="backUrl" />
+            <c:choose>
+                <c:when test="${not empty param.id or not empty param.kw or not empty param.roleId}">
+                      <c:url value="/users" var="backUrl" />
+                </c:when>
+                <c:otherwise>
+                        <c:url value="/" var="backUrl" />
+                </c:otherwise>
+            </c:choose>
             <a href="${backUrl}" class="btn btn-outline-info text-nowrap">Quay lại</a>
         </div>
         <h3 class="text-center">Users</h3>
@@ -18,15 +25,26 @@
         </div>
     </div>
     <c:url value="/users" var="action" />
-    <div>
-        <form class="d-flex mt-1" action="${action}">
-            <input class="me-2" type="text" name="kw" placeholder="Nhập từ khóa" />
-            <select name="roleId">
-                <option value="">Vai trò</option>
-                <c:forEach items="${roles}" var="r">
-                    <option value="${r.id}">${r.displayName}</option>
-                </c:forEach>
-            </select>
+    <div class="d-flex align-items-end">
+        <form class="d-flex w-100" action="${action}">
+            <div class="flex-grow-1 me-2">
+                <input type="text" class="form-control w-100" name="kw" placeholder="Nhập từ khóa" value="${param.kw}" />
+            </div>
+            <div class="me-2">
+                <select class="form-select" name="roleId">
+                    <option value="">Vai trò</option>
+                    <c:forEach items="${roles}" var="r">
+                        <c:choose>
+                            <c:when test="${r.id eq param.roleId}">
+                                <option value="${r.id}" selected>${r.displayName}</option>
+                            </c:when>
+                            <c:otherwise>
+                                <option value="${r.id}">${r.displayName}</option>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+                </select>
+            </div>
             <button class="btn btn-primary mx-1" type="submit">Tìm</button>
         </form>
     </div>
@@ -35,7 +53,7 @@
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th scope="col">Id</th>
+                    <th scope="col">id</th>
                     <th scope="col">Avatar</th>
                     <th scope="col">Họ</th>
                     <th scope="col">Tên</th>
