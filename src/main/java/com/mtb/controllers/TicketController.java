@@ -2,6 +2,7 @@ package com.mtb.controllers;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.lowagie.text.DocumentException;
 import com.mtb.myObject.BusSeats;
+import com.mtb.myObject.Utils;
 import com.mtb.pojo.Ticket;
 import com.mtb.pojo.TicketDetail;
 import com.mtb.pojo.Trip;
@@ -120,7 +122,33 @@ public class TicketController {
         List<User> staffUsers = userService.getUsers(staffParams);
         model.addAttribute("staffUsers", staffUsers);
 
-        int extraPrice = 10;
+        int extraPrice = 0;
+
+        Calendar holidayTetFrom = Calendar.getInstance();
+        holidayTetFrom.set(Calendar.MONTH, 0);
+        holidayTetFrom.set(Calendar.DAY_OF_MONTH, 1);
+
+        holidayTetFrom.set(Calendar.HOUR_OF_DAY, 0);
+        holidayTetFrom.set(Calendar.MINUTE, 0);
+        holidayTetFrom.set(Calendar.SECOND, 0);
+        holidayTetFrom.set(Calendar.MILLISECOND, 0);
+
+        Calendar holidayTetTo = Calendar.getInstance();
+        holidayTetTo.set(Calendar.MONTH, 1);
+        holidayTetTo.set(Calendar.DAY_OF_MONTH, 1);
+
+        holidayTetTo.set(Calendar.HOUR_OF_DAY, 0);
+        holidayTetTo.set(Calendar.MINUTE, 0);
+        holidayTetTo.set(Calendar.SECOND, 0);
+        holidayTetTo.set(Calendar.MILLISECOND, 0);
+
+        holidayTetTo.add(Calendar.SECOND, -1);
+
+        boolean isDateBetween = Utils.isDateBetween(Calendar.getInstance().getTime(), holidayTetFrom.getTime(),
+                holidayTetTo.getTime());
+
+        if (isDateBetween)
+            extraPrice = 100000;
         String multiLangExtraCharge = messageResource.getMessage("ui.ticket.extra_charge", null, locale);
         model.addAttribute("extraPriceTitle", multiLangExtraCharge);
         model.addAttribute("extraPrice", extraPrice);
@@ -169,7 +197,32 @@ public class TicketController {
         List<User> staffUsers = userService.getUsers(staffParams);
         model.addAttribute("staffUsers", staffUsers);
 
-        int extraPrice = 10;
+        int extraPrice = 0;
+        Calendar holidayTetFrom = Calendar.getInstance();
+        holidayTetFrom.set(Calendar.MONTH, 0);
+        holidayTetFrom.set(Calendar.DAY_OF_MONTH, 1);
+
+        holidayTetFrom.set(Calendar.HOUR_OF_DAY, 0);
+        holidayTetFrom.set(Calendar.MINUTE, 0);
+        holidayTetFrom.set(Calendar.SECOND, 0);
+        holidayTetFrom.set(Calendar.MILLISECOND, 0);
+
+        Calendar holidayTetTo = Calendar.getInstance();
+        holidayTetTo.set(Calendar.MONTH, 1);
+        holidayTetTo.set(Calendar.DAY_OF_MONTH, 1);
+
+        holidayTetTo.set(Calendar.HOUR_OF_DAY, 0);
+        holidayTetTo.set(Calendar.MINUTE, 0);
+        holidayTetTo.set(Calendar.SECOND, 0);
+        holidayTetTo.set(Calendar.MILLISECOND, 0);
+
+        holidayTetTo.add(Calendar.SECOND, -1);
+
+        boolean isDateBetween = Utils.isDateBetween(Calendar.getInstance().getTime(), holidayTetFrom.getTime(),
+                holidayTetTo.getTime());
+
+        if (isDateBetween)
+            extraPrice = 100000;
         String multiLangExtraCharge = messageResource.getMessage("ui.ticket.extra_charge", null, locale);
         model.addAttribute("extraPriceTitle", multiLangExtraCharge);
         model.addAttribute("extraPrice", extraPrice);
