@@ -3,13 +3,110 @@
 <tiles-definitions>
     <definition name="baseLayout" template="/WEB-INF/layout/base.jsp">
         <put-attribute name="title" value="" />
+        <put-attribute name="sidebar" value="/WEB-INF/layout/sidebar.jsp" />
         <put-attribute name="header" value="/WEB-INF/layout/header.jsp" />
         <put-attribute name="content" value="" />
-        <put-attribute name="footer" value="/WEB-INF/layout/footer.jsp" />
+        <!-- <put-attribute name="footer" value="/WEB-INF/layout/footer.jsp" /> -->
     </definition>
 
     <definition name="index" extends="baseLayout">
         <put-attribute name="title" value="Trang chủ" />
         <put-attribute name="content" value="/WEB-INF/pages/index.jsp" />
     </definition>
+
+    <definition name="users" extends="baseLayout">
+        <put-attribute name="title" value="Users" />
+        <put-attribute name="content"
+            value="/WEB-INF/pages/users.jsp" />
+    </definition>
+
+    <definition name="users.addOrUpdate" extends="baseLayout">
+        <put-attribute name="title" value="Users" />
+        <put-attribute name="content" value="/WEB-INF/pages/users.addOrUpdate.jsp" />
+    </definition>
+    <definition name="roles" extends="baseLayout">
+        <put-attribute name="title" value="Roles" />
+        <put-attribute name="content"
+            value="/WEB-INF/pages/roles.jsp" />
+    </definition>
+
+    <definition name="roles.addOrUpdate" extends="baseLayout">
+        <put-attribute name="title" value="Roles" />
+        <put-attribute name="content" value="/WEB-INF/pages/roles.addOrUpdate.jsp" />
+    </definition>
+    <definition name="routes" extends="baseLayout">
+        <put-attribute name="title" value="Tuyến xe" />
+        <put-attribute name="content" value="/WEB-INF/pages/routes.jsp" />
+    </definition>
+    <definition name="routes.addOrUpdate" extends="baseLayout">
+        <put-attribute name="title" value="Chỉnh sửa tuyến xe" />
+        <put-attribute name="content" value="/WEB-INF/pages/routes.addOrUpdate.jsp" />
+    </definition>
+
+    <definition name="buses" extends="baseLayout">
+        <put-attribute name="title" value="Các xe khách" />
+        <put-attribute name="content" value="/WEB-INF/pages/buses.jsp" />
+    </definition>
+    <definition name="bus.detail" extends="baseLayout">
+        <put-attribute name="title" value="Chi tiết xe khách" />
+        <put-attribute name="content" value="/WEB-INF/pages/bus.detail.jsp" />
+        <put-attribute name="bus_seats" value="/WEB-INF/pages/bus.seats.jsp" />
+    </definition>
+    <definition name="buses.addOrUpdate" extends="baseLayout">
+        <put-attribute name="title" value="Chỉnh sửa xe khách" />
+        <put-attribute name="content" value="/WEB-INF/pages/buses.addOrUpdate.jsp" />
+    </definition>
+
+    <definition name="trips" extends="baseLayout">
+        <put-attribute name="title" value="Các chuyến xe" />
+        <put-attribute name="content" value="/WEB-INF/pages/trips.jsp" />
+    </definition>
+    <definition name="trips.addOrUpdate" extends="baseLayout">
+        <put-attribute name="title" value="Thêm chuyến xe" />
+        <put-attribute name="content" value="/WEB-INF/pages/trips.addOrUpdate.jsp" />
+    </definition>
+    <definition name="trips.find" extends="baseLayout">
+        <put-attribute name="title" value="Tìm kiếm chuyến xe" />
+        <put-attribute name="content" value="/WEB-INF/pages/trips.find.jsp" />
+    </definition>
+
+    <definition name="tickets" extends="baseLayout">
+        <put-attribute name="title" value="Các vé xe" />
+        <put-attribute name="content" value="/WEB-INF/pages/tickets.jsp" />
+    </definition>
+    <definition name="tickets.add" extends="baseLayout">
+        <put-attribute name="title" value="Thêm vé xe" />
+        <put-attribute name="content" value="/WEB-INF/pages/tickets.add.jsp" />
+    </definition>
+    <definition name="tickets.detail" extends="baseLayout">
+        <put-attribute name="title" value="Chi tiết vé xe" />
+        <put-attribute name="content" value="/WEB-INF/pages/tickets.detail.jsp" />
+    </definition>
+    <definition name="tickets.update" extends="baseLayout">
+        <put-attribute name="title" value="Cập nhật vé xe" />
+        <put-attribute name="content" value="/WEB-INF/pages/tickets.update.jsp" />
+    </definition>
+
+    <definition name="revenue" extends="baseLayout">
+        <put-attribute name="title" value="Doanh thu" />
+        <put-attribute name="content" value="/WEB-INF/pages/revenue.jsp" />
+    </definition>
+
+    <definition name="debug" extends="baseLayout">
+        <put-attribute name="title" value="Debug" />
+        <put-attribute name="content" value="/WEB-INF/pages/debug.jsp" />
+    </definition>
+    <definition name="trips.chart" extends="baseLayout">
+        <put-attribute name="title" value="Thống kê" />
+        <put-attribute name="content" value="/WEB-INF/pages/trips.chart.jsp" />
+    </definition>
+    <definition name="feedbacks" extends="baseLayout">
+        <put-attribute name="title" value="Phản hồi chuyến đi" />
+        <put-attribute name="content" value="/WEB-INF/pages/feedbacks.jsp" />
+    </definition>
+    <definition name="feedbacks.addOrUpdate" extends="baseLayout">
+        <put-attribute name="title" value="Phản hồi chuyến đi" />
+        <put-attribute name="content" value="/WEB-INF/pages/feedbacks.addOrUpdate.jsp" />
+    </definition>
+
 </tiles-definitions>

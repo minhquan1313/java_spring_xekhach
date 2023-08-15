@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,6 +22,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -44,23 +46,27 @@ public class Trip implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "start_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date startAt;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "price")
-    private Integer price;
+    private int price;
     @JoinColumn(name = "bus_id", referencedColumnName = "id")
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Bus busId;
     @JoinColumn(name = "route_id", referencedColumnName = "id")
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Route routeId;
     @JoinColumn(name = "driver_id", referencedColumnName = "id")
-    @ManyToOne
+    @ManyToOne(optional = false)
     private User driverId;
     @OneToMany(mappedBy = "tripId")
     private Set<Ticket> ticketSet;
-    @OneToMany(mappedBy = "tripId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tripId")
     private Set<BusSeatTrip> busSeatTripSet;
 
     public Trip() {
@@ -68,6 +74,12 @@ public class Trip implements Serializable {
 
     public Trip(Integer id) {
         this.id = id;
+    }
+
+    public Trip(Integer id, Date startAt, int price) {
+        this.id = id;
+        this.startAt = startAt;
+        this.price = price;
     }
 
     public Integer getId() {
@@ -86,11 +98,11 @@ public class Trip implements Serializable {
         this.startAt = startAt;
     }
 
-    public Integer getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 

@@ -16,6 +16,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -33,13 +34,19 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Role.findByTitle", query = "SELECT r FROM Role r WHERE r.title = :title")})
 public class Role implements Serializable {
 
+    @Size(max = 50)
+    @Column(name = "display_name")
+    private String displayName;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Size(max = 50)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "title")
     private String title;
     @OneToMany(mappedBy = "roleId")
@@ -50,6 +57,11 @@ public class Role implements Serializable {
 
     public Role(Integer id) {
         this.id = id;
+    }
+
+    public Role(Integer id, String title) {
+        this.id = id;
+        this.title = title;
     }
 
     public Integer getId() {
@@ -100,6 +112,14 @@ public class Role implements Serializable {
     @Override
     public String toString() {
         return "com.mtb.pojo.Role[ id=" + id + " ]";
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 
 }

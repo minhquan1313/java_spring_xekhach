@@ -16,7 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -29,7 +29,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "BusSeatTemplate.findAll", query = "SELECT b FROM BusSeatTemplate b"),
     @NamedQuery(name = "BusSeatTemplate.findById", query = "SELECT b FROM BusSeatTemplate b WHERE b.id = :id"),
-    @NamedQuery(name = "BusSeatTemplate.findByBusSeat", query = "SELECT b FROM BusSeatTemplate b WHERE b.busSeat = :busSeat")})
+    @NamedQuery(name = "BusSeatTemplate.findByBusSeatX", query = "SELECT b FROM BusSeatTemplate b WHERE b.busSeatX = :busSeatX"),
+    @NamedQuery(name = "BusSeatTemplate.findByBusSeatY", query = "SELECT b FROM BusSeatTemplate b WHERE b.busSeatY = :busSeatY")})
 public class BusSeatTemplate implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -38,11 +39,16 @@ public class BusSeatTemplate implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Size(max = 50)
-    @Column(name = "bus_seat")
-    private String busSeat;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "bus_seat_x")
+    private int busSeatX;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "bus_seat_y")
+    private int busSeatY;
     @JoinColumn(name = "bus_id", referencedColumnName = "id")
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Bus busId;
 
     public BusSeatTemplate() {
@@ -50,6 +56,12 @@ public class BusSeatTemplate implements Serializable {
 
     public BusSeatTemplate(Integer id) {
         this.id = id;
+    }
+
+    public BusSeatTemplate(Integer id, int busSeatX, int busSeatY) {
+        this.id = id;
+        this.busSeatX = busSeatX;
+        this.busSeatY = busSeatY;
     }
 
     public Integer getId() {
@@ -60,12 +72,20 @@ public class BusSeatTemplate implements Serializable {
         this.id = id;
     }
 
-    public String getBusSeat() {
-        return busSeat;
+    public int getBusSeatX() {
+        return busSeatX;
     }
 
-    public void setBusSeat(String busSeat) {
-        this.busSeat = busSeat;
+    public void setBusSeatX(int busSeatX) {
+        this.busSeatX = busSeatX;
+    }
+
+    public int getBusSeatY() {
+        return busSeatY;
+    }
+
+    public void setBusSeatY(int busSeatY) {
+        this.busSeatY = busSeatY;
     }
 
     public Bus getBusId() {

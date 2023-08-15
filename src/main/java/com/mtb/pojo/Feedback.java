@@ -42,7 +42,7 @@ public class Feedback implements Serializable {
     @Column(name = "comment")
     private String comment;
     @JoinColumn(name = "ticket_id", referencedColumnName = "id")
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Ticket ticketId;
 
     public Feedback() {

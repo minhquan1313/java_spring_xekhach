@@ -6,7 +6,9 @@ package com.mtb.pojo;
 
 import java.io.Serializable;
 import java.util.Set;
+
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,9 +18,13 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -28,10 +34,10 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "bus")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Bus.findAll", query = "SELECT b FROM Bus b"),
-    @NamedQuery(name = "Bus.findById", query = "SELECT b FROM Bus b WHERE b.id = :id"),
-    @NamedQuery(name = "Bus.findByLicensePlate", query = "SELECT b FROM Bus b WHERE b.licensePlate = :licensePlate"),
-    @NamedQuery(name = "Bus.findByImage", query = "SELECT b FROM Bus b WHERE b.image = :image")})
+        @NamedQuery(name = "Bus.findAll", query = "SELECT b FROM Bus b"),
+        @NamedQuery(name = "Bus.findById", query = "SELECT b FROM Bus b WHERE b.id = :id"),
+        @NamedQuery(name = "Bus.findByLicensePlate", query = "SELECT b FROM Bus b WHERE b.licensePlate = :licensePlate"),
+        @NamedQuery(name = "Bus.findByImage", query = "SELECT b FROM Bus b WHERE b.image = :image") })
 public class Bus implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -40,7 +46,9 @@ public class Bus implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Size(max = 50)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "license_plate")
     private String licensePlate;
     @Size(max = 200)
@@ -48,16 +56,37 @@ public class Bus implements Serializable {
     private String image;
     @OneToMany(mappedBy = "busId")
     private Set<Trip> tripSet;
-    @OneToMany(mappedBy = "busId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "busId")
     private Set<BusSeatTemplate> busSeatTemplateSet;
     @OneToMany(mappedBy = "busId")
     private Set<BusSeatTrip> busSeatTripSet;
+
+    @Transient
+    private Integer busSeatTemplateCount;
+    @Transient
+    private Integer busSeatTripCount;
+
+    @Transient
+    private MultipartFile file;
 
     public Bus() {
     }
 
     public Bus(Integer id) {
         this.id = id;
+    }
+
+    public Bus(Integer id, String licensePlate) {
+        this.id = id;
+        this.licensePlate = licensePlate;
+    }
+
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    public void setFile(MultipartFile file) {
+        this.file = file;
     }
 
     public Integer getId() {
@@ -134,6 +163,22 @@ public class Bus implements Serializable {
     @Override
     public String toString() {
         return "com.mtb.pojo.Bus[ id=" + id + " ]";
+    }
+
+    public Integer getBusSeatTemplateCount() {
+        return busSeatTemplateCount;
+    }
+
+    public void setBusSeatTemplateCount(Integer busSeatTemplateCount) {
+        this.busSeatTemplateCount = busSeatTemplateCount;
+    }
+
+    public Integer getBusSeatTripCount() {
+        return busSeatTripCount;
+    }
+
+    public void setBusSeatTripCount(Integer busSeatTripCount) {
+        this.busSeatTripCount = busSeatTripCount;
     }
 
 }
