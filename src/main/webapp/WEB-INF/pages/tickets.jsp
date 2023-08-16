@@ -118,10 +118,19 @@
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <c:url value="/feedbacks/add?ticketId=${item.id}" var="feedBackUrl" />
-                                        <a href="${feedBackUrl}" class="dropdown-item btn btn-primary">
-                                            <spring:message code="ui.feedback" />
-                                        </a>
+                                        <c:choose>
+                                            <c:when test="${item.isPaid == true && item.staffId != null}">
+                                                <c:url value="/feedbacks/add?ticketId=${item.id}" var="feedBackUrl" />
+                                                <a href="${feedBackUrl}" class="dropdown-item btn btn-primary">
+                                                    <spring:message code="ui.feedback" />
+                                                </a>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <a href="javascript:;" class="dropdown-item btn btn-primary disabled">
+                                                    <spring:message code="ui.feedback" />
+                                                </a>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </li>
                                     <li>
                                         <c:url value="/tickets/${item.id}" var="detailUrl" />
