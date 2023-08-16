@@ -57,7 +57,7 @@ public class UserController {
         return "users.addOrUpdate";
     }
 
-    @GetMapping("/users/{id}")
+    @GetMapping("/users/edit/{id}")
     public String update(Model model, @PathVariable(value = "id") int id) {
         model.addAttribute("user", this.userService.getUserById(id));
         return "users.addOrUpdate";
