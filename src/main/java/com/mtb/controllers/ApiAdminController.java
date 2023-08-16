@@ -10,13 +10,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mtb.service.BusService;
 import com.mtb.service.FeedbackService;
+import com.mtb.service.RoleService;
 import com.mtb.service.RouteService;
 import com.mtb.service.TicketService;
 import com.mtb.service.TripService;
+import com.mtb.service.UserService;
 
 @RestController
-@RequestMapping("/api")
-public class ApiController {
+@RequestMapping("/api/admin")
+public class ApiAdminController {
 
     @Autowired
     private RouteService routeService;
@@ -29,9 +31,15 @@ public class ApiController {
 
     @Autowired
     private TicketService ticketService;
-    
+
     @Autowired
     private FeedbackService feedbackService;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private RoleService roleService;
 
     @DeleteMapping("/routes/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -56,10 +64,22 @@ public class ApiController {
     public void deleteTicket(@PathVariable(value = "id") int id) {
         this.ticketService.deleteById(id);
     }
-    
+
     @DeleteMapping("/feedbacks/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteFeedback(@PathVariable(value = "id") int id) {
         this.feedbackService.deleteFeedback(id);
+    }
+
+    @DeleteMapping("/users/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteUser(@PathVariable(value = "id") int id) {
+        this.userService.deleteUser(id);
+    }
+
+    @DeleteMapping("/roles/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteRole(@PathVariable(value = "id") int id) {
+        this.roleService.deleteRole(id);
     }
 }

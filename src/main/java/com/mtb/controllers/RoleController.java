@@ -44,7 +44,7 @@ public class RoleController {
         return "roles.addOrUpdate";
     }
 
-    @GetMapping("/roles/{id}")
+    @GetMapping("/roles/edit/{id}")
     public String update(Model model, @PathVariable(value = "id") int id) {
         model.addAttribute("role", this.roleService.getRoleById(id));
         return "roles.addOrUpdate";
