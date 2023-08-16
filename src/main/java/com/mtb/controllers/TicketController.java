@@ -156,7 +156,7 @@ public class TicketController {
         return "tickets.add";
     }
 
-    @GetMapping("/tickets/update/{id}")
+    @GetMapping("/tickets/edit/{id}")
     public String editForm(Model model, @PathVariable(value = "id") int id, @RequestParam Map<String, String> params,
             Locale locale) {
         Ticket ticket = ticketService.getById(id);

@@ -50,7 +50,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.formLogin()
-                // .loginPage("/login")
+                .loginPage("/login")
                 .usernameParameter("username")
                 .passwordParameter("password");
 
@@ -60,10 +60,28 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.exceptionHandling().accessDeniedPage("/login?accessDenied");
 
-        // http.authorizeRequests()
-        // .antMatchers("/").permitAll()
-        // .antMatchers("/**/add").access("hasRole('ROLE_ADMIN')")
-        // .antMatchers("/**/pay").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");
+        http.authorizeRequests()
+                .antMatchers("/").permitAll()
+                .antMatchers("/**/add/**").hasAnyAuthority("Admin")
+                .antMatchers("/**/edit/**").hasAnyAuthority("Admin")
+                .antMatchers("/api/admin/**").hasAnyAuthority("Admin")
+
+                .antMatchers("/revenue/**").hasAnyAuthority("Admin")
+
+                .antMatchers("/tickets/add").hasAnyAuthority("Admin", "Staff")
+                .antMatchers("/tickets/**").hasAnyAuthority("Admin", "Staff")
+
+                .antMatchers("/trips/**").hasAnyAuthority("Admin", "Staff", "Driver")
+
+                .antMatchers("/routes/**").hasAnyAuthority("Admin", "Staff", "Driver")
+
+                .antMatchers("/buses/**").hasAnyAuthority("Admin", "Staff", "Driver")
+
+                .antMatchers("/users/**").hasAnyAuthority("Admin")
+
+                .antMatchers("/roles/**").hasAnyAuthority("Admin")
+
+                .antMatchers("/feedbacks/**").hasAnyAuthority("Admin");
 
         http.csrf().disable();
     }
