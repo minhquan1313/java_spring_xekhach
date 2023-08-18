@@ -7,6 +7,7 @@ package com.mtb.pojo;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
+
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -26,6 +27,8 @@ import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  *
  * @author Binh
@@ -34,10 +37,10 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "trip")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Trip.findAll", query = "SELECT t FROM Trip t"),
-    @NamedQuery(name = "Trip.findById", query = "SELECT t FROM Trip t WHERE t.id = :id"),
-    @NamedQuery(name = "Trip.findByStartAt", query = "SELECT t FROM Trip t WHERE t.startAt = :startAt"),
-    @NamedQuery(name = "Trip.findByPrice", query = "SELECT t FROM Trip t WHERE t.price = :price")})
+        @NamedQuery(name = "Trip.findAll", query = "SELECT t FROM Trip t"),
+        @NamedQuery(name = "Trip.findById", query = "SELECT t FROM Trip t WHERE t.id = :id"),
+        @NamedQuery(name = "Trip.findByStartAt", query = "SELECT t FROM Trip t WHERE t.startAt = :startAt"),
+        @NamedQuery(name = "Trip.findByPrice", query = "SELECT t FROM Trip t WHERE t.price = :price") })
 public class Trip implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -64,8 +67,12 @@ public class Trip implements Serializable {
     @JoinColumn(name = "driver_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private User driverId;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "tripId")
     private Set<Ticket> ticketSet;
+
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tripId")
     private Set<BusSeatTrip> busSeatTripSet;
 

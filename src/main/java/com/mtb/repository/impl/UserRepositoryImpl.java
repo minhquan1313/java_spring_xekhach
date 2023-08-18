@@ -50,14 +50,9 @@ public class UserRepositoryImpl implements UserRepository {
         if (params != null) {
             List<Predicate> predicates = new ArrayList<>();
 
-            String kw = params.get("kw");
-            if (kw != null && !kw.isEmpty()) {
-                predicates.add(b.like(root.get("username"), String.format("%%%s%%", kw)));
-            }
-
             String username = params.get("username");
             if (username != null && !username.isEmpty()) {
-                predicates.add(b.like(root.get("username"), String.format("%%%s%%", username)));
+                predicates.add(b.equal(root.get("username"), username));
             }
 
             String firstName = params.get("firstName");
@@ -72,7 +67,7 @@ public class UserRepositoryImpl implements UserRepository {
 
             String password = params.get("password");
             if (password != null && !password.isEmpty()) {
-                predicates.add(b.like(root.get("password"), String.format("%%%s%%", password)));
+                predicates.add(b.equal(root.get("password"), password));
             }
 
             String roleId = params.get("roleId");
