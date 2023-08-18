@@ -119,13 +119,13 @@ public class TripRepositoryImp implements TripRepository {
 
             String timeFrom = params.get("timeFrom");
             if (timeFrom != null && !timeFrom.isEmpty()) {
-                Date time = new Date(timeFrom);
+                Date time = new Date(Long.parseLong(timeFrom));
                 predicates.add(cb.greaterThanOrEqualTo(trip.get("startAt"), time));
             }
 
             String timeTo = params.get("timeTo");
             if (timeTo != null && !timeTo.isEmpty()) {
-                Date time = new Date(timeTo);
+                Date time = new Date(Long.parseLong(timeTo));
                 predicates.add(cb.lessThanOrEqualTo(trip.get("startAt"), time));
             }
 

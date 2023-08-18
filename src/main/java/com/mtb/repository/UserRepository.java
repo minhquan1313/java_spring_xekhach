@@ -27,4 +27,6 @@ public interface UserRepository {
     boolean deleteUser(int id);
 
     User getUserByUsername(String username);
+
+    User getUserByUsernameAndPassword(String username, String encodedPassword);
 }

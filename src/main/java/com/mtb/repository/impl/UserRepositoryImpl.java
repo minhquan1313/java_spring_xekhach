@@ -181,4 +181,23 @@ public class UserRepositoryImpl implements UserRepository {
 
         return (User) q.getSingleResult();
     }
+
+    @Override
+    public User getUserByUsernameAndPassword(String username, String password) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s
+                .createQuery(String.join(" ",
+                        "",
+                        "FROM User",
+                        "WHERE username=:un",
+                        "AND password=:pass"))
+                .setParameter("un", username)
+                .setParameter("pass", password);
+
+        try {
+            return (User) q.getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }

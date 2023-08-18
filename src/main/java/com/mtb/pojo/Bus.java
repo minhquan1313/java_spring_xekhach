@@ -74,6 +74,7 @@ public class Bus implements Serializable {
     @Transient
     private Integer busSeatTripCount;
 
+    @JsonIgnore
     @Transient
     private MultipartFile file;
 

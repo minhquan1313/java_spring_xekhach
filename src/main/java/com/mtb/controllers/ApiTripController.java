@@ -1,5 +1,6 @@
 package com.mtb.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -23,15 +24,25 @@ public class ApiTripController {
     @Autowired
     private TripService tripService;
 
-    @CrossOrigin(origins = ("http://localhost:5173"))
+    @CrossOrigin
     @GetMapping("/trips/")
     public ResponseEntity<List<Trip>> list(@RequestParam Map<String, String> params) {
-        return new ResponseEntity<>(this.tripService.getList(params), HttpStatus.OK);
+        ResponseEntity<List<Trip>> responseEntity = new ResponseEntity<>(this.tripService.getList(params),
+                HttpStatus.OK);
+
+        return responseEntity;
     }
 
-    @CrossOrigin(origins = ("http://localhost:5173"))
+    @CrossOrigin
     @GetMapping("/trips/{id}")
-    public ResponseEntity<Trip> get(@PathVariable(value = "id") int id) {
-        return new ResponseEntity<>(this.tripService.getById(id), HttpStatus.OK);
+    public ResponseEntity<List<Trip>> get(@PathVariable(value = "id") int id) {
+        List<Trip> arrayList = new ArrayList<Trip>() {
+            {
+                add(tripService.getById(id));
+            }
+        };
+        ResponseEntity<List<Trip>> responseEntity = new ResponseEntity<>(arrayList, HttpStatus.OK);
+
+        return responseEntity;
     }
 }
