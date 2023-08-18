@@ -179,7 +179,12 @@ public class UserRepositoryImpl implements UserRepository {
         Query q = s.createQuery("From User Where username=:un");
         q.setParameter("un", username);
 
-        return (User) q.getSingleResult();
+        try {
+            User singleResult = (User) q.getSingleResult();
+            return singleResult;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override

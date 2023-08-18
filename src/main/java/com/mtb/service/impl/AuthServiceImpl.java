@@ -40,23 +40,22 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public List<User> loginApi(String username, String password) {
+    public User loginApi(String username, String password) {
 
         User u = userRepo.getUserByUsername(username);
-        List<User> uList = new ArrayList<>();
 
         if (u != null) {
             boolean isMatch = passwordEncoder.matches(password, u.getPassword());
 
             if (isMatch)
-                uList.add(u);
+                return u;
         }
         // User u = userRepo.getUserByUsernameAndPassword(username, encodedPassword);
-        return uList;
+        return null;
     }
 
     @Override
-    public List<User> registerApi(
+    public User registerApi(
             String username,
             String password,
             String first_name,
@@ -76,10 +75,10 @@ public class AuthServiceImpl implements AuthService {
         List<User> uList = new ArrayList<>();
 
         if (userRepo.addOrUpdateUser(u)) {
-            uList.add(u);
+            return u;
         }
 
-        return uList;
+        return null;
     }
 
 }

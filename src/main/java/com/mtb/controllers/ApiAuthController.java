@@ -4,6 +4,7 @@
  */
 package com.mtb.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -36,8 +37,13 @@ public class ApiAuthController {
         String username = payload.get("username");
         String password = payload.get("password");
 
-        ResponseEntity<List<User>> responseEntity = new ResponseEntity<>(this.service.loginApi(username, password),
-                HttpStatus.OK);
+        List<User> arrayList = new ArrayList<User>() {
+            {
+                add(service.loginApi(username, password));
+            }
+        };
+
+        ResponseEntity<List<User>> responseEntity = new ResponseEntity<>(arrayList, HttpStatus.OK);
 
         return responseEntity;
     }
@@ -51,9 +57,13 @@ public class ApiAuthController {
         String last_name = payload.get("last_name");
         String avatar = payload.get("avatar");
 
-        ResponseEntity<List<User>> responseEntity = new ResponseEntity<>(
-                this.service.registerApi(username, password, first_name, last_name, avatar),
-                HttpStatus.OK);
+        List<User> arrayList = new ArrayList<User>() {
+            {
+                add(service.registerApi(username, password, first_name, last_name, avatar));
+            }
+        };
+
+        ResponseEntity<List<User>> responseEntity = new ResponseEntity<>(arrayList, HttpStatus.OK);
         return responseEntity;
     }
 }
