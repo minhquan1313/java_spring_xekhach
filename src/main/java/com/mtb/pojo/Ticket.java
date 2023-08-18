@@ -28,6 +28,8 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  *
  * @author Binh
@@ -60,6 +62,8 @@ public class Ticket implements Serializable {
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
+
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ticketId")
     private Set<Feedback> feedbackSet;
     @JoinColumn(name = "trip_id", referencedColumnName = "id")
@@ -71,6 +75,8 @@ public class Ticket implements Serializable {
     @JoinColumn(name = "staff_id", referencedColumnName = "id")
     @ManyToOne
     private User staffId;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "ticketId")
     private Set<TicketDetail> ticketDetailSet;
 

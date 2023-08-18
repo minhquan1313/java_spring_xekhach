@@ -26,6 +26,8 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  *
  * @author Binh
@@ -55,9 +57,15 @@ public class Bus implements Serializable {
     @Column(name = "image")
     private String image;
     @OneToMany(mappedBy = "busId")
+
+    @JsonIgnore
     private Set<Trip> tripSet;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "busId")
+
+    @JsonIgnore
     private Set<BusSeatTemplate> busSeatTemplateSet;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "busId")
     private Set<BusSeatTrip> busSeatTripSet;
 

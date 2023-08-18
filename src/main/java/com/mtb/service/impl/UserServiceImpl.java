@@ -59,8 +59,10 @@ public class UserServiceImpl implements UserService {
             }
         }
 
-        String encodedPassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(encodedPassword);
+        if (user.getId() == null) {
+            String encodedPassword = passwordEncoder.encode(user.getPassword());
+            user.setPassword(encodedPassword);
+        }
 
         return this.userRepo.addOrUpdateUser(user);
     }

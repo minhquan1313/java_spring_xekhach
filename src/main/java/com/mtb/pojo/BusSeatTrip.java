@@ -6,6 +6,7 @@ package com.mtb.pojo;
 
 import java.io.Serializable;
 import java.util.Set;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,6 +23,8 @@ import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  *
  * @author Binh
@@ -30,13 +33,13 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "bus_seat_trip")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "BusSeatTrip.findAll", query = "SELECT b FROM BusSeatTrip b"),
-    @NamedQuery(name = "BusSeatTrip.findById", query = "SELECT b FROM BusSeatTrip b WHERE b.id = :id"),
-    @NamedQuery(name = "BusSeatTrip.findByBusSeatX", query = "SELECT b FROM BusSeatTrip b WHERE b.busSeatX = :busSeatX"),
-    @NamedQuery(name = "BusSeatTrip.findByBusSeatY", query = "SELECT b FROM BusSeatTrip b WHERE b.busSeatY = :busSeatY"),
-    @NamedQuery(name = "BusSeatTrip.findByAvailable", query = "SELECT b FROM BusSeatTrip b WHERE b.available = :available")})
+        @NamedQuery(name = "BusSeatTrip.findAll", query = "SELECT b FROM BusSeatTrip b"),
+        @NamedQuery(name = "BusSeatTrip.findById", query = "SELECT b FROM BusSeatTrip b WHERE b.id = :id"),
+        @NamedQuery(name = "BusSeatTrip.findByBusSeatX", query = "SELECT b FROM BusSeatTrip b WHERE b.busSeatX = :busSeatX"),
+        @NamedQuery(name = "BusSeatTrip.findByBusSeatY", query = "SELECT b FROM BusSeatTrip b WHERE b.busSeatY = :busSeatY"),
+        @NamedQuery(name = "BusSeatTrip.findByAvailable", query = "SELECT b FROM BusSeatTrip b WHERE b.available = :available") })
 public class BusSeatTrip implements Serializable {
-
+    @JsonIgnore
     @OneToMany(mappedBy = "busSeatTripId")
     private Set<TicketDetail> ticketDetailSet;
 

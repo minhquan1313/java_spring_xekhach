@@ -27,6 +27,8 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  *
  * @author Binh
@@ -72,10 +74,16 @@ public class User implements Serializable {
     @Size(max = 200)
     @Column(name = "avatar")
     private String avatar;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "driverId")
     private Set<Trip> tripSet;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "userId")
     private Set<Ticket> ticketSet;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "staffId")
     private Set<Ticket> ticketSet1;
     @JoinColumn(name = "role_id", referencedColumnName = "id")
