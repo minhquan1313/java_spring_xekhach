@@ -6,6 +6,7 @@ package com.mtb.pojo;
 
 import java.io.Serializable;
 import java.util.Set;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,6 +22,8 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  *
  * @author Binh
@@ -29,9 +32,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "role")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Role.findAll", query = "SELECT r FROM Role r"),
-    @NamedQuery(name = "Role.findById", query = "SELECT r FROM Role r WHERE r.id = :id"),
-    @NamedQuery(name = "Role.findByTitle", query = "SELECT r FROM Role r WHERE r.title = :title")})
+        @NamedQuery(name = "Role.findAll", query = "SELECT r FROM Role r"),
+        @NamedQuery(name = "Role.findById", query = "SELECT r FROM Role r WHERE r.id = :id"),
+        @NamedQuery(name = "Role.findByTitle", query = "SELECT r FROM Role r WHERE r.title = :title") })
 public class Role implements Serializable {
 
     @Size(max = 50)
@@ -49,6 +52,8 @@ public class Role implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "title")
     private String title;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "roleId")
     private Set<User> userSet;
 

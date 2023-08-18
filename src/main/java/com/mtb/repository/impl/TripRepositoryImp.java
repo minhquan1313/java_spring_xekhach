@@ -136,6 +136,14 @@ public class TripRepositoryImp implements TripRepository {
 
         List<Trip> list = query.getResultList();
 
+        list.forEach(_trip -> {
+            int bId = _trip.getBusId().getId();
+            int tId = _trip.getId();
+
+            _trip.getBusId()
+                    .setBusSeatTripCount(busSeatTripService.countSeatById(bId, tId));
+        });
+
         return list;
     }
 

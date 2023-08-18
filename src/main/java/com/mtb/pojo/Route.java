@@ -6,6 +6,7 @@ package com.mtb.pojo;
 
 import java.io.Serializable;
 import java.util.Set;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,6 +22,8 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  *
  * @author Binh
@@ -29,10 +32,10 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "route")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Route.findAll", query = "SELECT r FROM Route r"),
-    @NamedQuery(name = "Route.findById", query = "SELECT r FROM Route r WHERE r.id = :id"),
-    @NamedQuery(name = "Route.findByStartLocation", query = "SELECT r FROM Route r WHERE r.startLocation = :startLocation"),
-    @NamedQuery(name = "Route.findByEndLocation", query = "SELECT r FROM Route r WHERE r.endLocation = :endLocation")})
+        @NamedQuery(name = "Route.findAll", query = "SELECT r FROM Route r"),
+        @NamedQuery(name = "Route.findById", query = "SELECT r FROM Route r WHERE r.id = :id"),
+        @NamedQuery(name = "Route.findByStartLocation", query = "SELECT r FROM Route r WHERE r.startLocation = :startLocation"),
+        @NamedQuery(name = "Route.findByEndLocation", query = "SELECT r FROM Route r WHERE r.endLocation = :endLocation") })
 public class Route implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -51,6 +54,8 @@ public class Route implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "end_location")
     private String endLocation;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "routeId")
     private Set<Trip> tripSet;
 

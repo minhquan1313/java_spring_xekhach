@@ -10,9 +10,15 @@
 <!--  -->
 <section class="container py-4">
   <div class="d-flex align-items-center mb-3">
-    <div class="d-flex justify-content-start" style="flex: 1">
-      <c:url value="/users" var="backUrl" />
-      <a href="${backUrl}" class="btn btn-outline-info text-nowrap">
+    <div
+      class="d-flex justify-content-start"
+      style="flex: 1">
+      <c:url
+        value="/users"
+        var="backUrl" />
+      <a
+        href="${backUrl}"
+        class="btn btn-outline-info text-nowrap">
         <spring:message code="ui.global.back" />
       </a>
     </div>
@@ -26,19 +32,27 @@
         </c:otherwise>
       </c:choose>
 
-      <spring:message code="ui.user" var="__user" />
+      <spring:message
+        code="ui.user"
+        var="__user" />
       ${fn:toLowerCase(__user)}
     </h3>
-    <div class="invisible" style="flex: 1"></div>
+    <div
+      class="invisible"
+      style="flex: 1"></div>
   </div>
-  <c:url value="/users/" var="action" />
+  <c:url
+    value="/users/"
+    var="action" />
   <form:form
     modelAttribute="user"
     method="post"
     action="${action}"
-    enctype="multipart/form-data"
-  >
-    <form:errors path="*" element="div" cssClass="alert alert-danger" />
+    enctype="multipart/form-data">
+    <form:errors
+      path="*"
+      element="div"
+      cssClass="alert alert-danger" />
 
     <form:hidden path="id" />
     <form:hidden path="avatar" />
@@ -49,8 +63,7 @@
           class="form-control"
           path="username"
           id="username"
-          name="username"
-        />
+          name="username" />
         <label for="name">
           <spring:message code="ui.user.username" />
         </label>
@@ -64,8 +77,7 @@
           path="username"
           id="username"
           name="username"
-          readonly="true"
-        />
+          readonly="true" />
         <label for="name">
           <spring:message code="ui.user.username" />
         </label>
@@ -78,20 +90,19 @@
         class="form-control"
         path="password"
         id="password"
-        name="password"
-      />
+        name="password" />
       <label for="name">
         <spring:message code="ui.user.password" />
       </label>
     </div>
+
     <div class="form-floating mb-3 mt-3">
       <form:input
         type="text"
         class="form-control"
         path="lastName"
         id="lastName"
-        name="lastName"
-      />
+        name="lastName" />
       <label for="name">
         <spring:message code="ui.user.last_name" />
       </label>
@@ -102,18 +113,27 @@
         class="form-control"
         path="firstName"
         id="firstName"
-        name="firstName"
-      />
+        name="firstName" />
       <label for="name">
         <spring:message code="ui.user.first_name" />
       </label>
     </div>
     <div class="form-floating mb-3 mt-3">
-      <form:select class="form-select" id="role" name="role" path="roleId">
-        <c:forEach items="${roles}" var="r">
+      <form:select
+        class="form-select"
+        id="role"
+        name="role"
+        path="roleId">
+        <c:forEach
+          items="${roles}"
+          var="r">
           <c:choose>
             <c:when test="${r.id == user.roleId.id}">
-              <option value="${r.id}" selected>${r.displayName}</option>
+              <option
+                value="${r.id}"
+                selected>
+                ${r.displayName}
+              </option>
             </c:when>
             <c:otherwise>
               <option value="${r.id}">${r.displayName}</option>
@@ -121,18 +141,26 @@
           </c:choose>
         </c:forEach>
       </form:select>
-      <label for="role" class="form-label">
+      <label
+        for="role"
+        class="form-label">
         <spring:message code="ui.user.role" />
       </label>
     </div>
     <div class="form-floating mb-3 mt-3">
-      <form:input type="file" class="form-control" path="file" id="file" />
+      <form:input
+        type="file"
+        class="form-control"
+        path="file"
+        id="file" />
       <label for="file">
         <spring:message code="ui.global.image" />
       </label>
     </div>
     <div class="form-floating mb-3 mt-3">
-      <button class="btn btn-outline-info w-100" type="submit">
+      <button
+        class="btn btn-outline-info w-100"
+        type="submit">
         <c:choose>
           <c:when test="${user.id != null}">
             <spring:message code="ui.global.update" />
