@@ -61,7 +61,7 @@
             class="form-control"
             placeholder="${__start_location}"
             path="startLocation"
-          />            
+          />
         </div>
       </div>
 
@@ -80,8 +80,8 @@
           />
         </div>
       </div>
-      <form:errors path="startLocation" element="div" cssClass="text-danger" />
       <form:errors path="endLocation" element="div" cssClass="text-danger" />
+      <form:errors path="startLocation" element="div" cssClass="text-danger" />
     </div>
 
     <div class="mb-3">
