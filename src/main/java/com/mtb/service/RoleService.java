@@ -4,9 +4,10 @@
  */
 package com.mtb.service;
 
-import com.mtb.pojo.Role;
 import java.util.List;
 import java.util.Map;
+
+import com.mtb.pojo.Role;
 
 /**
  *
@@ -16,6 +17,10 @@ public interface RoleService {
     List<Role> getRoles(Map<String, String> params);
 
     boolean addOrUpdateRole(Role r);
+
     Role getRoleById(int id);
+
+    Role getRoleByTitle(String title);
+
     boolean deleteRole(int id);
 }

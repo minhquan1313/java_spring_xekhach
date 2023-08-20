@@ -11,6 +11,7 @@ import com.mtb.pojo.Trip;
 import com.mtb.repository.TripRepository;
 import com.mtb.service.BusSeatTemplateService;
 import com.mtb.service.BusSeatTripService;
+import com.mtb.service.TicketService;
 import com.mtb.service.TripService;
 
 @Service
@@ -20,6 +21,9 @@ public class TripServiceImpl implements TripService {
     private TripRepository repository;
 
     @Autowired
+    private TicketService ticketService;
+
+    @Autowired
     private BusSeatTripService busSeatTripService;
 
     @Autowired
@@ -27,7 +31,9 @@ public class TripServiceImpl implements TripService {
 
     @Override
     public List<Trip> getList(Map<String, String> params) {
-        return repository.getList(params);
+        List<Trip> list = repository.getList(params);
+
+        return list;
     }
 
     @Override
@@ -76,5 +82,10 @@ public class TripServiceImpl implements TripService {
     @Override
     public List<Object[]> countTripsByRoute() {
         return repository.countTripsByRoute();
+    }
+
+    @Override
+    public int countPaidPrice(Trip item, int selectedSeatCount) {
+        return item.getPrice() * selectedSeatCount + ticketService.getExtraPrice();
     }
 }

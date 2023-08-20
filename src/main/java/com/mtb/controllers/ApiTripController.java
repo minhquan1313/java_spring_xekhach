@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mtb.pojo.Trip;
+import com.mtb.service.BusSeatTripService;
 import com.mtb.service.TripService;
 
 @RestController
@@ -27,7 +28,9 @@ public class ApiTripController {
     @CrossOrigin
     @GetMapping("/trips/")
     public ResponseEntity<List<Trip>> list(@RequestParam Map<String, String> params) {
-        ResponseEntity<List<Trip>> responseEntity = new ResponseEntity<>(this.tripService.getList(params),
+        List<Trip> list = this.tripService.getList(params);
+
+        ResponseEntity<List<Trip>> responseEntity = new ResponseEntity<>(list,
                 HttpStatus.OK);
 
         return responseEntity;

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.lowagie.text.DocumentException;
 import com.mtb.myObject.BusSeats;
 import com.mtb.myObject.BusSeats.Pos;
+import com.mtb.myObject.Utils;
 import com.mtb.pojo.BusSeatTrip;
 import com.mtb.pojo.Ticket;
 import com.mtb.pojo.TicketDetail;
@@ -21,6 +22,7 @@ import com.mtb.repository.TicketRepository;
 import com.mtb.service.BusSeatTripService;
 import com.mtb.service.TicketDetailService;
 import com.mtb.service.TicketService;
+import com.mtb.service.TripService;
 
 @Service
 public class TicketServiceImpl implements TicketService {
@@ -33,6 +35,9 @@ public class TicketServiceImpl implements TicketService {
 
     @Autowired
     private BusSeatTripService busSeatTripService;
+
+    @Autowired
+    private TripService tripService;
 
     @Override
     public List<Ticket> getList(Map<String, String> params) {
@@ -49,6 +54,9 @@ public class TicketServiceImpl implements TicketService {
         Calendar c = Calendar.getInstance(new Locale("vi"));
         Date current = c.getTime();
         item.setCreatedAt(current);
+
+        int paidPrice = tripService.countPaidPrice(item.getTripId(), busSeats.getArray().size());
+        item.setPaidPrice(paidPrice);
 
         boolean isAdded = repository.addOrUpdate(item);
 
@@ -83,10 +91,9 @@ public class TicketServiceImpl implements TicketService {
                 }
             }
 
-            // New ticket detail, but won't create a new in db, add to pending update list
+            // New ticket detail(other seat), but won't create a new in db, add to pending
+            // update list
             toUpdateSeats.add(busSeatTripFromClient);
-            // TODO: Change the exist ticket with a new seat, not delete the ticket detail
-            // and create a new ticket detail (WASTE OF ID)
         });
 
         // Delete seats that user un-checked
@@ -116,6 +123,9 @@ public class TicketServiceImpl implements TicketService {
             }
         }
 
+        int paidPrice = tripService.countPaidPrice(item.getTripId(), busSeats.getArray().size());
+        item.setPaidPrice(paidPrice);
+
         return repository.addOrUpdate(item);
     }
 
@@ -138,6 +148,41 @@ public class TicketServiceImpl implements TicketService {
         } else {
             throw new IllegalArgumentException("Không tìm thấy");
         }
+    }
+
+    @Override
+    public int getExtraPrice() {
+        int extra = 0;
+
+        Calendar holidayTetFrom = Calendar.getInstance();
+        holidayTetFrom.set(Calendar.MONTH, 0);
+        holidayTetFrom.set(Calendar.DAY_OF_MONTH, 1);
+
+        holidayTetFrom.set(Calendar.HOUR_OF_DAY, 0);
+        holidayTetFrom.set(Calendar.MINUTE, 0);
+        holidayTetFrom.set(Calendar.SECOND, 0);
+        holidayTetFrom.set(Calendar.MILLISECOND, 0);
+
+        Calendar holidayTetTo = Calendar.getInstance();
+        holidayTetTo.set(Calendar.MONTH, 1);
+        holidayTetTo.set(Calendar.DAY_OF_MONTH, 1);
+
+        holidayTetTo.set(Calendar.HOUR_OF_DAY, 0);
+        holidayTetTo.set(Calendar.MINUTE, 0);
+        holidayTetTo.set(Calendar.SECOND, 0);
+        holidayTetTo.set(Calendar.MILLISECOND, 0);
+
+        holidayTetTo.add(Calendar.SECOND, -1);
+
+        boolean isDateBetween = Utils.isDateBetween(
+                Calendar.getInstance().getTime(),
+                holidayTetFrom.getTime(),
+                holidayTetTo.getTime());
+
+        if (isDateBetween)
+            extra += 50000;
+
+        return extra;
     }
 
 }

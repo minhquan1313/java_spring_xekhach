@@ -36,6 +36,8 @@ import com.lowagie.text.pdf.BaseFont;
 import com.lowagie.text.pdf.PdfWriter;
 import com.mtb.pojo.Ticket;
 import com.mtb.repository.TicketRepository;
+import com.mtb.service.BusSeatTripService;
+import com.mtb.service.TicketDetailService;
 
 @Repository
 @Transactional
@@ -43,6 +45,12 @@ public class TicketRepositoryImpl implements TicketRepository {
 
     @Autowired
     private LocalSessionFactoryBean factory;
+
+    @Autowired
+    private TicketDetailService ticketDetailService;
+
+    @Autowired
+    private BusSeatTripService busSeatTripService;
 
     @Override
     public List<Ticket> getList(Map<String, String> params) {
@@ -60,12 +68,49 @@ public class TicketRepositoryImpl implements TicketRepository {
                 predicates.add(cb.equal(ticket.get("id"), Integer.parseInt(id)));
             }
 
+            String userId = params.get("userId");
+            if (userId != null && !userId.isEmpty()) {
+                predicates.add(cb.equal(ticket.get("userId"), Integer.parseInt(userId)));
+            }
+
+            // String totalSeat = params.get("totalSeat");
+            // if (totalSeat != null && !totalSeat.isEmpty()) {
+            // predicates.add(cb.equal(ticket.get("userId"), Integer.parseInt(userId)));
+            // }
+
             cq.where(predicates.toArray(Predicate[]::new));
         }
 
         Query query = session.createQuery(cq);
 
         List<Ticket> list = query.getResultList();
+
+        if (params != null) {
+
+            String totalSeat = params.get("totalSeat");
+            if (totalSeat != null) {
+
+                list.forEach(r -> {
+                    int c = ticketDetailService.countByTicketId(r.getId());
+
+                    r.setTotalSeat(c);
+                });
+            }
+
+            String busSeat = params.get("busSeat");
+            if (busSeat != null) {
+
+                list.forEach(r -> {
+
+                    int busId = r.getTripId().getBusId().getId();
+                    int tripId = r.getTripId().getId();
+                    int ticketId = r.getId();
+
+                    r.getTripId().getBusId().setBusSeats(busSeatTripService.getBusSeats(busId, tripId, ticketId));
+                });
+            }
+
+        }
 
         return list;
     }

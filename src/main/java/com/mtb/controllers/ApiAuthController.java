@@ -37,11 +37,11 @@ public class ApiAuthController {
         String username = payload.get("username");
         String password = payload.get("password");
 
-        List<User> arrayList = new ArrayList<User>() {
-            {
-                add(service.loginApi(username, password));
-            }
-        };
+        List<User> arrayList = new ArrayList<User>();
+
+        User u = service.loginApi(username, password);
+        if (u != null)
+            arrayList.add(u);
 
         ResponseEntity<List<User>> responseEntity = new ResponseEntity<>(arrayList, HttpStatus.OK);
 
@@ -51,17 +51,16 @@ public class ApiAuthController {
     @CrossOrigin
     @PostMapping("/register/")
     public ResponseEntity<List<User>> register(@RequestBody Map<String, String> payload) {
+        List<User> arrayList = new ArrayList<User>();
+
         String username = payload.get("username");
         String password = payload.get("password");
-        String first_name = payload.get("first_name");
-        String last_name = payload.get("last_name");
-        String avatar = payload.get("avatar");
+        String first_name = payload.get("firstName");
+        String last_name = payload.get("lastName");
 
-        List<User> arrayList = new ArrayList<User>() {
-            {
-                add(service.registerApi(username, password, first_name, last_name, avatar));
-            }
-        };
+        User u = service.registerApi(username, password, first_name, last_name);
+        if (u != null)
+            arrayList.add(u);
 
         ResponseEntity<List<User>> responseEntity = new ResponseEntity<>(arrayList, HttpStatus.OK);
         return responseEntity;

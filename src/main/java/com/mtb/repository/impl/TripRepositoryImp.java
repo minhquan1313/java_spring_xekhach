@@ -32,6 +32,7 @@ import com.mtb.pojo.Trip_;
 import com.mtb.repository.TripRepository;
 import com.mtb.service.BusSeatTripService;
 import com.mtb.service.RouteService;
+import com.mtb.service.TicketService;
 
 @Repository
 @Transactional
@@ -45,6 +46,9 @@ public class TripRepositoryImp implements TripRepository {
 
     @Autowired
     private RouteService routeService;
+
+    @Autowired
+    private TicketService ticketService;
 
     /**
      * params: startLocation | endLocation | busId | fromPrice | toPrice |
@@ -143,6 +147,22 @@ public class TripRepositoryImp implements TripRepository {
             _trip.getBusId()
                     .setBusSeatTripCount(busSeatTripService.countSeatById(bId, tId));
         });
+
+        if (params != null) {
+            if (params.get("getSeats") != null) {
+                list.forEach(r -> {
+                    int bid = r.getBusId().getId();
+                    int tid = r.getId();
+                    r.getBusId().setBusSeats(busSeatTripService.getBusSeats(bid, tid));
+                });
+            }
+
+            if (params.get("extraPrice") != null) {
+                list.forEach(r -> {
+                    r.setExtraPrice(ticketService.getExtraPrice());
+                });
+            }
+        }
 
         return list;
     }
