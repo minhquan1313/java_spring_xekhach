@@ -4,23 +4,25 @@
  */
 package com.mtb.repository.impl;
 
-import com.mtb.pojo.Feedback;
-import com.mtb.pojo.Ticket;
-import com.mtb.repository.FeedbackRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.mtb.pojo.Feedback;
+import com.mtb.repository.FeedbackRepository;
 
 /**
  *
@@ -57,7 +59,7 @@ public class FeedbackRepositoryImpl implements FeedbackRepository {
             q.where(predicates.toArray(Predicate[]::new));
         }
 
-        //q.orderBy(b.desc(root.get("id")));
+        // q.orderBy(b.desc(root.get("id")));
         Query query = session.createQuery(q);
 
         return query.getResultList();

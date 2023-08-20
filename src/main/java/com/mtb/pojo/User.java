@@ -89,6 +89,8 @@ public class User implements Serializable {
     @JoinColumn(name = "role_id", referencedColumnName = "id")
     @ManyToOne
     private Role roleId;
+
+    @JsonIgnore
     @Transient
     private MultipartFile file;
 

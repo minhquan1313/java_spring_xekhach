@@ -191,7 +191,7 @@ CREATE TABLE `ticket` (
   `staff_id` int DEFAULT NULL,
   `paid_with` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `paid_price` int DEFAULT NULL,
-  `is_paid` bit(1) DEFAULT NULL,
+  `is_paid` bit(1) NOT NULL DEFAULT b'0',
   `created_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `trip_id` (`trip_id`),

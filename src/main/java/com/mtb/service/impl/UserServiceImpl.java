@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean addOrUpdateUser(User user) {
-        if (!user.getFile().isEmpty()) {
+        if (user.getFile() != null && !user.getFile().isEmpty()) {
             try {
                 Map res = this.cloudinary
                         .uploader()

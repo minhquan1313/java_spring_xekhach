@@ -23,6 +23,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -75,6 +76,9 @@ public class Trip implements Serializable {
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tripId")
     private Set<BusSeatTrip> busSeatTripSet;
+
+    @Transient
+    private Integer extraPrice;
 
     public Trip() {
     }
@@ -178,6 +182,14 @@ public class Trip implements Serializable {
     @Override
     public String toString() {
         return "com.mtb.pojo.Trip[ id=" + id + " ]";
+    }
+
+    public Integer getExtraPrice() {
+        return extraPrice;
+    }
+
+    public void setExtraPrice(Integer extraPrice) {
+        this.extraPrice = extraPrice;
     }
 
 }

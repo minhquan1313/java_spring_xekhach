@@ -27,6 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.mtb.myObject.BusSeats;
 
 /**
  *
@@ -74,8 +75,12 @@ public class Bus implements Serializable {
     @Transient
     private Integer busSeatTripCount;
 
+    @JsonIgnore
     @Transient
     private MultipartFile file;
+
+    @Transient
+    private BusSeats busSeats;
 
     public Bus() {
     }
@@ -187,6 +192,14 @@ public class Bus implements Serializable {
 
     public void setBusSeatTripCount(Integer busSeatTripCount) {
         this.busSeatTripCount = busSeatTripCount;
+    }
+
+    public BusSeats getBusSeats() {
+        return busSeats;
+    }
+
+    public void setBusSeats(BusSeats busSeats) {
+        this.busSeats = busSeats;
     }
 
 }

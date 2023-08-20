@@ -4,16 +4,19 @@
  */
 package com.mtb.repository.impl;
 
-import com.mtb.pojo.Role;
-import com.mtb.repository.RoleRepository;
 import java.util.List;
+
 import javax.persistence.Query;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.mtb.pojo.Role;
+import com.mtb.repository.RoleRepository;
 
 /**
  *
@@ -71,4 +74,21 @@ public class RoleRepositoryImpl implements RoleRepository {
         }
     }
 
+    @Override
+    public Role getRoleByTitle(String title) {
+
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s
+                .createQuery(String.join(" ",
+                        "",
+                        "FROM Role",
+                        "WHERE title=:un"))
+                .setParameter("un", title);
+
+        try {
+            return (Role) q.getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }

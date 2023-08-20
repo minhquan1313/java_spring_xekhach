@@ -22,4 +22,6 @@ public interface TripService {
     boolean deleteById(int id);
 
     List<Object[]> countTripsByRoute();
+
+    int countPaidPrice(Trip item, int selectedSeatCount);
 }
