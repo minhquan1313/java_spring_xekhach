@@ -46,6 +46,7 @@ public class ApiBookingController {
         List<Ticket> arrayList = new ArrayList<Ticket>();
 
         String id = payload.get("id");
+        String tripId = payload.get("tripId");
         String selectedSeats = payload.get("selectedSeats");
 
         if (id != null && !id.isEmpty()) {
@@ -60,8 +61,14 @@ public class ApiBookingController {
                 busSeats.addMultiPosFromInputFull(selectedSeats);
             }
 
-            ticketService.update(item, busSeats);
+            if (tripId != null && !tripId.isEmpty()) {
+                Trip trip = tripService.getById(Integer.parseInt(tripId));
+                if (trip != null) {
+                    item.setTripId(trip);
+                }
+            }
 
+            ticketService.update(item, busSeats);
         }
 
         ResponseEntity<List<Ticket>> responseEntity = new ResponseEntity<>(arrayList, HttpStatus.OK);

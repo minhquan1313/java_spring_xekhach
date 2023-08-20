@@ -4,11 +4,10 @@
  */
 package com.mtb.repository;
 
-import com.mtb.pojo.Feedback;
-import com.mtb.pojo.Ticket;
 import java.util.List;
 import java.util.Map;
 
+import com.mtb.pojo.Feedback;
 
 /**
  *
@@ -16,8 +15,12 @@ import java.util.Map;
  */
 public interface FeedbackRepository {
     List<Feedback> getFeedbacks(Map<String, String> params);
-    List<Feedback> getFeedbacksForTrip(Map<String, String> params,String id);
+
+    List<Feedback> getFeedbacksForTrip(Map<String, String> params, String id);
+
     boolean addOrUpdateFeedback(Feedback f);
+
     Feedback getFeedbackById(int id);
+
     boolean deleteFeedback(int id);
 }

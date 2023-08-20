@@ -1,10 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mtb.controllers;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,24 +10,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import com.mtb.pojo.User;
 import com.mtb.service.AuthService;
+import com.mtb.service.UserService;
 
-/**
- *
- * @author Duc Hung
- */
 @RestController
 @RequestMapping("/api")
 public class ApiAuthController {
 
     @Autowired
     private AuthService service;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private Cloudinary cloudinary;
 
     @CrossOrigin
     @PostMapping("/login/")
@@ -64,5 +70,49 @@ public class ApiAuthController {
 
         ResponseEntity<List<User>> responseEntity = new ResponseEntity<>(arrayList, HttpStatus.OK);
         return responseEntity;
+    }
+
+    @CrossOrigin
+    @PostMapping("/avatar/")
+    public Map<String, String> avatarUpload(@RequestParam("file") MultipartFile file,
+            @RequestParam("userId") Integer userId) {
+        Map<String, String> map = new HashMap<>();
+        if (userId != null) {
+            User user = userService.getUserById(userId);
+
+            if (user != null) {
+                if (file != null && !file.isEmpty()) {
+                    try {
+                        Map res = this.cloudinary
+                                .uploader()
+                                .upload(file.getBytes(), ObjectUtils.asMap("resource_type", "auto"));
+
+                        String url = res.get("secure_url").toString();
+
+                        user.setAvatar(url);
+
+                        userService.addOrUpdateUser(user);
+
+                        map.put("url", url);
+                    } catch (IOException ex) {
+
+                    }
+                }
+            }
+
+        }
+
+        return map;
+    }
+
+    @CrossOrigin
+    @GetMapping("/test/")
+    public Map<String, String> avatarGet() {
+        Map<String, String> map = new HashMap<>();
+        map.put("key", "value");
+        map.put("foo", "bar");
+        map.put("aa", "bb");
+
+        return map;
     }
 }
