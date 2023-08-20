@@ -4,8 +4,9 @@
  */
 package com.mtb.repository;
 
-import com.mtb.pojo.Role;
 import java.util.List;
+
+import com.mtb.pojo.Role;
 
 /**
  *
@@ -16,7 +17,11 @@ public interface RoleRepository {
     List<Role> getRoles();
 
     boolean addOrUpdateRole(Role r);
+
     Role getRoleById(int id);
+
     boolean deleteRole(int id);
-    
+
+    Role getRoleByTitle(String title);
+
 }

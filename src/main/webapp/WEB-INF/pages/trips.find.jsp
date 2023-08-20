@@ -13,58 +13,91 @@
 <!--  -->
 <section class="container py-4">
   <div class="d-flex align-items-center mb-3">
-    <div class="d-flex justify-content-start" style="flex: 1">
-      <c:url value="/trips" var="backUrl" />
-      <a href="${backUrl}" class="btn btn-outline-info text-nowrap">
+    <div
+      class="d-flex justify-content-start"
+      style="flex: 1">
+      <c:url
+        value="/trips"
+        var="backUrl" />
+      <a
+        href="${backUrl}"
+        class="btn btn-outline-info text-nowrap">
         <spring:message code="ui.global.back" />
       </a>
     </div>
     <h3 class="text-center">
       <spring:message code="ui.global.find" />
 
-      <spring:message code="ui.trip" var="__header_title" />
+      <spring:message
+        code="ui.trip"
+        var="__header_title" />
       ${fn:toLowerCase(__header_title)}
     </h3>
 
-    <div class="invisible" style="flex: 1"></div>
+    <div
+      class="invisible"
+      style="flex: 1"></div>
   </div>
 
-  <c:url value="/trips" var="action" />
-  <form method="get" action="${action}" enctype="multipart/form-data">
+  <c:url
+    value="/trips"
+    var="action" />
+  <form
+    method="get"
+    action="${action}"
+    enctype="multipart/form-data">
     <!-- Route -->
     <div class="mb-3">
       <div class="input-group">
         <span class="input-group-text">
           <i class="bi bi-cursor"></i>
         </span>
-        <select class="form-select" id="startLocation">
-          <option value="" selected disabled>
+        <select
+          class="form-select"
+          id="startLocation">
+          <option
+            value=""
+            selected
+            disabled>
             <spring:message code="ui.trip.find.choose_start" />
           </option>
 
-          <c:forEach items="${routesStart}" var="c">
+          <c:forEach
+            items="${routesStart}"
+            var="c">
             <option value="${c.startLocation}">${c.startLocation}</option>
           </c:forEach>
         </select>
       </div>
-      <input type="hidden" name="startLocation" />
+      <input
+        type="hidden"
+        name="startLocation" />
     </div>
     <div class="mb-3">
       <div class="input-group">
         <span class="input-group-text">
           <i class="bi bi-geo-fill"></i>
         </span>
-        <select class="form-select" id="endLocation">
-          <option value="" selected disabled>
+        <select
+          class="form-select"
+          id="endLocation">
+          <option
+            value=""
+            selected
+            disabled>
             <spring:message code="ui.trip.find.choose_end" />
           </option>
 
-          <c:forEach items="${routesEnd}" var="c">
+          <c:forEach
+            items="${routesEnd}"
+            var="c">
             <option value="${c.endLocation}">${c.endLocation}</option>
           </c:forEach>
         </select>
       </div>
-      <input type="hidden" name="endLocation" />
+      <input
+        type="hidden"
+        name="endLocation" />
     </div>
 
     <!-- Bus -->
@@ -73,21 +106,32 @@
         <span class="input-group-text">
           <i class="bi bi-bus-front-fill"></i>
         </span>
-        <select class="form-select" id="busId">
-          <option value="" selected disabled>
+        <select
+          class="form-select"
+          id="busId">
+          <option
+            value=""
+            selected
+            disabled>
             <spring:message code="ui.trip.find.choose_bus" />
           </option>
 
-          <c:forEach items="${buses}" var="c">
+          <c:forEach
+            items="${buses}"
+            var="c">
             <option value="${c.id}">
               ${c.licensePlate} - ${c.busSeatTemplateCount}
-              <spring:message code="ui.bus.seat" var="__seat" />
+              <spring:message
+                code="ui.bus.seat"
+                var="__seat" />
               ${fn:toLowerCase(__seat)}
             </option>
           </c:forEach>
         </select>
       </div>
-      <input type="hidden" name="busId" />
+      <input
+        type="hidden"
+        name="busId" />
     </div>
 
     <!-- price -->
@@ -100,36 +144,35 @@
           type="text"
           id="fromPrice"
           class="form-control"
-          placeholder='<spring:message code="ui.trip.find.from_time" />'
-        />
+          placeholder='<spring:message code="ui.trip.find.from_time" />' />
         <span class="input-group-text">-</span>
         <input
           type="text"
           id="toPrice"
           class="form-control"
-          placeholder='<spring:message code="ui.trip.find.to_time" />'
-        />
+          placeholder='<spring:message code="ui.trip.find.to_time" />' />
       </div>
-      <input type="hidden" name="fromPrice" />
-      <input type="hidden" name="toPrice" />
+      <input
+        type="hidden"
+        name="fromPrice" />
+      <input
+        type="hidden"
+        name="toPrice" />
 
       <div class="range-slide">
         <div class="slide bg-secondary">
           <div
             class="line bg-primary"
             id="line"
-            style="left: 0%; right: 0%"
-          ></div>
+            style="left: 0%; right: 0%"></div>
           <span
             class="thumb border border-primary-subtle bg-primary"
             id="thumbMin"
-            style="left: 0%"
-          ></span>
+            style="left: 0%"></span>
           <span
             class="thumb border border-primary-subtle bg-primary"
             id="thumbMax"
-            style="left: 100%"
-          ></span>
+            style="left: 100%"></span>
         </div>
         <input
           id="rangeMin"
@@ -137,16 +180,14 @@
           max="${toPrice}"
           min="${fromPrice}"
           step="1000"
-          value="${fromPrice}"
-        />
+          value="${fromPrice}" />
         <input
           id="rangeMax"
           type="range"
           max="${toPrice}"
           min="${fromPrice}"
           step="1000"
-          value="${toPrice}"
-        />
+          value="${toPrice}" />
         <div>
           <style>
             :root {
@@ -228,44 +269,71 @@
           <i class="bi bi-person-rolodex"></i>
         </span>
 
-        <select class="form-select" id="driverId">
-          <option value="" selected disabled>
+        <select
+          class="form-select"
+          id="driverId">
+          <option
+            value=""
+            selected
+            disabled>
             <spring:message code="ui.trip.find.choose_driver" />
           </option>
 
-          <c:forEach items="${drivers}" var="c">
+          <c:forEach
+            items="${drivers}"
+            var="c">
             <option value="${c.id}">${c}</option>
           </c:forEach>
         </select>
       </div>
-      <input type="hidden" name="driverId" />
+      <input
+        type="hidden"
+        name="driverId" />
     </div>
 
     <!-- startAt -->
     <div class="mb-3 row">
       <div class="col col-md-6">
-        <div id="dateTimePickerFrom" class="input-group">
+        <div
+          id="dateTimePickerFrom"
+          class="input-group">
           <span class="input-group-text">
             <spring:message code="ui.trip.find.from_time" />
           </span>
-          <input type="text" class="form-control" readonly />
+          <input
+            type="text"
+            class="form-control"
+            readonly />
         </div>
       </div>
 
       <div class="col col-md-6">
-        <div id="dateTimePickerTo" class="input-group">
+        <div
+          id="dateTimePickerTo"
+          class="input-group">
           <span class="input-group-text">
             <spring:message code="ui.trip.find.to_time" />
           </span>
-          <input type="text" class="form-control" readonly />
+          <input
+            type="text"
+            class="form-control"
+            readonly />
         </div>
       </div>
 
-      <input type="hidden" name="timeFrom" />
-      <input type="hidden" name="timeTo" />
+      <input
+        type="hidden"
+        name="timeFrom" />
+      <input
+        type="hidden"
+        name="timeTo" />
     </div>
 
-    <button type="submit" class="btn btn-outline-info w-100">Tìm</button>
+    <button
+      type="submit"
+      class="btn btn-outline-info w-100">
+      Tìm
+    </button>
   </form>
 </section>
 <script>
@@ -330,10 +398,14 @@
     }
   }
 </script>
-<c:url value="/js/selectBindInput.js" var="selectBindInput" />
+<c:url
+  value="/js/selectBindInput.js"
+  var="selectBindInput" />
 <script src="${selectBindInput}"></script>
 
-<c:url value="/js/dateTimePicker.js" var="dateTimePicker" />
+<c:url
+  value="/js/dateTimePicker.js"
+  var="dateTimePicker" />
 <script src="${dateTimePicker}"></script>
 <script>
   dateTimePicker({

@@ -4,13 +4,15 @@
  */
 package com.mtb.service.impl;
 
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.mtb.pojo.Role;
 import com.mtb.repository.RoleRepository;
 import com.mtb.service.RoleService;
-import java.util.List;
-import java.util.Map;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 /**
  *
@@ -40,5 +42,10 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public boolean deleteRole(int id) {
         return this.roleRepo.deleteRole(id);
+    }
+
+    @Override
+    public Role getRoleByTitle(String title) {
+        return this.roleRepo.getRoleByTitle(title);
     }
 }

@@ -14,5 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 public class ApiUserController {
-
+    // @CrossOrigin
+    // @PostMapping("/trips/")
+    // public ResponseEntity<List<Trip>> list(@RequestParam Map<String, String>
+    // params) {
+    // return new ResponseEntity<>(this.tripService.getList(params), HttpStatus.OK);
+    // }
 }
