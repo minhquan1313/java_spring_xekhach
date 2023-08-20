@@ -49,11 +49,11 @@ public class Bus implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
+    @NotNull(message = "{bus.licensePlate.notNull}")
+    @Size(min = 1, max = 50, message = "{bus.licensePlate.lenErr}")
     @Column(name = "license_plate")
     private String licensePlate;
-    @Size(max = 200)
+    @Size(max = 200, message = "{bus.image.lenErr}")
     @Column(name = "image")
     private String image;
     @OneToMany(mappedBy = "busId")

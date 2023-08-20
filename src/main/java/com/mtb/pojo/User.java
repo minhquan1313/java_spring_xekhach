@@ -59,16 +59,16 @@ public class User implements Serializable {
     @Column(name = "username", updatable = false)
     private String username;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 200)
+    @NotNull(message = "{user.password.notNull}")
+    @Size(min = 1, max = 200, message = "{user.password.lenErr}")
     @Column(name = "password")
     private String password;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
+    @NotNull(message = "{user.firstName.notNull}")
+    @Size(min = 1, max = 50, message = "{user.firstName.lenErr}")
     @Column(name = "first_name")
     private String firstName;
-    @Size(max = 50)
+    @Size(max = 50, message = "{user.lastName.lenErr}")
     @Column(name = "last_name")
     private String lastName;
     @Size(max = 200)
