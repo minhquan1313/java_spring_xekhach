@@ -49,10 +49,6 @@
     method="post"
     action="${action}"
     enctype="multipart/form-data">
-    <form:errors
-      path="*"
-      element="div"
-      cssClass="alert alert-danger" />
 
     <form:hidden path="id" />
     <form:hidden path="avatar" />
@@ -67,6 +63,10 @@
         <label for="name">
           <spring:message code="ui.user.username" />
         </label>
+            <form:errors
+      path="username"
+      element="div"
+      cssClass="alert alert-danger" />
       </div>
     </c:if>
     <c:if test="${not empty user.id}">
@@ -81,6 +81,10 @@
         <label for="name">
           <spring:message code="ui.user.username" />
         </label>
+        <form:errors
+      path="username"
+      element="div"
+      cssClass="alert alert-danger" />
       </div>
     </c:if>
 
@@ -94,6 +98,10 @@
       <label for="name">
         <spring:message code="ui.user.password" />
       </label>
+      <form:errors
+      path="password"
+      element="div"
+      cssClass="alert alert-danger" />
     </div>
 
     <div class="form-floating mb-3 mt-3">
@@ -106,6 +114,10 @@
       <label for="name">
         <spring:message code="ui.user.last_name" />
       </label>
+      <form:errors
+      path="lastName"
+      element="div"
+      cssClass="alert alert-danger" />
     </div>
     <div class="form-floating mb-3 mt-3">
       <form:input
@@ -117,6 +129,10 @@
       <label for="name">
         <spring:message code="ui.user.first_name" />
       </label>
+      <form:errors
+      path="firstName"
+      element="div"
+      cssClass="alert alert-danger" />
     </div>
     <div class="form-floating mb-3 mt-3">
       <form:select

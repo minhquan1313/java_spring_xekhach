@@ -51,12 +51,12 @@ public class Trip implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "{trip.startAt.notNull}")
     @Column(name = "start_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date startAt;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "{trip.price.notNull}")
     @Column(name = "price")
     private int price;
     @JoinColumn(name = "bus_id", referencedColumnName = "id")

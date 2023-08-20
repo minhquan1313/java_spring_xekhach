@@ -38,7 +38,7 @@ public class Feedback implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Size(max = 200)
+    @Size(min = 1, max = 200, message = "{feedback.comment.lenErr}")
     @Column(name = "comment")
     private String comment;
     @JoinColumn(name = "ticket_id", referencedColumnName = "id")
