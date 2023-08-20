@@ -42,7 +42,7 @@ Binh --%>
     modelAttribute="bus"
     enctype="multipart/form-data"
   >
-    
+    <form:errors path="*" element="div" cssClass="alert alert-danger" />
     <form:hidden path="id" />
     <form:hidden path="image" />
     <c:if test="${bus.id == null}">

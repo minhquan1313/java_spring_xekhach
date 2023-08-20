@@ -42,7 +42,7 @@ Binh --%>
     action="${action}"
     enctype="multipart/form-data"
   >
-    
+    <form:errors path="*" element="div" cssClass="alert alert-danger" />
     <form:hidden path="id" />
 
     <!-- Route -->

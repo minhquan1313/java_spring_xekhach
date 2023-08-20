@@ -42,7 +42,7 @@
     modelAttribute="route"
     enctype="multipart/form-data"
   >
-  
+    <form:errors path="*" element="div" cssClass="alert alert-danger" />
     <form:hidden path="id" />
 
     <div class="row g-3 mb-3">
@@ -61,8 +61,7 @@
             class="form-control"
             placeholder="${__start_location}"
             path="startLocation"
-          />
-            <form:errors path="startLocation" element="div" cssClass="text-danger" />
+          />            
         </div>
       </div>
 
@@ -79,9 +78,10 @@
             placeholder="${__end_location}"
             path="endLocation"
           />
-            <form:errors path="endLocation" element="div" cssClass="text-danger" />
         </div>
       </div>
+      <form:errors path="startLocation" element="div" cssClass="text-danger" />
+      <form:errors path="endLocation" element="div" cssClass="text-danger" />
     </div>
 
     <div class="mb-3">
