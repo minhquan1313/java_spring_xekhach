@@ -63,13 +63,16 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/api/**").permitAll()
                 .antMatchers("/").permitAll()
+
+                .antMatchers("/tickets/**").hasAnyAuthority("Admin", "Staff")
+                .antMatchers("/tickets/add").hasAnyAuthority("Admin", "Staff")
+
                 .antMatchers("/**/add/**").hasAnyAuthority("Admin")
                 .antMatchers("/**/edit/**").hasAnyAuthority("Admin")
                 .antMatchers("/api/admin/**").hasAnyAuthority("Admin")
 
                 .antMatchers("/revenue/**").hasAnyAuthority("Admin")
 
-                .antMatchers("/tickets/add").hasAnyAuthority("Admin", "Staff")
                 .antMatchers("/tickets/**").hasAnyAuthority("Admin", "Staff")
 
                 .antMatchers("/trips/**").hasAnyAuthority("Admin", "Staff", "Driver")
