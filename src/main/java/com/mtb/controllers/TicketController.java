@@ -2,7 +2,6 @@ package com.mtb.controllers;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -27,7 +26,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.lowagie.text.DocumentException;
 import com.mtb.myObject.BusSeats;
-import com.mtb.myObject.Utils;
 import com.mtb.pojo.Ticket;
 import com.mtb.pojo.TicketDetail;
 import com.mtb.pojo.Trip;
@@ -60,12 +58,15 @@ public class TicketController {
     private MessageSource messageResource;
 
     @ModelAttribute
-    public void commonAttr(Model model) {
+    public void commonAttr(Model model, Locale locale) {
+        String multiLangMoney = messageResource.getMessage("ui.ticket.payment.cash", null, locale);
+        String multiLangMomo = messageResource.getMessage("ui.ticket.payment.momo", null, locale);
+        String multiLangBanking = messageResource.getMessage("ui.ticket.payment.transfer", null, locale);
         List<String> paidWithTemplate = new ArrayList<>() {
             {
-                add("Tiền mặt");
-                add("Momo");
-                add("Chuyển khoản");
+                add(multiLangMoney);
+                add(multiLangMomo);
+                add(multiLangBanking);
             }
         };
         model.addAttribute("paidWithTemplate", paidWithTemplate);
@@ -122,7 +123,7 @@ public class TicketController {
         List<User> staffUsers = userService.getUsers(staffParams);
         model.addAttribute("staffUsers", staffUsers);
 
-        int extraPrice = ticketService.getExtraPrice();
+        int extraPrice = ticketService.getExtraPrice(trip.getStartAt());
         String multiLangExtraCharge = messageResource.getMessage("ui.ticket.extra_charge", null, locale);
         model.addAttribute("extraPriceTitle", multiLangExtraCharge);
         model.addAttribute("extraPrice", extraPrice);
@@ -171,7 +172,7 @@ public class TicketController {
         List<User> staffUsers = userService.getUsers(staffParams);
         model.addAttribute("staffUsers", staffUsers);
 
-        int extraPrice = ticketService.getExtraPrice();
+        int extraPrice = ticketService.getExtraPrice(trip.getStartAt());
 
         String multiLangExtraCharge = messageResource.getMessage("ui.ticket.extra_charge", null, locale);
         model.addAttribute("extraPriceTitle", multiLangExtraCharge);

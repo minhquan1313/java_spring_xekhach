@@ -1,5 +1,4 @@
-<%-- Document : tickets.add Created on : Aug 4, 2023, 12:51:57 PM Author : Binh
---%>
+<%-- Document : tickets.add Created on : Aug 4, 2023, 12:51:57 PM Author : Binh --%>
 <!--  -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!--  -->
@@ -15,9 +14,15 @@
 <!--  -->
 <section class="container py-4">
   <div class="d-flex align-items-center mb-3">
-    <div class="d-flex justify-content-start" style="flex: 1">
-      <c:url value="/tickets" var="backUrl" />
-      <a href="${backUrl}" class="btn btn-outline-info text-nowrap">
+    <div
+      class="d-flex justify-content-start"
+      style="flex: 1">
+      <c:url
+        value="/tickets"
+        var="backUrl" />
+      <a
+        href="${backUrl}"
+        class="btn btn-outline-info text-nowrap">
         <spring:message code="ui.global.back" />
       </a>
     </div>
@@ -33,17 +38,23 @@
       vé xe
     </h3>
 
-    <div class="invisible" style="flex: 1"></div>
+    <div
+      class="invisible"
+      style="flex: 1"></div>
   </div>
 
-  <c:url value="/tickets/add" var="action" />
+  <c:url
+    value="/tickets/add"
+    var="action" />
   <form:form
     modelAttribute="ticket"
     method="post"
     action="${action}"
-    enctype="multipart/form-data"
-  >
-    <form:errors path="*" element="div" cssClass="alert alert-danger" />
+    enctype="multipart/form-data">
+    <form:errors
+      path="*"
+      element="div"
+      cssClass="alert alert-danger" />
     <form:hidden path="id" />
 
     <!-- Trip -->
@@ -52,27 +63,39 @@
         <span
           class="input-group-text"
           data-bs-toggle="tooltip"
-          data-bs-title='<spring:message code="ui.ticket.tooltip.choose_trip" />'
-        >
+          data-bs-title='<spring:message code="ui.ticket.tooltip.choose_trip" />'>
           <i class="bi bi-geo-fill"></i>
         </span>
 
-        <form:select class="form-select" path="tripId">
-          <c:forEach items="${trips}" var="c">
-            <c:set value="" var="selected" />
+        <form:select
+          class="form-select"
+          path="tripId">
+          <c:forEach
+            items="${trips}"
+            var="c">
+            <c:set
+              value=""
+              var="selected" />
             <c:if test="${c.id == trip.id}">
-              <c:set value="${c.price}" var="basePrice" />
-              <c:set value="selected" var="selected" />
+              <c:set
+                value="${c.price}"
+                var="basePrice" />
+              <c:set
+                value="selected"
+                var="selected" />
             </c:if>
-            <c:url value="/tickets/edit/${ticket.id}" var="reloadUrl">
-              <c:param name="tripId" value="${c.id}" />
+            <c:url
+              value="/tickets/edit/${ticket.id}"
+              var="reloadUrl">
+              <c:param
+                name="tripId"
+                value="${c.id}" />
             </c:url>
             <option
               value="${c.id}"
               data-url="${reloadUrl}"
               data-basePrice="${c.price}"
-              ${selected}
-            >
+              ${selected}>
               <c:if test="${c.id == ticket.tripId.id}">
                 <spring:message code="ui.global.current" />
                 |
@@ -86,8 +109,7 @@
         <ul
           class="list-group tripIdSelectData"
           data-tripId="${trip.id}"
-          style="flex: 1"
-        >
+          style="flex: 1">
           <li class="list-group-item">
             <spring:message code="ui.route" />
             : ${trip.routeId.startLocation} -> ${trip.routeId.endLocation}
@@ -95,7 +117,9 @@
           <li class="list-group-item">
             <spring:message code="ui.trip.start_at" />
             :
-            <fmt:formatDate value="${trip.startAt}" pattern="${date_pattern}" />
+            <fmt:formatDate
+              value="${trip.startAt}"
+              pattern="${date_pattern}" />
           </li>
           <li class="list-group-item">
             <spring:message code="ui.bus.license_plate" />
@@ -107,11 +131,12 @@
           </li>
         </ul>
 
-        <c:url value="/trips/add" var="createUrl" />
+        <c:url
+          value="/trips/add"
+          var="createUrl" />
         <a
           href="${createUrl}"
-          class="input-group-text link-underline link-underline-opacity-0 bg-info-subtle"
-        >
+          class="input-group-text link-underline link-underline-opacity-0 bg-info-subtle">
           <i class="bi bi-plus-square-dotted"></i>
         </a>
       </div>
@@ -124,7 +149,10 @@
           });
         </script>
       </div>
-      <form:errors path="tripId" element="div" cssClass="text-danger" />
+      <form:errors
+        path="tripId"
+        element="div"
+        cssClass="text-danger" />
     </div>
 
     <!-- bookingUsers -->
@@ -133,29 +161,44 @@
         <span
           class="input-group-text"
           data-bs-toggle="tooltip"
-          data-bs-title='<spring:message code="ui.ticket.tooltip.choose_user_booking" />'
-        >
+          data-bs-title='<spring:message code="ui.ticket.tooltip.choose_user_booking" />'>
           <i class="bi bi-person"></i>
         </span>
-        <form:select class="form-select" path="userId">
-          <c:forEach items="${bookingUsers}" var="c">
-            <c:set value="" var="selected" />
+        <form:select
+          class="form-select"
+          path="userId">
+          <c:forEach
+            items="${bookingUsers}"
+            var="c">
+            <c:set
+              value=""
+              var="selected" />
             <c:if test="${c.id == ticket.userId.id}">
-              <c:set value="selected" var="selected" />
+              <c:set
+                value="selected"
+                var="selected" />
             </c:if>
-            <option value="${c.id}" ${selected}>${c}</option>
+            <option
+              value="${c.id}"
+              ${selected}>
+              ${c}
+            </option>
           </c:forEach>
         </form:select>
 
-        <c:url value="/users/add" var="createUrl" />
+        <c:url
+          value="/users/add"
+          var="createUrl" />
         <a
           href="${createUrl}"
-          class="input-group-text link-underline link-underline-opacity-0 bg-info-subtle"
-        >
+          class="input-group-text link-underline link-underline-opacity-0 bg-info-subtle">
           <i class="bi bi-plus-square-dotted"></i>
         </a>
       </div>
-      <form:errors path="userId" element="div" cssClass="text-danger" />
+      <form:errors
+        path="userId"
+        element="div"
+        cssClass="text-danger" />
     </div>
 
     <!-- paidPrice -->
@@ -164,8 +207,7 @@
         <span
           class="input-group-text"
           data-bs-toggle="tooltip"
-          data-bs-title='<spring:message code="ui.trip.price" />'
-        >
+          data-bs-title='<spring:message code="ui.trip.price" />'>
           <i class="bi bi-currency-dollar"></i>
         </span>
 
@@ -174,8 +216,7 @@
           type="text"
           class="form-control"
           placeholder='<spring:message code="ui.trip.price" />'
-          readonly
-        />
+          readonly />
         <c:if test="${not empty extraPriceTitle}">
           <span class="input-group-text">${extraPriceTitle}</span>
           <input
@@ -183,27 +224,32 @@
             id="extraPrice"
             class="form-control"
             placeholder='<spring:message code="ui.ticket.extra_charge" />'
-            value="${extraPrice}"
-          />
+            value="${extraPrice}" />
         </c:if>
         <span class="input-group-text">=</span>
 
-        <spring:message code="ui.ticket.paid_price" var="__paid_price" />
+        <spring:message
+          code="ui.ticket.paid_price"
+          var="__paid_price" />
         <form:input
           type="text"
           class="form-control"
           placeholder="${__paid_price}"
           path="paidPrice"
-          readonly="true"
-        />
+          readonly="true" />
 
         <span class="input-group-text">VND</span>
       </div>
 
-      <c:url value="/js/ticketPriceInputs.js" var="ticketPriceInputs" />
+      <c:url
+        value="/js/ticketPriceInputs.js"
+        var="ticketPriceInputs" />
       <script src="${ticketPriceInputs}"></script>
 
-      <form:errors path="paidPrice" element="div" cssClass="text-danger" />
+      <form:errors
+        path="paidPrice"
+        element="div"
+        cssClass="text-danger" />
     </div>
 
     <div class="mb-3 row g-3">
@@ -213,22 +259,36 @@
           <span
             class="input-group-text"
             data-bs-toggle="tooltip"
-            data-bs-title='<spring:message code="ui.ticket.paid_with" />'
-          >
+            data-bs-title='<spring:message code="ui.ticket.paid_with" />'>
             <i class="bi bi-wallet2"></i>
           </span>
 
-          <form:select class="form-select" path="paidWith">
-            <c:forEach items="${paidWithTemplate}" var="c">
-              <c:set value="" var="selected" />
+          <form:select
+            class="form-select"
+            path="paidWith">
+            <c:forEach
+              items="${paidWithTemplate}"
+              var="c">
+              <c:set
+                value=""
+                var="selected" />
               <c:if test="${c == ticket.paidWith}">
-                <c:set value="selected" var="selected" />
+                <c:set
+                  value="selected"
+                  var="selected" />
               </c:if>
-              <option value="${c}" ${selected}>${c}</option>
+              <option
+                value="${c}"
+                ${selected}>
+                ${c}
+              </option>
             </c:forEach>
           </form:select>
         </div>
-        <form:errors path="paidWith" element="div" cssClass="text-danger" />
+        <form:errors
+          path="paidWith"
+          element="div"
+          cssClass="text-danger" />
       </div>
 
       <!-- staffId -->
@@ -237,45 +297,61 @@
           <span
             class="input-group-text"
             data-bs-toggle="tooltip"
-            data-bs-title='<spring:message code="ui.ticket.choose_printing_staff" />'
-          >
+            data-bs-title='<spring:message code="ui.ticket.choose_printing_staff" />'>
             <i class="bi bi-person"></i>
           </span>
-          <form:select class="form-select" path="staffId">
+          <form:select
+            class="form-select"
+            path="staffId">
             <option value="">
               <spring:message code="ui.ticket.printing_staff" />
             </option>
 
-            <c:forEach items="${staffUsers}" var="c">
-              <c:set value="" var="selected" />
+            <c:forEach
+              items="${staffUsers}"
+              var="c">
+              <c:set
+                value=""
+                var="selected" />
               <c:if test="${c.id == ticket.staffId.id}">
-                <c:set value="selected" var="selected" />
+                <c:set
+                  value="selected"
+                  var="selected" />
               </c:if>
-              <option value="${c.id}" ${selected}>${c}</option>
+              <option
+                value="${c.id}"
+                ${selected}>
+                ${c}
+              </option>
             </c:forEach>
           </form:select>
 
-          <c:url value="/users/add" var="createUrl" />
+          <c:url
+            value="/users/add"
+            var="createUrl" />
           <a
             href="${createUrl}"
-            class="input-group-text link-underline link-underline-opacity-0 bg-info-subtle"
-          >
+            class="input-group-text link-underline link-underline-opacity-0 bg-info-subtle">
             <i class="bi bi-plus-square-dotted"></i>
           </a>
         </div>
 
-        <form:errors path="staffId" element="div" cssClass="text-danger" />
+        <form:errors
+          path="staffId"
+          element="div"
+          cssClass="text-danger" />
       </div>
 
       <!-- isPaid -->
       <div class="col-12 col-xl-4">
-        <label class="input-group mb-3" style="cursor: pointer">
+        <label
+          class="input-group mb-3"
+          style="cursor: pointer">
           <div class="input-group-text">
             <form:checkbox
               class="form-check-input mt-0"
               path="isPaid"
-              id="isPaid"
-            />
+              id="isPaid" />
           </div>
 
           <div class="form-control">
@@ -284,7 +360,9 @@
         </label>
 
         <div class="d-none">
-          <c:url value="/js/ticketIsPaid.js" var="ticketIsPaid" />
+          <c:url
+            value="/js/ticketIsPaid.js"
+            var="ticketIsPaid" />
           <script src="${ticketIsPaid}"></script>
         </div>
       </div>
@@ -300,17 +378,26 @@
         <div
           id="seatArrayContainer"
           class="d-none"
-          style="--col: ${seats.col}; --row: ${seats.row}"
-        >
-          <c:forEach items="${seats.array}" var="c">
-            <c:set value="" var="userChosen" />
+          style="--col: ${seats.col}; --row: ${seats.row}">
+          <c:forEach
+            items="${seats.array}"
+            var="c">
+            <c:set
+              value=""
+              var="userChosen" />
             <c:if test="${c.userChosen == true}">
-              <c:set value="userChosen active" var="userChosen" />
+              <c:set
+                value="userChosen active"
+                var="userChosen" />
             </c:if>
 
-            <c:set value="" var="disabled" />
+            <c:set
+              value=""
+              var="disabled" />
             <c:if test="${userChosen == '' && c.available != true}">
-              <c:set value="disabled" var="disabled" />
+              <c:set
+                value="disabled"
+                var="disabled" />
             </c:if>
 
             <button
@@ -322,12 +409,15 @@
               ${disabled}
               ${userChosen}
               data-bs-toggle="tooltip"
-              data-bs-title="${c.id}"
-            >
-              <h3 class="m-0" withoutActive>
+              data-bs-title="${c.id}">
+              <h3
+                class="m-0"
+                withoutActive>
                 <i class="bi bi-circle"></i>
               </h3>
-              <h3 class="m-0" withActive>
+              <h3
+                class="m-0"
+                withActive>
                 <i class="bi bi-circle-fill"></i>
               </h3>
             </button>
@@ -340,20 +430,33 @@
           <spring:message code="ui.ticket.total_bus_seat_selected" />
           :
         </span>
-        <span id="seatCount" class="ms-3">~</span>
+        <span
+          id="seatCount"
+          class="ms-3">
+          ~
+        </span>
       </div>
-      <input type="hidden" name="selectedSeats" id="selectedSeats" />
+      <input
+        type="hidden"
+        name="selectedSeats"
+        id="selectedSeats" />
 
       <div class="d-none">
-        <c:url value="/css/busSeat.css" var="busSeat" />
-        <link rel="stylesheet" href="${busSeat}" />
+        <c:url
+          value="/css/busSeat.css"
+          var="busSeat" />
+        <link
+          rel="stylesheet"
+          href="${busSeat}" />
       </div>
     </div>
 
     <!-- createdAt -->
     <c:if test="${ticket.id != null}">
       <div class="mb-3">
-        <div class="input-group" id="datetimepicker1">
+        <div
+          class="input-group"
+          id="datetimepicker1">
           <span class="input-group-text">
             <spring:message code="ui.ticket.created_at" />
           </span>
@@ -361,22 +464,25 @@
             id="datetimepicker1Input"
             type="text"
             class="form-control"
-            readonly
-          />
+            readonly />
           <span
             class="input-group-text"
             data-td-toggle="datetimepicker"
-            style="cursor: pointer"
-          >
+            style="cursor: pointer">
             <i class="bi bi-calendar-plus"></i>
           </span>
         </div>
         <form:hidden path="createdAt" />
-        <form:errors path="createdAt" element="div" cssClass="text-danger" />
+        <form:errors
+          path="createdAt"
+          element="div"
+          cssClass="text-danger" />
       </div>
     </c:if>
 
-    <button type="submit" class="btn btn-outline-info w-100">
+    <button
+      type="submit"
+      class="btn btn-outline-info w-100">
       <c:choose>
         <c:when test="${ticket.id == null}">
           <spring:message code="ui.global.add" />
@@ -389,10 +495,14 @@
   </form:form>
 </section>
 
-<c:url value="/js/dateTimePicker.js" var="dateTimePicker" />
+<c:url
+  value="/js/dateTimePicker.js"
+  var="dateTimePicker" />
 <script src="${dateTimePicker}"></script>
 
-<c:url value="/js/busSeatTripTicketSelect.js" var="busSeatTripTicketSelect" />
+<c:url
+  value="/js/busSeatTripTicketSelect.js"
+  var="busSeatTripTicketSelect" />
 <script src="${busSeatTripTicketSelect}"></script>
 
 <c:if test="${ticket.id != null}">

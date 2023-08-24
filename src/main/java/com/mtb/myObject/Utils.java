@@ -8,7 +8,8 @@ public class Utils {
     }
 
     public static boolean isDateBetween(Date now, Date a, Date b) {
-        return a.getTime() >= now.getTime() && now.getTime() >= b.getTime();
+        // Khi get time, ngay nao som hon thi be hon
+        return a.getTime() <= now.getTime() && now.getTime() <= b.getTime();
     }
 
     public static String replaceFromMessageBean(String text, String... valueReplace) {

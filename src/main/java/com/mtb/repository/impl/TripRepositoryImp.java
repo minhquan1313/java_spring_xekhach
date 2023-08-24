@@ -159,7 +159,7 @@ public class TripRepositoryImp implements TripRepository {
 
             if (params.get("extraPrice") != null) {
                 list.forEach(r -> {
-                    r.setExtraPrice(ticketService.getExtraPrice());
+                    r.setExtraPrice(ticketService.getExtraPrice(r.getStartAt()));
                 });
             }
         }
