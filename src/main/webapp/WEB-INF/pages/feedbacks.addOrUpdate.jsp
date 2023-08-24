@@ -49,6 +49,10 @@
       <label for="comment">
         <spring:message code="ui.feedback.comment" />
       </label>
+        <form:errors
+      path="comment"
+      element="div"
+      cssClass="alert alert-danger" />
     </div>
     <div class="form-floating mb-3 mt-3">
       <form:select

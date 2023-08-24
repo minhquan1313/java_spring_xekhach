@@ -52,7 +52,7 @@ public class Ticket implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Size(max = 50)
+    @Size(max = 50, message = "{ticket.paidWith.lenErr}")
     @Column(name = "paid_with")
     private String paidWith;
     @Column(name = "paid_price")

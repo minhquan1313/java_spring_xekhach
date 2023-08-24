@@ -48,8 +48,8 @@ public class Role implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
+    @NotNull(message = "{role.title.notNull}")
+    @Size(min = 1, max = 50, message = "{role.title.lenErr}")
     @Column(name = "title")
     private String title;
 

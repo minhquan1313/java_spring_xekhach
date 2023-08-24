@@ -45,13 +45,13 @@ public class Route implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
+    @NotNull(message = "{route.startLocation.notNull}")
+    @Size(min = 1, max = 50, message = "{route.startLocation.lenErr}")
     @Column(name = "start_location")
     private String startLocation;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
+    @NotNull(message = "{route.endLocation.notNull}")
+    @Size(min = 1, max = 50, message = "{route.endLocation.lenErr}")
     @Column(name = "end_location")
     private String endLocation;
 
