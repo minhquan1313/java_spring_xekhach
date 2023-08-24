@@ -86,6 +86,10 @@ public class TripServiceImpl implements TripService {
 
     @Override
     public int countPaidPrice(Trip item, int selectedSeatCount) {
-        return item.getPrice() * selectedSeatCount + ticketService.getExtraPrice();
+        int p = (item.getPrice() + ticketService.getExtraPrice(item.getStartAt())) * selectedSeatCount;
+        // int p = item.getPrice() * selectedSeatCount +
+        // ticketService.getExtraPrice(item.getStartAt());
+
+        return p;
     }
 }

@@ -7,26 +7,26 @@ priceInputHandler();
 
 $("#extraPrice").on("input", priceInputHandler);
 function priceInputHandler() {
-    let extraP = $("#extraPrice").val() ?? "0";
-    extraP = extraP.replace(/\,/g, "");
+  let extraP = $("#extraPrice").val() ?? "0";
+  extraP = extraP.replace(/\,/g, "");
 
-    extraPrice = extraP == "" ? 0 : parseInt(extraP);
+  extraPrice = extraP == "" ? 0 : parseInt(extraP);
 
-    paidPrice = globalSeatCount == 0 ? 0 : globalSeatCount * basePrice + extraPrice;
+  paidPrice = globalSeatCount == 0 ? 0 : globalSeatCount * (basePrice + extraPrice);
 
-    $("#paidPrice").val(paidPrice);
-    $("#extraPrice").val(extraPrice.toLocaleString());
+  $("#paidPrice").val(paidPrice);
+  $("#extraPrice").val(extraPrice.toLocaleString());
 }
 
-$("#paidPrice").on("input", () => {
-    extraPrice = paidPrice - basePrice;
+// $("#paidPrice").on("input", () => {
+//     extraPrice = paidPrice - basePrice;
 
-    $("#extraPrice").val(extraPrice.toLocaleString());
-});
+//     $("#extraPrice").val(extraPrice.toLocaleString());
+// });
 
 function setPriceOnInputs() {
-    const $initSelected = $("#tripId").find(":selected");
-    basePrice = parseInt($initSelected.attr("data-basePrice"));
+  const $initSelected = $("#tripId").find(":selected");
+  basePrice = parseInt($initSelected.attr("data-basePrice"));
 
-    $("#basePrice").val(basePrice.toLocaleString());
+  $("#basePrice").val(basePrice.toLocaleString());
 }

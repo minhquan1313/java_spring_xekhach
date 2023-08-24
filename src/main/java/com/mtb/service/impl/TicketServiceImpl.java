@@ -18,6 +18,7 @@ import com.mtb.myObject.Utils;
 import com.mtb.pojo.BusSeatTrip;
 import com.mtb.pojo.Ticket;
 import com.mtb.pojo.TicketDetail;
+import com.mtb.pojo.Trip;
 import com.mtb.repository.TicketRepository;
 import com.mtb.service.BusSeatTripService;
 import com.mtb.service.TicketDetailService;
@@ -55,8 +56,12 @@ public class TicketServiceImpl implements TicketService {
         Date current = c.getTime();
         item.setCreatedAt(current);
 
-        int paidPrice = tripService.countPaidPrice(item.getTripId(), busSeats.getArray().size());
-        item.setPaidPrice(paidPrice);
+        Trip trip = tripService.getById(item.getTripId().getId());
+
+        if (item.getPaidPrice() == null || item.getPaidPrice() == 0) {
+            int paidPrice = tripService.countPaidPrice(trip, busSeats.getArray().size());
+            item.setPaidPrice(paidPrice);
+        }
 
         boolean isAdded = repository.addOrUpdate(item);
 
@@ -151,10 +156,14 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public int getExtraPrice() {
+    public int getExtraPrice(Date d) {
         int extra = 0;
 
+        Calendar ref = Calendar.getInstance();
+        ref.setTime(d);
+
         Calendar holidayTetFrom = Calendar.getInstance();
+        holidayTetFrom.set(Calendar.YEAR, ref.get(Calendar.YEAR));
         holidayTetFrom.set(Calendar.MONTH, 0);
         holidayTetFrom.set(Calendar.DAY_OF_MONTH, 1);
 
@@ -164,6 +173,7 @@ public class TicketServiceImpl implements TicketService {
         holidayTetFrom.set(Calendar.MILLISECOND, 0);
 
         Calendar holidayTetTo = Calendar.getInstance();
+        holidayTetTo.set(Calendar.YEAR, ref.get(Calendar.YEAR));
         holidayTetTo.set(Calendar.MONTH, 1);
         holidayTetTo.set(Calendar.DAY_OF_MONTH, 1);
 
@@ -174,13 +184,15 @@ public class TicketServiceImpl implements TicketService {
 
         holidayTetTo.add(Calendar.SECOND, -1);
 
+        Date from = holidayTetFrom.getTime();
+        Date to = holidayTetTo.getTime();
         boolean isDateBetween = Utils.isDateBetween(
-                Calendar.getInstance().getTime(),
-                holidayTetFrom.getTime(),
-                holidayTetTo.getTime());
+                d,
+                from,
+                to);
 
         if (isDateBetween)
-            extra += 50000;
+            extra += 20000;
 
         return extra;
     }

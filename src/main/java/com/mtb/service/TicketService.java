@@ -1,6 +1,7 @@
 package com.mtb.service;
 
 import java.io.OutputStream;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +22,6 @@ public interface TicketService {
 
     void exportTicketToPdf(int id, OutputStream outputStream) throws DocumentException;
 
-    int getExtraPrice();
+    int getExtraPrice(Date d);
 
 }

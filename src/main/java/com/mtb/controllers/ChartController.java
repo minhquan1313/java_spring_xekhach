@@ -6,10 +6,12 @@ package com.mtb.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,8 +35,14 @@ public class ChartController {
     @Autowired
     private RouteService routeService;
 
+    @Autowired
+    private MessageSource messageResource;
+
     @GetMapping("/trips/chart")
-    public String showChart(Model model, Map<String, String> params) {
+    public String showChart(Model model, Map<String, String> params, Locale locale) {
+        String multiLangDataOf = messageResource.getMessage("ui.trip.chart.chart_column_data_name", null, locale);
+        String multiLangTableName = messageResource.getMessage("ui.trip.chart.chart_column_name", null, locale);
+
         List<TitleAndValue> routeData = new ArrayList<>();
         List<Object[]> tripDataList = tripService.countTripsByRoute();
         List<Route> listRoute = routeService.getList(params);
@@ -53,8 +61,8 @@ public class ChartController {
         }
 
         TitleAndValueChartJs routeChartJs = TitleAndValue.parseToChartJsData(routeData);
-        routeChartJs.setDataOf("Số chuyến");
-        routeChartJs.setTableName("Mật độ chuyến xe");
+        routeChartJs.setDataOf(multiLangDataOf);
+        routeChartJs.setTableName(multiLangTableName);
         routeChartJs.setChartType("bar");
         model.addAttribute("routeChartJs", routeChartJs);
 
