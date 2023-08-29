@@ -82,6 +82,7 @@ public class TicketServiceImpl implements TicketService {
     public boolean update(Ticket item, BusSeats busSeats) {
         List<TicketDetail> alreadyCreatedInDBList = ticketDetailService.getListByTicketId(item.getId());
         List<Pos> toUpdateSeats = new ArrayList<>();
+        Trip trip = tripService.getById(item.getTripId().getId());
 
         busSeats.getArray().forEach(busSeatTripFromClient -> {
             TicketDetail newTicketDetail = new TicketDetail();
@@ -128,8 +129,10 @@ public class TicketServiceImpl implements TicketService {
             }
         }
 
-        int paidPrice = tripService.countPaidPrice(item.getTripId(), busSeats.getArray().size());
-        item.setPaidPrice(paidPrice);
+        if (item.getPaidPrice() == null || item.getPaidPrice() == 0) {
+            int paidPrice = tripService.countPaidPrice(trip, busSeats.getArray().size());
+            item.setPaidPrice(paidPrice);
+        }
 
         return repository.addOrUpdate(item);
     }
